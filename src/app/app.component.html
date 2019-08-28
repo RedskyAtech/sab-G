@@ -1,0 +1,38 @@
+<GridLayout>
+    <router-outlet></router-outlet>
+    <StackLayout *ngIf="showPlayButton" row="5" class="play-container" horizontalAlignment="right"
+        (tap)="onPlayClick()">
+        <Image class="play-icon" src="res://play"></Image>
+    </StackLayout>
+    <ActivityIndicator row="1" #activityIndicator [busy]="showLoading" color="#273BD3" verticalAlignment="middle"
+        width="50" height="50" class="activity-indicator"></ActivityIndicator>
+    <StackLayout *ngIf="showFooter" height="10%" backgroundColor="#FFFFFF" verticalAlignment="bottom">
+        <GridLayout rows="*" columns="*,*,*,*,*">
+            <StackLayout col="0" row="0" (tap)="onSearchTap()">
+                <Image class="footer-icon" [src]="searchIcon">
+                </Image>
+                <Label class="footer-label" [color]="searchColor" text="Search"></Label>
+            </StackLayout>
+            <StackLayout col="1" row="0" (tap)="onQuizTap()">
+                <Image class="footer-icon" [src]="quizIcon">
+                </Image>
+                <Label class="footer-label" [color]="quizColor" text="Quiz"></Label>
+            </StackLayout>
+            <StackLayout col="2" row="0" (tap)="onTopicsTap()">
+                <Image class="footer-icon" [src]="topicsIcon">
+                </Image>
+                <Label class="footer-label" [color]="topicsColor" text="Topics"></Label>
+            </StackLayout>
+            <StackLayout col="3" row="0" (tap)="onBookmarkTap()">
+                <Image class="footer-icon" [src]="bookmarkIcon">
+                </Image>
+                <Label class="footer-label" [color]="bookmarkColor" text="Bookmark"></Label>
+            </StackLayout>
+            <StackLayout col="4" row="0" (tap)="onAccountTap()">
+                <Image class="footer-icon" [src]="accountIcon">
+                </Image>
+                <Label class="footer-label" [color]="accountColor" text="Account"></Label>
+            </StackLayout>
+        </GridLayout>
+    </StackLayout>
+</GridLayout>

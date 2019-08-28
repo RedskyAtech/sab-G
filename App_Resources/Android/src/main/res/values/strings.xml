@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">bookreading</string>
+    <string name="title_activity_kimera">bookreading</string>
+
+    <!--Login-->
+    <string name="loginHeading">Log In</string>
+    <string name="usernameHint">Username</string>
+    <string name="passwordHint">Password</string>
+    <string name="dontAccount">Do not have an account?</string>
+    <string name="createNow">Create Now</string>
+    <string name="loginButton">Login</string>
+    <string name="forgotPassword">Forgot password?</string>
+
+    <!-- Register -->
+    <string name="registerHeading">Sign Up</string>
+    <string name="emailHint">Email</string>
+    <string name="phoneNumberHint">Phone number</string>
+    <string name="confirmPasswordhint">Confirm password</string>
+    <string name="signUpButton">Sign Up</string>
+    <string name="alreadyAccount">Already have an account? </string>
+    <string name="login">Login</string>
+
+    <!-- Forgot Password -->
+    <string name="sendOTPButton">Send OTP</string>
+    <string name="forgotHeading">Forgot Password</string>
+
+    <!-- Confirm OTP -->
+    <string name="confirmOtpHeading">Enter your OTP code</string>
+    <string name="otpHint">Enter your OTP</string>
+    <string name="confirmButton">Confirm</string>
+
+     <!-- Change Password -->
+    <string name="changePasswordHeading">Change Password</string>
+    <string name="oldPasswordHint">Old password</string>
+    <string name="newPasswordHint">New password</string>
+    <string name="updatePasswordButton">Update password</string>
+
+    <!-- Home -->
+    <string name="goodMorning">Good Morning,</string>
+    <string name="paymentStatus">Paid</string>
+
+    <!-- Chapter -->
+    <string name="quizButton">Quiz</string>
+    <string name="nextChapterButton">Next Chapter</string>
+    <string name="likeDialogText">like what you are reading?</string>
+    <string name="buyButton">Buy Full Access</string>
+    <string name="continueButton">Continue</string>
+
+    <!-- Account -->
+    <string name="activityText">Activity</string>
+    <string name="eiusmodDo">Eiusmod do</string>
+
+    <!-- Bookmark -->
+    <string name="bookmarkHeading">Your bookmarks</string>
+
+    <!-- Quiz -->
+    <string name="question">Question</string>
+    <string name="outOf">/10</string>
+    <string name="questionOrigin">Question Origin</string>
+    <string name="option1">Option 1</string>
+    <string name="option2">Option 2</string>
+    <string name="option3">Option 3</string>
+    <string name="option4">Option 4</string>
+
+    <!-- Quiz Result -->
+    <string name="correctOutOf"> correct out of 10 questions</string>
+
+</resources>

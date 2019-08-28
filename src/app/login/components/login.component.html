@@ -1,0 +1,71 @@
+<Page actionBarHidden="true">
+    <GridLayout rows="auto,auto,auto" class="page">
+        <GridLayout row="0" class="upper-container" verticalAlignment="top">
+            <Image src="res://logo" width="80vh" height="80vh" verticalAlignment="top" marginTop="20%"></Image>
+            <Image src="res://logo_transparent" width="70%" height="70%" verticalAlignment="top" marginTop="50%"
+                marginLeft="80%">
+            </Image>
+        </GridLayout>
+        <GridLayout row="0" marginTop="30%" height="50%" width="100%">
+            <GridLayout #loginCard orientation="vertical" width="80%" height="90%" rows="auto,auto,auto,auto"
+                (loaded)="onLoginLoaded($event)">
+                <StackLayout row="0" width="95%" height="15%" marginTop="5%" verticalAlignment="middle">
+                    <Label color="#707070" fontSize="30" textAlignment="center" [text]="loginHeading"></Label>
+                </StackLayout>
+                <StackLayout row="1" class="textfield-container" orientation="horizontal" borderWidth="1"
+                    [borderBottomColor]="mobileBorderColor" borderLeftColor="transparent" borderRightColor="transparent"
+                    borderTopColor="transparent" [borderWidth]="mobileBorderWidth">
+                    <GridLayout class="iconTextField" height="15%" width="15%">
+                        <Image height="60%" width="60%" marginRight="15%" horizontalAlignment="center"
+                            src="res://user_icon">
+                        </Image>
+                    </GridLayout>
+                    <TextField [hint]="mobileHint" width="85%" fontSize="16" color="#23A6DB"
+                        style.placeholderColor="#B9B9B9" (textChange)="mobileTextField($event)"
+                        borderColor="transparent" borderWidth="1" autocorrect="false">
+                    </TextField>
+                </StackLayout>
+                <StackLayout row="2" class="textfield-container" orientation="horizontal" borderWidth="1"
+                    [borderBottomColor]="passwordBorderColor" borderLeftColor="transparent"
+                    borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="passwordBorderWidth">
+                    <GridLayout class="iconTextField" height="15%" width="15%">
+                        <Image height="60%" width="60%" marginRight="15%" horizontalAlignment="center" src="res://lock">
+                        </Image>
+                    </GridLayout>
+                    <TextField [hint]="passwordHint" width="70%" fontSize="16" color="#23A6DB"
+                        style.placeholderColor="#B9B9B9" (textChange)="passwordTextField($event)"
+                        borderColor="transparent" borderWidth="1" autocorrect="false" secure="true">
+                    </TextField>
+                    <Image src="res://eye" width="35" height="15"></Image>
+                </StackLayout>
+                <StackLayout row="3" width="100%" height="40%" verticalAlignment="middle">
+                    <Button class="login-button" [text]="loginButton" (tap)="onLoginClick()"></Button>
+                </StackLayout>
+            </GridLayout>
+        </GridLayout>
+        <GridLayout row="2" height="20%" width="100%" rows="auto,auto">
+            <StackLayout row="0" width="95%" height="40%" verticalAlignment="middle" (tap)="onForgotPassword()">
+                <Label color="#A5A5A5" fontSize="16" textAlignment="center" [text]="forgotPassword"></Label>
+            </StackLayout>
+            <StackLayout row="1" width="95%" height="40%" verticalAlignment="middle">
+                <StackLayout orientation="horizontal" horizontalAlignment="center" (tap)="onRegisterClick()">
+                    <Label color="#707070" fontSize="16" textAlignment="center" text="Don't have an account?"></Label>
+                    <Label color="#707070" fontSize="16" textAlignment="center" fontWeight="500"
+                        text="Create Now"></Label>
+                </StackLayout>
+            </StackLayout>
+        </GridLayout>
+    </GridLayout>
+
+    <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
+        <ActivityIndicator horizontalAlignment="center" verticalAlignment="middle" [busy]="!isRendering" rowSpan="1"
+            colSpan="1">
+        </ActivityIndicator>
+    </GridLayout> -->
+
+    <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
+        <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
+            [busy]="isFavouring" rowSpan="1" colSpan="1">
+        </ActivityIndicator>
+    </GridLayout>
+</Page>
