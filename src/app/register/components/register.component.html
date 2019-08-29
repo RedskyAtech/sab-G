@@ -10,7 +10,7 @@
             <GridLayout #registerCard orientation="vertical" width="80%" height="90%" rows="auto,auto,auto,auto,auto"
                 (loaded)="onRegisterLoaded($event)">
                 <StackLayout row="0" width="95%" height="15%" marginTop="5%" verticalAlignment="middle">
-                    <Label color="#707070" fontSize="30" textAlignment="center" [text]="loginHeading"></Label>
+                    <Label color="#707070" fontSize="30%" textAlignment="center" [text]="heading"></Label>
                 </StackLayout>
                 <StackLayout row="1" class="textfield-container" orientation="horizontal" borderWidth="1"
                     [borderBottomColor]="mobileBorderColor" borderLeftColor="transparent" borderRightColor="transparent"
@@ -20,9 +20,10 @@
                             src="res://user_icon">
                         </Image>
                     </GridLayout>
-                    <TextField [hint]="mobileHint" width="85%" fontSize="16" color="#23A6DB"
+                    <TextField [hint]="mobileHint" width="85%" fontSize="16%" color="#23A6DB"
                         style.placeholderColor="#B9B9B9" (textChange)="mobileTextField($event)"
-                        borderColor="transparent" borderWidth="1" autocorrect="false">
+                        borderColor="transparent" borderWidth="1" autocorrect="false" maxLength="10"
+                        keyboardType="phone">
                     </TextField>
                 </StackLayout>
                 <StackLayout row="2" class="textfield-container" orientation="horizontal" borderWidth="1"
@@ -32,7 +33,7 @@
                         <Image height="60%" width="60%" marginRight="15%" horizontalAlignment="center" src="res://lock">
                         </Image>
                     </GridLayout>
-                    <TextField [hint]="passwordHint" width="70%" fontSize="16" color="#23A6DB"
+                    <TextField [hint]="passwordHint" width="70%" fontSize="16%" color="#23A6DB"
                         style.placeholderColor="#B9B9B9" (textChange)="passwordTextField($event)"
                         borderColor="transparent" borderWidth="1" autocorrect="false" secure="true">
                     </TextField>
@@ -46,7 +47,7 @@
                         <Image height="60%" width="60%" marginRight="15%" horizontalAlignment="center" src="res://lock">
                         </Image>
                     </GridLayout>
-                    <TextField [hint]="confirmPasswordHint" width="70%" fontSize="16" color="#23A6DB"
+                    <TextField [hint]="confirmPasswordHint" width="70%" fontSize="16%" color="#23A6DB"
                         style.placeholderColor="#B9B9B9" (textChange)="confirmPasswordTextField($event)"
                         borderColor="transparent" borderWidth="1" autocorrect="false" secure="true">
                     </TextField>
@@ -61,7 +62,7 @@
             <StackLayout orientation="horizontal" horizontalAlignment="center" verticalAlignment="middle"
                 (tap)="onLoginClick()">
                 <Label color="#707070" fontSize="16" textAlignment="center" text="Already have an account?"></Label>
-                <Label color="#707070" fontSize="16" textAlignment="center" fontWeight="500" text="login"></Label>
+                <Label color="#707070" fontSize="16" textAlignment="center" fontWeight="500" text=" Login"></Label>
             </StackLayout>
         </GridLayout>
     </GridLayout>

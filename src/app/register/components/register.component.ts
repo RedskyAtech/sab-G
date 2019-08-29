@@ -21,11 +21,10 @@ export class RegisterComponent implements OnInit, AfterContentInit {
     mobileText: string;
     passwordText: string;
     confirmPasswordText: string;
-    loginHeading: string;
+    heading: string;
     mobileHint: string;
     passwordHint: string;
     confirmPasswordHint: string;
-    alreadyAccount: string;
     createNow: string;
     registerButton: string;
     forgotPassword: string;
@@ -41,11 +40,10 @@ export class RegisterComponent implements OnInit, AfterContentInit {
         this.isLoading = false;
         this.mobileText = "";
         this.passwordText = "";
-        this.loginHeading = "Sign Up";
+        this.heading = "Sign Up";
         this.mobileHint = "Enter your mobile number";
         this.passwordHint = "Enter your password";
         this.confirmPasswordHint = "Confirm your password";
-        this.alreadyAccount = "Already have an account?";
         this.createNow = " Create Now";
         this.registerButton = "Sign Up"
         this.forgotPassword = "Forgot password?";

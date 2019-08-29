@@ -3,6 +3,7 @@ import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
+import { stringify } from "@angular/core/src/util";
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -15,24 +16,31 @@ declare const CGSizeMake: any;
 })
 export class ForgotPasswordComponent implements OnInit, AfterContentInit {
 
-    isRendering: boolean;
+    // isRendering: boolean;
     isLoading: boolean;
-    phoneText: string;
-    phoneNumberHint: string;
-    sendOTPButton: string;
-    forgotHeading: string;
-
+    mobileText: string;
+    heading: string;
+    mobileHint: string;
+    sendOtpButton: string;
+    forgotPassword: string;
+    renderingTimeout;
+    mobileBorderColor: string;
+    mobileBorderWidth: string;
     constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
-        this.isRendering = false;
+        // this.isRendering = true;
         this.isLoading = false;
-        this.phoneText = "";
-        this.phoneNumberHint = "Phone number";
-        this.sendOTPButton = "Send OTP";
-        this.forgotHeading = "Forgot Password";
+        this.mobileText = "";
+        this.heading = "Forgot Password";
+        this.mobileHint = "Enter your mobile number";
+        this.sendOtpButton = "Send OTP"
         this.userService.showFooter(false);
+        this.mobileBorderColor = "#707070";
+        this.mobileBorderWidth = "1";
     }
     ngAfterContentInit(): void {
-        throw new Error("Method not implemented.");
+        // this.renderingTimeout = setTimeout(() => {
+        //     this.isRendering = true;
+        // }, 5000)
     }
     ngOnInit(): void {
         throw new Error("Method not implemented.");
@@ -46,19 +54,19 @@ export class ForgotPasswordComponent implements OnInit, AfterContentInit {
         return 2.0
     }
 
-    onForgotPasswordLoaded(args: any) {
-        var forgotPasswordCard = <any>args.object;
+    onLoginLoaded(args: any) {
+        var loginCard = <any>args.object;
         setTimeout(() => {
-            if (forgotPasswordCard.android) {
-                let nativeGridMain = forgotPasswordCard.android;
+            if (loginCard.android) {
+                let nativeGridMain = loginCard.android;
                 var shape = new android.graphics.drawable.GradientDrawable();
                 shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
                 shape.setColor(android.graphics.Color.parseColor('white'));
-                shape.setCornerRadius(20)
+                shape.setCornerRadius(50)
                 nativeGridMain.setBackgroundDrawable(shape);
                 nativeGridMain.setElevation(10)
-            } else if (forgotPasswordCard.ios) {
-                let nativeGridMain = forgotPasswordCard.ios;
+            } else if (loginCard.ios) {
+                let nativeGridMain = loginCard.ios;
                 nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
                 nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
                 nativeGridMain.layer.shadowOpacity = 0.5
@@ -70,24 +78,23 @@ export class ForgotPasswordComponent implements OnInit, AfterContentInit {
 
     }
 
-    public phoneTextField(args) {
+    public mobileTextField(args) {
         var textField = <TextField>args.object;
-        this.phoneText = textField.text;
+        this.mobileText = textField.text;
+        this.mobileBorderColor = "#23A6DB";
+        this.mobileBorderWidth = "2";
     }
 
     onSendOtpClick() {
-        if (this.phoneText == "") {
-            alert("Please enter phone number.");
-        }
-        else if (this.phoneText.length < 10) {
-            alert("Phone number should be of ten digits.");
+        if (this.mobileText == "") {
+            alert("Please enter mobile number.");
         }
         else {
             this.routerExtensions.navigate(['/confirmOtp']);
         }
     }
 
-    onBack() {
+    onCancel() {
         this.routerExtensions.navigate(['/login']);
     }
 

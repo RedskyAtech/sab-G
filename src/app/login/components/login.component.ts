@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit, AfterContentInit {
     isLoading: boolean;
     mobileText: string;
     passwordText: string;
-    loginHeading: string;
+    heading: string;
     mobileHint: string;
     passwordHint: string;
     loginButton: string;
@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit, AfterContentInit {
         this.isLoading = false;
         this.mobileText = "";
         this.passwordText = "";
-        this.loginHeading = "Log In";
+        this.heading = "Log In";
         this.mobileHint = "Enter your mobile number";
         this.passwordHint = "Enter your password";
         this.loginButton = "Log In"

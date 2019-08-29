@@ -1,8 +1,10 @@
-import { Component, OnInit, AfterContentInit } from "@angular/core";
+import { Component, OnInit, AfterContentInit, ElementRef, ViewChild } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
+import { stringify } from "@angular/core/src/util";
+import { Page } from "tns-core-modules/ui/page/page";
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -14,28 +16,53 @@ declare const CGSizeMake: any;
     styleUrls: ['./confirm-otp.component.css']
 })
 export class ConfirmOtpComponent implements OnInit, AfterContentInit {
+    @ViewChild("textField1") textField1: ElementRef;
+    @ViewChild("textField2") textField2: ElementRef;
+    @ViewChild("textField3") textField3: ElementRef;
+    @ViewChild("textField4") textField4: ElementRef;
 
-    isRendering: boolean;
+    // isRendering: boolean;
     isLoading: boolean;
-    otpText: string;
-    confirmOtpHeading: string;
-    otpHint: string;
-    confirmButton: string;
-
+    otp1Text: string;
+    otp2Text: string;
+    otp3Text: string;
+    otp4Text: string;
+    heading: string;
+    mobileHint: string;
+    nextButton: string;
+    forgotPassword: string;
+    renderingTimeout;
+    mobileBorderColor: string;
+    mobileBorderWidth: string;
+    textfield1: TextField;
+    textfield2: TextField;
+    textfield3: TextField;
+    textfield4: TextField;
     constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
-        this.isRendering = false;
+        // this.isRendering = true;
         this.isLoading = false;
-        this.otpText = "";
-        this.confirmOtpHeading = "Enter your OTP code";
-        this.otpHint = "Enter your OTP";
-        this.confirmButton = "Confirm"
+        this.otp1Text = "";
+        this.otp2Text = "";
+        this.otp3Text = "";
+        this.otp4Text = "";
+        this.heading = "Enter your OTP code";
+        this.mobileHint = "Enter your mobile number";
+        this.nextButton = "Next"
         this.userService.showFooter(false);
+        this.mobileBorderColor = "#707070";
+        this.mobileBorderWidth = "1";
     }
     ngAfterContentInit(): void {
-        throw new Error("Method not implemented.");
+        // this.renderingTimeout = setTimeout(() => {
+        //     this.isRendering = true;
+        // }, 5000)
     }
     ngOnInit(): void {
-        throw new Error("Method not implemented.");
+        this.textfield1 = <TextField>this.textField1.nativeElement;
+        this.textfield2 = <TextField>this.textField2.nativeElement;
+        this.textfield3 = <TextField>this.textField3.nativeElement;
+        this.textfield4 = <TextField>this.textField4.nativeElement;
+        this.textfield1.focus();
     }
 
     protected get shadowColor(): Color {
@@ -46,19 +73,19 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
         return 2.0
     }
 
-    onForgotPasswordLoaded(args: any) {
-        var forgotPasswordCard = <any>args.object;
+    onLoginLoaded(args: any) {
+        var loginCard = <any>args.object;
         setTimeout(() => {
-            if (forgotPasswordCard.android) {
-                let nativeGridMain = forgotPasswordCard.android;
+            if (loginCard.android) {
+                let nativeGridMain = loginCard.android;
                 var shape = new android.graphics.drawable.GradientDrawable();
                 shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
                 shape.setColor(android.graphics.Color.parseColor('white'));
-                shape.setCornerRadius(20)
+                shape.setCornerRadius(50)
                 nativeGridMain.setBackgroundDrawable(shape);
                 nativeGridMain.setElevation(10)
-            } else if (forgotPasswordCard.ios) {
-                let nativeGridMain = forgotPasswordCard.ios;
+            } else if (loginCard.ios) {
+                let nativeGridMain = loginCard.ios;
                 nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
                 nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
                 nativeGridMain.layer.shadowOpacity = 0.5
@@ -70,17 +97,58 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
 
     }
 
-    public otpTextField(args) {
+    public otp1Field(args) {
         var textField = <TextField>args.object;
-        this.otpText = textField.text;
+        this.otp1Text = textField.text;
+        if (this.otp1Text.length == 0) {
+            this.textfield1.focus();
+        }
+        else {
+            this.textfield2.focus();
+        }
     }
 
-    onConfirmClick() {
-        this.routerExtensions.navigate(['/login']);
+    public otp2Field(args) {
+        var textField = <TextField>args.object;
+        this.otp2Text = textField.text;
+        if (this.otp2Text.length == 0) {
+            this.textfield2.focus();
+        }
+        else {
+            this.textfield3.focus();
+        }
     }
 
-    onBack() {
-        this.routerExtensions.navigate(['/forgotPassword']);
+    public otp3Field(args) {
+        var textField = <TextField>args.object;
+        this.otp3Text = textField.text;
+        if (this.otp3Text.length == 0) {
+            this.textfield3.focus();
+        }
+        else {
+            this.textfield4.focus();
+        }
+    }
+
+    public otp4Field(args) {
+        var textField = <TextField>args.object;
+        this.otp4Text = textField.text;
+        if (this.otp4Text.length == 0) {
+            this.textfield4.focus();
+        }
+    }
+
+    onNextClick() {
+        if (this.otp1Text == "" || this.otp2Text == "" || this.otp3Text == "" || this.otp4Text == "") {
+            alert("Please enter correct otp.");
+        }
+        else {
+            this.routerExtensions.navigate(['/login']);
+        }
+    }
+
+    onResendOtpClick() {
+        alert("resend otp clicked.");
     }
 
 }
