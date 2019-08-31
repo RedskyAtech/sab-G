@@ -6,7 +6,6 @@ import { NgModalModule } from "./modals/ng-modal";
 import { HttpClientModule } from "@angular/common/http";
 import { UserService } from "./services/user.service";
 
-
 @NgModule({
     bootstrap: [
         AppComponent
@@ -25,6 +24,4 @@ import { UserService } from "./services/user.service";
         NO_ERRORS_SCHEMA
     ]
 })
-
-
 export class AppModule { }

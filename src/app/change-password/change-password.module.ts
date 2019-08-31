@@ -5,7 +5,6 @@ import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { GridViewModule } from "nativescript-grid-view/angular";
 import { ChangePasswordComponent } from "./components/change-password.component";
-import { ChangeDetectorStatus } from "@angular/core/src/change_detection/constants";
 import { ChangePasswordRoutingModule } from "./change-password-routing.module";
 
 

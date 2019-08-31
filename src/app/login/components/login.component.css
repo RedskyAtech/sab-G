@@ -29,7 +29,7 @@
     height:auto;
   }
   .login-button{
-    font-size: 20%;
+    font-size: 18%;
     border-radius: 100;
     background: linear-gradient(345deg,#8BDE22,#23A6DB);
     text-transform: initial;
@@ -38,7 +38,7 @@
     border-width:1;
     padding:0;
     height:40%;
-    width:50%;
+    width:60%;
 }
 .login-button:highlighted{
     background-color: white;

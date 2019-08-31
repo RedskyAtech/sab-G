@@ -35,9 +35,9 @@
                     </GridLayout>
                     <TextField [hint]="passwordHint" width="70%" fontSize="16%" color="#23A6DB"
                         style.placeholderColor="#B9B9B9" (textChange)="passwordTextField($event)"
-                        borderColor="transparent" borderWidth="1" autocorrect="false" secure="true">
+                        borderColor="transparent" borderWidth="1" autocorrect="false" [secure]="passwordSecure">
                     </TextField>
-                    <Image src="res://eye" width="35" height="15"></Image>
+                    <Image src="res://eye" width="35" height="15" (tap)="onEye()"></Image>
                 </StackLayout>
                 <StackLayout row="3" class="textfield-container" orientation="horizontal" borderWidth="1"
                     [borderBottomColor]="confirmPasswordBorderColor" borderLeftColor="transparent"
@@ -49,9 +49,9 @@
                     </GridLayout>
                     <TextField [hint]="confirmPasswordHint" width="70%" fontSize="16%" color="#23A6DB"
                         style.placeholderColor="#B9B9B9" (textChange)="confirmPasswordTextField($event)"
-                        borderColor="transparent" borderWidth="1" autocorrect="false" secure="true">
+                        borderColor="transparent" borderWidth="1" autocorrect="false" [secure]="confirmPasswordSecure">
                     </TextField>
-                    <Image src="res://eye" width="35" height="15"></Image>
+                    <Image src="res://eye" width="35" height="15" (tap)="onConfirmEye()"></Image>
                 </StackLayout>
                 <StackLayout row="4" width="100%" height="30%" verticalAlignment="middle">
                     <Button class="register-button" [text]="registerButton" (tap)="onRegisterClick()"></Button>

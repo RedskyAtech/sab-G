@@ -89,6 +89,9 @@ export class ForgotPasswordComponent implements OnInit, AfterContentInit {
         if (this.mobileText == "") {
             alert("Please enter mobile number.");
         }
+        else if (this.mobileText.length < 10) {
+            alert("Mobile number should be of ten digits.");
+        }
         else {
             this.routerExtensions.navigate(['/confirmOtp']);
         }

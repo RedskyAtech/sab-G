@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit, AfterContentInit {
     passwordBorderColor: string;
     mobileBorderWidth: string;
     passwordBorderWidth: string;
+    passwordSecure: boolean;
     constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
         // this.isRendering = true;
         this.isLoading = false;
@@ -41,10 +42,13 @@ export class LoginComponent implements OnInit, AfterContentInit {
         this.loginButton = "Log In"
         this.forgotPassword = "Forgot password?";
         this.userService.showFooter(false);
+        this.userService.showHeader(false);
+        this.userService.headerLabel("login");
         this.mobileBorderColor = "#707070";
         this.passwordBorderColor = "#707070";
         this.mobileBorderWidth = "1";
         this.passwordBorderWidth = "1";
+        this.passwordSecure = true;
     }
     ngAfterContentInit(): void {
         // this.renderingTimeout = setTimeout(() => {
@@ -105,11 +109,15 @@ export class LoginComponent implements OnInit, AfterContentInit {
         if (this.mobileText == "") {
             alert("Please enter mobile number.");
         }
+        else if (this.mobileText.length < 10) {
+            alert("Mobile number should be of ten digits.");
+        }
         else if (this.passwordText == "") {
             alert("Please enter password.");
         }
         else {
-            this.routerExtensions.navigate(['/home']);
+            // this.routerExtensions.navigate(['/home']);
+            alert("Login successfully");
         }
     }
 
@@ -119,6 +127,10 @@ export class LoginComponent implements OnInit, AfterContentInit {
 
     onForgotPassword() {
         this.routerExtensions.navigate(['/forgotPassword']);
+    }
+
+    onEyeClick() {
+        this.passwordSecure = !this.passwordSecure;
     }
 
 }

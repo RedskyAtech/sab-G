@@ -35,9 +35,9 @@
                     </GridLayout>
                     <TextField [hint]="passwordHint" width="70%" fontSize="16%" color="#23A6DB"
                         style.placeholderColor="#B9B9B9" (textChange)="passwordTextField($event)"
-                        borderColor="transparent" borderWidth="1" autocorrect="false" secure="true">
+                        borderColor="transparent" borderWidth="1" autocorrect="false" [secure]="passwordSecure">
                     </TextField>
-                    <Image src="res://eye" width="35" height="15"></Image>
+                    <Image src="res://eye" width="35" height="15" (tap)="onEyeClick()"></Image>
                 </StackLayout>
                 <StackLayout row="3" width="100%" height="40%" verticalAlignment="middle">
                     <Button class="login-button" [text]="loginButton" (tap)="onLoginClick()"></Button>

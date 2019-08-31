@@ -35,6 +35,8 @@ export class RegisterComponent implements OnInit, AfterContentInit {
     mobileBorderWidth: string;
     passwordBorderWidth: string;
     confirmPasswordBorderWidth: string;
+    passwordSecure: boolean;
+    confirmPasswordSecure: boolean;
     constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
         // this.isRendering = true;
         this.isLoading = false;
@@ -54,6 +56,8 @@ export class RegisterComponent implements OnInit, AfterContentInit {
         this.passwordBorderWidth = "1";
         this.confirmPasswordBorderColor = "#707070";
         this.confirmPasswordBorderWidth = "1";
+        this.passwordSecure = true;
+        this.confirmPasswordSecure = true;
     }
     ngAfterContentInit(): void {
         // this.renderingTimeout = setTimeout(() => {
@@ -121,6 +125,9 @@ export class RegisterComponent implements OnInit, AfterContentInit {
         if (this.mobileText == "") {
             alert("Please enter mobile enter.");
         }
+        else if (this.mobileText.length < 10) {
+            alert("Mobile number should be of ten digits.");
+        }
         else if (this.passwordText == "") {
             alert("Please enter password.");
         }
@@ -134,5 +141,13 @@ export class RegisterComponent implements OnInit, AfterContentInit {
 
     onLoginClick() {
         this.routerExtensions.navigate(['/login']);
+    }
+
+    onEye() {
+        this.passwordSecure = !this.passwordSecure;
+    }
+
+    onConfirmEye() {
+        this.confirmPasswordSecure = !this.confirmPasswordSecure;
     }
 }

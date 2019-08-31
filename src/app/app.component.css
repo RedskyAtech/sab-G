@@ -1,9 +1,18 @@
 .footer-icon{
-    width:25;
-    height:25;
+    width:40%;
+    height:40%;
     margin-left:10;
     margin-right:10;
     margin-top:10;
+}
+.header-icon{
+    width:80%;
+    height:30%;
+}
+.header-label{
+    font-size: 20%;
+    color: #707070;
+    text-align: center;
 }
 .footer-label{
     font-size:10;
