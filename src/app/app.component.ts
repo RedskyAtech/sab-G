@@ -161,7 +161,7 @@ export class AppComponent implements OnInit, AfterContentInit, AfterViewInit {
                 shape.setColor(android.graphics.Color.parseColor('white'));
                 shape.setCornerRadius(0)
                 nativeGridMain.setBackgroundDrawable(shape);
-                nativeGridMain.setElevation(10)
+                nativeGridMain.setElevation(5)
             } else if (headerCard.ios) {
                 let nativeGridMain = headerCard.ios;
                 nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;

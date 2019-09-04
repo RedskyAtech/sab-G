@@ -86,7 +86,7 @@ export class ShippingComponent implements OnInit, AfterContentInit {
                 var shape = new android.graphics.drawable.GradientDrawable();
                 shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
                 shape.setColor(android.graphics.Color.parseColor('white'));
-                shape.setCornerRadius(50)
+                shape.setCornerRadius(20)
                 nativeGridMain.setBackgroundDrawable(shape);
                 nativeGridMain.setElevation(10)
             } else if (shippingCard.ios) {

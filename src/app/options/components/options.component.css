@@ -1,0 +1,30 @@
+.page{
+    /* background-image: url("res://background"); */
+    background-size: cover;
+    background-color: #F6F6F6;
+    width:100%;
+    height:100%;
+}
+.upper-container{
+     /* background-image: url("res://background"); */
+     background-size: cover;
+     background: linear-gradient(135deg,#23A6DB,#8BDE22);
+     width:100%;
+     height:30%;
+     border-bottom-left-radius: 30%;
+     border-bottom-right-radius: 30%;
+}
+.option-logo{
+    width:45%;
+    height:45%;
+}
+.option-heading{
+    font-size: 20%;
+    font-weight: 500;
+    color:#DBDBDB;
+}
+.seperator-line{
+    height:2;
+    width:80%;
+    background-color:#DBDBDB;
+}

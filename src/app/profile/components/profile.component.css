@@ -1,0 +1,43 @@
+.page{
+    /* background-image: url("res://background"); */
+    background-size: cover;
+    background-color: #F6F6F6;
+    width:100%;
+    height:100%;
+}
+.upper-container{
+     /* background-image: url("res://background"); */
+     width:100%;
+     height:22%;
+}
+.option-logo{
+    width:45%;
+    height:45%;
+}
+.option-heading{
+    font-size: 16%;
+    color:#707070;
+}
+.seperator-line{
+    height:2;
+    width:80%;
+    background-color:#DBDBDB;
+}
+
+.edit-button{
+    font-size: 12%;
+    border-radius: 20%;
+    text-transform: initial;
+    color:#67CB62;
+    border-color: #67CB62;
+    border-width:1;
+    padding:0;
+    height:80%;
+    width:30%;
+    background-color: #F6F6F6;
+}
+.edit-button:highlighted{
+    background-color: #67CB62;
+    border-color: #F6F6F6;
+    color: #F6F6F6;
+}

@@ -1,11 +1,11 @@
 <Page actionBarHidden="true">
     <GridLayout rows="auto,auto,auto" class="page">
-        <StackLayout row="0" marginTop="15%" height="40%" width="100%">
+        <StackLayout row="0" marginTop="15%" height="40%" width="100%" verticalAlignment="middle">
             <GridLayout #shippingCard orientation="vertical" width="90%" height="90%" rows="auto,auto,auto"
                 (loaded)="onShippingLoaded($event)">
                 <StackLayout row="0" class="textfield-container" orientation="horizontal" borderWidth="1"
                     [borderBottomColor]="cityBorderColor" borderLeftColor="transparent" borderRightColor="transparent"
-                    borderTopColor="transparent" [borderWidth]="cityBorderWidth" maxLength="10" keyboardType="phone">
+                    borderTopColor="transparent" [borderWidth]="cityBorderWidth">
                     <TextField [hint]="cityHint" width="100%" fontSize="16%" color="#23A6DB"
                         style.placeholderColor="#B9B9B9" (textChange)="cityTextField($event)" borderColor="transparent"
                         borderWidth="1" autocorrect="false">
@@ -40,7 +40,7 @@
                 </GridLayout>
             </GridLayout>
         </StackLayout>
-        <GridLayout width="100%" height="10%" marginTop="45%" verticalAlignment="middle">
+        <GridLayout width="100%" height="10%" marginTop="50%" verticalAlignment="middle">
             <Button class="update-button" [text]="updateProfileButton" (tap)="onUpdateProfileClick()"></Button>
         </GridLayout>
         <StackLayout row="2" height="10%" width="100%" verticalAlignment="middle">

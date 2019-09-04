@@ -1,0 +1,71 @@
+.page{
+    /* background-image: url("res://background"); */
+    background-size: cover;
+    background-color: #F6F6F6;
+    width:100%;
+    height:100%;
+}
+.upper-container{
+     /* background-image: url("res://background"); */
+     width:100%;
+     height:22%;
+}
+.option-logo{
+    width:45%;
+    height:45%;
+}
+.option-heading{
+    font-size: 16%;
+    color:#707070;
+}
+.seperator-line{
+    height:2;
+    width:90%;
+    background-color:#DBDBDB;
+}
+
+.change-photo-button{
+    font-size: 12%;
+    border-radius: 20%;
+    text-transform: initial;
+    color:#67CB62;
+    border-color: #67CB62;
+    border-width:1;
+    padding:0;
+    height:80%;
+    width:70%;
+    background-color: #F6F6F6;
+}
+.change-photo-button:highlighted{
+    background-color: #67CB62;
+    border-color: #F6F6F6;
+    color: #F6F6F6;
+}
+.camera-container{
+    background: linear-gradient(0deg,#8BDE22,#23A6DB);    
+    width:60%;
+    height:60%; 
+    border-radius:10;
+}
+.gallery-container{
+    background-color:white;
+    width:60%;
+    height:60%; 
+    border-radius:10;
+}
+.cancelButton{
+    width:70%;
+    height:80%;
+    border-radius:100;
+    border-color:#707070;
+    border-width:1;
+    background-color:white;
+    color: #707070;
+    padding:0;
+    font-size: 16%;
+  }
+  .cancelButton:highlighted{
+    background-color: #707070;
+    border-color: white;
+    color:white
+  }

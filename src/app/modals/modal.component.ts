@@ -63,7 +63,7 @@ let targetHandler2 = null;
 	`,
     styles: [`
 		.overlay {
-			background-color: rgba(0,0,0,0.3);
+			background-color: rgba(0,0,0,0.7);
 			z-index: 999999;
 		}
 		.overlay .overlay-body { }
@@ -281,7 +281,7 @@ export class ModalComponent implements OnInit {
 
             case "sm": return "65%";
 
-            case "lg": return "98%";
+            case "lg": return "100%";
 
             case "md":
 
@@ -299,7 +299,7 @@ export class ModalComponent implements OnInit {
 
             case "sm": return "50%";
 
-            case "lg": return "98%";
+            case "lg": return "100%";
 
             case "md":
 
