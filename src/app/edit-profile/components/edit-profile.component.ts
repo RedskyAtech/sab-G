@@ -17,6 +17,7 @@ declare const CGSizeMake: any;
 })
 export class EditProfileComponent implements OnInit, AfterContentInit {
     @ViewChild('viewImageChooserDialog') viewImageChooserDialog: ModalComponent;
+    @ViewChild('viewRemoveAccountDialog') viewRemoveAccountDialog: ModalComponent;
 
     // isRendering: boolean;
     isLoading: boolean;
@@ -106,6 +107,25 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
         }, 400)
     }
 
+    onRemoveAccountDialogLoaded(args) {
+        var removeAccountDialog = <any>args.object;
+        setTimeout(() => {
+            if (removeAccountDialog.android) {
+                let nativeImageView = removeAccountDialog.android;
+                var shape = new android.graphics.drawable.GradientDrawable();
+                shape.setShape(android.graphics.drawable.GradientDrawable.OVAL);
+                shape.setColor(android.graphics.Color.parseColor('#6D7CF1'));
+                nativeImageView.setElevation(20)
+            } else if (removeAccountDialog.ios) {
+                let nativeImageView = removeAccountDialog.ios;
+                nativeImageView.layer.shadowColor = this.shadowColor.ios.CGColor;
+                nativeImageView.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
+                nativeImageView.layer.shadowOpacity = 0.5
+                nativeImageView.layer.shadowRadius = 5.0
+            }
+        }, 400)
+    }
+
     onCameraContainerLoaded(args) {
         var cameraContainer = <any>args.object;
         setTimeout(() => {
@@ -167,10 +187,26 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
     onOutsideClick() {
         this.userService.showFooter(true);
         this.viewImageChooserDialog.hide();
+        this.viewRemoveAccountDialog.hide();
     }
 
-    onCancel() {
+    onCancelImageDialog() {
         this.userService.showFooter(true);
         this.viewImageChooserDialog.hide();
+    }
+
+    onCancelAccountDialog() {
+        this.userService.showFooter(true);
+        this.viewRemoveAccountDialog.hide();
+    }
+
+    onRemoveAccountDialog() {
+        this.userService.showFooter(true);
+        this.viewRemoveAccountDialog.hide();
+    }
+
+    onRemoveAccount() {
+        this.viewRemoveAccountDialog.show();
+        this.userService.showFooter(false);
     }
 }

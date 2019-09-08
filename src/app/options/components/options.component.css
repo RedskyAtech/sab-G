@@ -28,3 +28,38 @@
     width:80%;
     background-color:#DBDBDB;
 }
+
+.blank-button{
+    width:70%;
+    height:80%;
+    border-radius:100;
+    border-color:#707070;
+    border-width:1;
+    background-color:white;
+    color: #707070;
+    padding:0;
+    font-size: 16%;
+  }
+  .blank-button:highlighted{
+    background-color: #707070;
+    border-color: white;
+    color:white
+  }
+
+  .filled-button{
+    font-size: 18%;
+    border-radius: 100;
+    background: linear-gradient(345deg,#8BDE22,#23A6DB);
+    text-transform: initial;
+    color:white;
+    border-color: white;
+    border-width:1;
+    padding:0;
+    height:80%;
+    width:70%;
+}
+.filled-button:highlighted{
+    background-color: white;
+    border-color: #273BD3;
+    color: #273BD3;
+}
