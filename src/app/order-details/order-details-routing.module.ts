@@ -1,10 +1,10 @@
 import { NgModule } from "@angular/core";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { Routes } from "@angular/router";
-import { CartComponent } from "./components/cart.component";
+import { OrderDetailsComponent } from "./components/order-details.component";
 
 const routes: Routes = [
-    { path: "", component: CartComponent },
+    { path: "", component: OrderDetailsComponent },
 ];
 
 
@@ -14,4 +14,4 @@ const routes: Routes = [
 })
 
 
-export class CartRoutingModule { }
+export class OrderDetailsRoutingModule { }

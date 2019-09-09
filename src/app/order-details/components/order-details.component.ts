@@ -9,12 +9,12 @@ declare const android: any;
 declare const CGSizeMake: any;
 
 @Component({
-    selector: "ns-cart",
+    selector: "ns-orderDetails",
     moduleId: module.id,
-    templateUrl: "./cart.component.html",
-    styleUrls: ['./cart.component.css']
+    templateUrl: "./order-details.component.html",
+    styleUrls: ['./order-details.component.css']
 })
-export class CartComponent implements OnInit, AfterContentInit {
+export class OrderDetailsComponent implements OnInit, AfterContentInit {
 
     // isRendering: boolean;
     isLoading: boolean;
@@ -25,6 +25,7 @@ export class CartComponent implements OnInit, AfterContentInit {
     totalItems: string;
     deliveryCharges: string;
     total: string;
+    dateTime: string;
 
     constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
         // this.isRendering = true;
@@ -42,9 +43,10 @@ export class CartComponent implements OnInit, AfterContentInit {
         this.totalItems = "5";
         this.deliveryCharges = "FREE";
         this.total = "120"
+        this.dateTime = "22 Aug 9:30"
         this.userService.showFooter(true);
         this.userService.showHeader(true);
-        this.userService.headerLabel("Cart");
+        this.userService.headerLabel("Order details");
         this.cartProducts.push(
             { image: "res://onion", name: "Onion", MRP: "31.50", price: "25", weight: "1", dimension: "kg", quantity: "1" },
             { image: "res://lady_finger", name: "Lady finger", MRP: "31.50", price: "25", weight: "500", dimension: "g", quantity: "1" },
