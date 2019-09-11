@@ -4,28 +4,28 @@ import { HttpClientModule } from "@angular/common/http";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { GridViewModule } from "nativescript-grid-view/angular";
-import { HomeComponent } from "./components/home.component";
-import { HomeRoutingModule } from "./home-routing.module";
+import { MyOrdersComponent } from "./components/my-orders.component";
+import { MyOrdersRoutingModule } from "./my-orders-routing.module";
 
 
 @NgModule({
     bootstrap: [
-        HomeComponent
+        MyOrdersComponent
     ],
     imports: [
         NativeScriptCommonModule,
         NativeScriptFormsModule,
         NgModalModule,
         HttpClientModule,
-        HomeRoutingModule,
+        MyOrdersRoutingModule,
         GridViewModule
     ],
     declarations: [
-        HomeComponent
+        MyOrdersComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
     ]
 })
 
-export class HomeModule { }
+export class MyOrdersModule { }

@@ -1,0 +1,71 @@
+<Page actionBarHidden="true">
+    <GridLayout rows="auto,auto" class="page">
+        <GridLayout row="0" columns="auto,auto" height="15%" width="100%" marginTop="8%">
+            <StackLayout col="0" height="100%" width="50%" verticalAlignment="middle">
+                <Button *ngIf="isCurrentButton" class="selected-button" text="Current"
+                    (tap)="onCurrentClick()"></Button>
+                <Button *ngIf="!isCurrentButton" class="unselected-button" text="Current"
+                    (tap)="onCurrentClick()"></Button>
+            </StackLayout>
+            <StackLayout col="1" height="100%" width="50%" verticalAlignment="middle">
+                <Button *ngIf="isPastButton" class="selected-button" text="Past" (tap)="onPastClick()"></Button>
+                <Button *ngIf="!isPastButton" class="unselected-button" text="Past" (tap)="onPastClick()"></Button>
+            </StackLayout>
+        </GridLayout>
+        <GridLayout row="1" width="100%" height="69%">
+            <GridView [items]="products" colWidth="90%" rowHeight="23%" marginTop="2%" width="100%" height="100%"
+                backgroundColor="transparent">
+                <ng-template let-item="item" let-odd="odd">
+                    <GridLayout #cartCard width="90%" height="90%" backgroundColor="white" marginLeft="8%"
+                        marginRight="8%" marginTop="10%" marginBottom="10%" columns="auto,auto,auto"
+                        (loaded)="onOrderLoaded($event)">
+                        <StackLayout #orderImage col="0" width="25%" height="100%" backgroundColor="#F3F3F3"
+                            verticalAlignment="middle" (loaded)="onOrderImageLoaded($event)">
+                            <Image width="90%" height="90%" [src]="item.image"></Image>
+                        </StackLayout>
+                        <GridLayout col="1" width="50%" height="100%" rows="auto,auto,auto">
+                            <StackLayout row="0" width="95%" height="35%" verticalAlignment="middle">
+                                <Label [text]="item.date" color="#707070" fontSize="12%" textAlignment="left"></Label>
+                            </StackLayout>
+                            <StackLayout row="1" width="95%" height="30%" orientation="horizontal">
+                                <Label [text]="item.quantity" color="#707070" fontSize="18%" verticalAlignment="middle"
+                                    textAlignment="left"></Label>
+                                <Label text=" Items" color="#707070" fontSize="18%" verticalAlignment="middle"
+                                    textAlignment="left"></Label>
+                            </StackLayout>
+                            <StackLayout row="2" width="95%" height="35%" verticalAlignment="middle">
+                                <Label [text]="item.orderStatus" color="#DBDBDB" fontSize="12%" textAlignment="left"
+                                    fontWeight="500"></Label>
+                            </StackLayout>
+                        </GridLayout>
+                        <GridLayout col="2" width="25%" height="100%" rows="auto,auto">
+                            <StackLayout row="0" height="50%" width="100%" orientation="horizontal"
+                                horizontalAlignment="center">
+                                <Label text="Rs " color="#404040" fontSize="18%" verticalAlignment="middle"
+                                    textAlignment="center" fontWeight="500"></Label>
+                                <Label [text]="item.price" color="#404040" fontSize="18%" verticalAlignment="middle"
+                                    textAlignment="center" fontWeight="500"></Label>
+                            </StackLayout>
+                            <StackLayout row="1" height="50%" width="100%" orientation="horizontal"
+                                horizontalAlignment="center">
+                                <Button class="details-button" text="Details" (tap)="onDetailsClick()"></Button>
+                            </StackLayout>
+                        </GridLayout>
+                    </GridLayout>
+                </ng-template>
+            </GridView>
+        </GridLayout>
+    </GridLayout>
+
+    <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
+        <ActivityIndicator horizontalAlignment="center" verticalAlignment="middle" [busy]="!isRendering" rowSpan="1"
+            colSpan="1">
+        </ActivityIndicator>
+    </GridLayout> -->
+
+    <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
+        <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
+            [busy]="isFavouring" rowSpan="1" colSpan="1">
+        </ActivityIndicator>
+    </GridLayout>
+</Page>

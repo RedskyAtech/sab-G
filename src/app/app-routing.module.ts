@@ -3,7 +3,7 @@ import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { Routes, PreloadAllModules } from "@angular/router";
 
 const routes: Routes = [
-    { path: "", redirectTo: "/orderDetails", pathMatch: "full" },
+    { path: "", redirectTo: "/home", pathMatch: "full" },
     { path: "login", loadChildren: "./login/login.module#LoginModule" },
     { path: "register", loadChildren: "./register/register.module#RegisterModule" },
     { path: "forgotPassword", loadChildren: "./forgot-password/forgot-password.module#ForgotPasswordModule" },
@@ -18,6 +18,7 @@ const routes: Routes = [
     { path: "cart", loadChildren: "./cart/cart.module#CartModule" },
     { path: "products", loadChildren: "./products/products.module#ProductsModule" },
     { path: "orderDetails", loadChildren: "./order-details/order-details.module#OrderDetailsModule" },
+    { path: "myOrders", loadChildren: "./my-orders/my-orders.module#MyOrdersModule" },
     { path: "home", loadChildren: "./home/home.module#HomeModule" },
 ];
 
