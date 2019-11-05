@@ -3,6 +3,12 @@ NativeScript is an open-source framework to develop apps on the Apple iOS and An
  
  
  ##  Screenshots
+![image](./src/sabg1.jpeg)
+![image](./src/sabg2.jpeg)
+![image](./src/sabg3.jpeg)
+![image](./src/sabg4.jpeg)
+![image](./src/sabg5.jpeg)
+
 
 ## App Functionality
 With SABG app you can buy all your fresh vegetables, fruits  - with touch of your fingertips.
