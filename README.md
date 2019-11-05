@@ -5,6 +5,12 @@ NativeScript is an open-source framework to develop apps on the Apple iOS and An
  ##  Screenshots
 
 ## App Functionality
+With SA app you can buy all your fresh vegetables, fruits  - with touch of your fingertips.
+1.login with gmail
+2.Location tracking
+3.Admin can add categories  of product
+
+
 
 * ## Prerequisites
 1. Globally installed Nativecript  - `npm install -g nativescript`
