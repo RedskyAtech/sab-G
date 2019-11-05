@@ -7,7 +7,7 @@ NativeScript is an open-source framework to develop apps on the Apple iOS and An
 ![image](./src/sabg2.jpeg)
 ![image](./src/sabg3.jpeg)
 ![image](./src/sabg4.jpeg)
-![image](./src/sabg5.jpeg)
+
 
 
 ## App Functionality
