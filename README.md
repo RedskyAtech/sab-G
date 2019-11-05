@@ -6,9 +6,9 @@ NativeScript is an open-source framework to develop apps on the Apple iOS and An
 
 ## App Functionality
 With SABG app you can buy all your fresh vegetables, fruits  - with touch of your fingertips.
-1.login with gmail
-2.Location tracking
-3.Admin can add categories  of product
+1. login with gmail
+2. Location tracking
+3. Admin can add categories  of product
 
 
 
