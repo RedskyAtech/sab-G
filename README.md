@@ -25,8 +25,8 @@ With SABG app you can buy all your fresh vegetables, fruits  - with touch of you
 
 ## Installation
 This app is built with the NativeScript CLI. Once you have the [CLI installed](https://docs.nativescript.org/start/quick-setup), start by cloning the repo:
-1. `git clone https://github.com/SumitRedsky/music-app.git`
-2. `cd music-app`
+1. `git clone https://github.com/SumitRedsky/sabG.git`
+2. `cd sabG`
 3. `npm install` 
 
 ## Run iOS Application
