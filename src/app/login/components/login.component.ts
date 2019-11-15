@@ -1,9 +1,14 @@
+import { Values } from './../../values/values';
+import { HttpClient } from '@angular/common/http';
+import { User } from './../../models/user.model';
 import { Component, OnInit, AfterContentInit } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
-import { stringify } from "@angular/core/src/util";
+import * as Toast from 'nativescript-toast';
+import { Page } from "tns-core-modules/ui/page/page";
+import * as localstorage from "nativescript-localstorage";
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -31,7 +36,9 @@ export class LoginComponent implements OnInit, AfterContentInit {
     mobileBorderWidth: string;
     passwordBorderWidth: string;
     passwordSecure: boolean;
-    constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
+    user: User;
+    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private http: HttpClient) {
+        this.page.actionBarHidden = true;
         // this.isRendering = true;
         this.isLoading = false;
         this.mobileText = "";
@@ -49,6 +56,10 @@ export class LoginComponent implements OnInit, AfterContentInit {
         this.mobileBorderWidth = "1";
         this.passwordBorderWidth = "1";
         this.passwordSecure = true;
+        this.user = new User();
+        if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
+            this.routerExtensions.navigate(['/home']);
+        }
     }
     ngAfterContentInit(): void {
         // this.renderingTimeout = setTimeout(() => {
@@ -115,9 +126,37 @@ export class LoginComponent implements OnInit, AfterContentInit {
         else if (this.passwordText == "") {
             alert("Please enter password.");
         }
+        else if (this.passwordText.length < 6) {
+            alert("Password should be of minimum six characters long.");
+        }
         else {
-            // this.routerExtensions.navigate(['/home']);
-            alert("Login successfully");
+            this.isLoading = true;
+            this.user.phone = this.mobileText;
+            this.user.password = this.passwordText;
+            this.http
+                .post(Values.BASE_URL + "users/login", this.user)
+                .subscribe((res: any) => {
+                    if (res != "" && res != undefined) {
+                        if (res.isSuccess == true) {
+                            console.trace("USER::::", res);
+                            this.isLoading = false;
+                            localstorage.setItem("token", res.data.token);
+                            localstorage.setItem("userId", res.data._id);
+                            // this.routerExtensions.navigate(['/home'], {
+                            //     clearHistory: true,
+                            // });
+                            Toast.makeText("Login successfully", "long").show();
+                        }
+                    }
+                }, error => {
+                    this.isLoading = false;
+                    if (error.error.error == undefined) {
+                        alert("May be your network connection is low.")
+                    }
+                    else {
+                        alert(error.error.error);
+                    }
+                });
         }
     }
 

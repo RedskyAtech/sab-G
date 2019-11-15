@@ -3,7 +3,6 @@ import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
-import { stringify } from "@angular/core/src/util";
 import { ModalComponent } from "~/app/modals/modal.component";
 
 declare const android: any;

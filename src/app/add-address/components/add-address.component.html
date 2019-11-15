@@ -31,7 +31,8 @@
                     borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="contactNoBorderWidth">
                     <TextField [hint]="contactNoHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
                         style.placeholderColor="#B9B9B9" (textChange)="contactNoTextField($event)"
-                        borderColor="transparent" borderWidth="1" autocorrect="false">
+                        borderColor="transparent" borderWidth="1" autocorrect="false" maxLength="10"
+                        keyboardType="number">
                     </TextField>
                 </StackLayout>
             </GridLayout>
@@ -48,7 +49,7 @@
                         borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="houseNoBorderWidth">
                         <TextField [hint]="houseNoHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
                             style.placeholderColor="#B9B9B9" (textChange)="houseNoTextField($event)"
-                            borderColor="transparent" borderWidth="1" autocorrect="false">
+                            borderColor="transparent" borderWidth="1" autocorrect="false" keyboardType="number">
                         </TextField>
                     </StackLayout>
                     <StackLayout col="1" width="45%" height="auto" marginLeft="10%" orientation="horizontal"

@@ -43,7 +43,7 @@
         <GridLayout width="100%" height="10%" marginTop="50%" verticalAlignment="middle">
             <Button class="update-button" [text]="updateProfileButton" (tap)="onUpdateProfileClick()"></Button>
         </GridLayout>
-        <StackLayout row="2" height="10%" width="100%" verticalAlignment="middle">
+        <StackLayout row="2" height="10%" width="100%" verticalAlignment="middle" (tap)="onCancelClick()">
             <Label color="#67CB62" fontSize="16" textAlignment="center" fontWeight="500" text=" Cancel"></Label>
         </StackLayout>
     </GridLayout>

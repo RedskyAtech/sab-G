@@ -1,9 +1,7 @@
 import { Component, OnInit, AfterContentInit } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
-import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
-import { stringify } from "@angular/core/src/util";
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -24,6 +22,7 @@ export class ProfileComponent implements OnInit, AfterContentInit {
     userContact: string;
     editButton: string;
     constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
+        this.userService.activeScreen("profile");
         // this.isRendering = true;
         this.isLoading = false;
         this.userService.showFooter(true);
@@ -76,6 +75,14 @@ export class ProfileComponent implements OnInit, AfterContentInit {
     }
 
     onEditClick() {
-        alert("edit clicked");
+        this.routerExtensions.navigate(['/editProfile']);
+    }
+
+    onChangePasswordClick() {
+        this.routerExtensions.navigate(['/changePassword']);
+    }
+
+    onShippingClick() {
+        this.routerExtensions.navigate(['/shipping']);
     }
 }

@@ -3,7 +3,6 @@ import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
-import { stringify } from "@angular/core/src/util";
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -34,6 +33,7 @@ export class ForgotPasswordComponent implements OnInit, AfterContentInit {
         this.mobileHint = "Enter your mobile number";
         this.sendOtpButton = "Send OTP"
         this.userService.showFooter(false);
+        this.userService.showHeader(false);
         this.mobileBorderColor = "#707070";
         this.mobileBorderWidth = "1";
     }

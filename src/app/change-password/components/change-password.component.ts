@@ -3,7 +3,7 @@ import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
-import { stringify } from "@angular/core/src/util";
+import * as Toast from 'nativescript-toast';
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -143,14 +143,15 @@ export class ChangePasswordComponent implements OnInit, AfterContentInit {
             alert("New password and confirm password should be same.");
         }
         else {
-            // this.routerExtensions.navigate(['/home']);
-            alert("Password changed successfully");
+            Toast.makeText("Password changed successffuly.", "long").show();
+            this.routerExtensions.navigate(['/profile']);
         }
     }
 
     onCancelClick() {
         // this.routerExtensions.navigate(['/register']);
-        alert("cancel button clicked");
+        // alert("cancel button clicked");
+        this.routerExtensions.back();
     }
 
     onForgotPassword() {

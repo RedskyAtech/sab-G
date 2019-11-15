@@ -20,8 +20,15 @@ export class HomeComponent implements OnInit, AfterContentInit {
     categories;
     offerHeading: string;
     offer: string;
+    selectedPage: number;
+    sliderImage1: string;
+    sliderImage2: string;
+    sliderImage3: string;
+    sliderImage4: string;
+
     constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
         // this.isRendering = true;
+        this.userService.activeScreen("home");
     }
     ngAfterContentInit(): void {
         // this.renderingTimeout = setTimeout(() => {
@@ -29,21 +36,38 @@ export class HomeComponent implements OnInit, AfterContentInit {
         // }, 5000)
     }
     ngOnInit(): void {
-        this.categories = [];
         this.isLoading = false;
+        this.categories = [];
         this.offerHeading = "SEASON'S SPECIAL"
         this.offer = "50% off*"
         this.userService.showFooter(true);
         this.userService.showHeader(true);
         this.userService.headerLabel("sabG");
+        this.selectedPage = 0;
+        this.sliderImage1 = "res://slider";
+        this.sliderImage2 = "res://slider2";
+        this.sliderImage3 = "res://slider3";
+        this.sliderImage4 = "res://slider4";
+
         this.categories.push(
-            { image: "res://vegetables", name: "Vagetables" },
+            { image: "res://vegetables", name: "Vegetables" },
             { image: "res://fresh_fruits", name: "Fresh Fruits" },
             { image: "res://organic", name: "Organic" },
             { image: "res://herbs", name: "Herbs" },
             { image: "res://pears", name: "Pears" },
             { image: "res://cut_fruits", name: "Cut fruits and Vegetables" },
         );
+
+        setInterval(() => {
+            setTimeout(() => {
+                this.selectedPage++;
+            }, 6000)
+            if (this.selectedPage == 3) {
+                setTimeout(() => {
+                    this.selectedPage = 0;
+                }, 6000);
+            }
+        }, 6000);
     }
 
     protected get shadowColor(): Color {
@@ -75,5 +99,18 @@ export class HomeComponent implements OnInit, AfterContentInit {
             }
             // this.changeDetector.detectChanges();
         }, 10)
+    }
+
+    onViewMoreClick() {
+        this.routerExtensions.navigate(['/categories']);
+        // alert("view more clicked");
+    }
+
+    onCategoryClick(name: any) {
+        this.routerExtensions.navigate(['/products'], {
+            queryParams: {
+                "categoryName": name,
+            },
+        });
     }
 }

@@ -1,9 +1,12 @@
+import { User } from './../../models/user.model';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, AfterContentInit } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
-import { stringify } from "@angular/core/src/util";
+import { Page } from "tns-core-modules/ui/page/page";
+import { Values } from '~/app/values/values';
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -37,7 +40,10 @@ export class RegisterComponent implements OnInit, AfterContentInit {
     confirmPasswordBorderWidth: string;
     passwordSecure: boolean;
     confirmPasswordSecure: boolean;
-    constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
+    user: User;
+
+    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private http: HttpClient) {
+        this.page.actionBarHidden = true;
         // this.isRendering = true;
         this.isLoading = false;
         this.mobileText = "";
@@ -58,6 +64,7 @@ export class RegisterComponent implements OnInit, AfterContentInit {
         this.confirmPasswordBorderWidth = "1";
         this.passwordSecure = true;
         this.confirmPasswordSecure = true;
+        this.user = new User();
     }
     ngAfterContentInit(): void {
         // this.renderingTimeout = setTimeout(() => {
@@ -131,11 +138,43 @@ export class RegisterComponent implements OnInit, AfterContentInit {
         else if (this.passwordText == "") {
             alert("Please enter password.");
         }
+        else if (this.passwordText.length < 6) {
+            alert("Password is too short, please enter minimum six characters.");
+        }
         else if (this.confirmPasswordText == "") {
             alert("Please enter confirm password.");
         }
+        else if (this.passwordText != this.confirmPasswordText) {
+            alert("Password and confirm password should be same.");
+        }
         else {
-            this.routerExtensions.navigate(['/login']);
+            this.isLoading = true;
+            this.user.phone = this.mobileText;
+            this.user.password = this.passwordText;
+            this.http
+                .post(Values.BASE_URL + "users", this.user)
+                .subscribe((res: any) => {
+                    if (res != "" && res != undefined) {
+                        if (res.isSuccess == true) {
+                            this.isLoading = false;
+                            this.routerExtensions.navigate(['./confirmOtp'], {
+                                queryParams: {
+                                    "phone": this.mobileText,
+                                },
+                                clearHistory: true,
+                            });
+                        }
+                    }
+                }, error => {
+                    this.isLoading = false;
+                    console.log(error);
+                    if (error.error.error == undefined) {
+                        alert("May be your network connection is low.")
+                    }
+                    else {
+                        alert(error.error.error);
+                    }
+                });
         }
     }
 

@@ -3,7 +3,6 @@ import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
-import { stringify } from "@angular/core/src/util";
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -181,23 +180,21 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
         this.areaBorderWidth = "2";
     }
     onUpdateProfileClick() {
-        if (this.contactNoText == "") {
-            alert("Please enter contact number.");
-        }
-        else if (this.houseNoText == "") {
-            alert("Please enter house number.");
-        }
-        else if (this.areaText == "") {
-            alert("Please enter area.");
-        }
-        else {
-            alert("Successfully added shipping adress");
-        }
-    }
-
-    onCancelClick() {
-        // this.routerExtensions.navigate(['/register']);
-        alert("cancel button clicked");
+        // if (this.contactNoText == "") {
+        //     alert("Please enter contact number.");
+        // }
+        // else if (this.contactNoText.length < 10) {
+        //     alert("Please enter ten digit contact number.")
+        // }
+        // else if (this.houseNoText == "") {
+        //     alert("Please enter house number.");
+        // }
+        // else if (this.areaText == "") {
+        //     alert("Please enter area.");
+        // }
+        // else {
+        this.routerExtensions.navigate(['/congratulations']);
+        // }
     }
 
 }

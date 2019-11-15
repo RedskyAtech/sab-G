@@ -1,46 +1,63 @@
-<GridLayout>
-    <router-outlet></router-outlet>
-    <StackLayout *ngIf="showPlayButton" row="5" class="play-container" horizontalAlignment="right"
-        (tap)="onPlayClick()">
-        <Image class="play-icon" src="res://play"></Image>
-    </StackLayout>
-    <ActivityIndicator row="1" #activityIndicator [busy]="showLoading" color="#273BD3" verticalAlignment="middle"
-        width="50" height="50" class="activity-indicator"></ActivityIndicator>
-    <StackLayout #headerCard *ngIf="showHeader" height="8%" backgroundColor="#FFFFFF" verticalAlignment="Top"
-        (loaded)="onHeaderLoaded($event)">
-        <GridLayout columns="auto,auto,auto">
-            <StackLayout col="0" width="15%" height="100%" (tap)="onBackClick()" verticalAlignment="middle">
-                <Image class="header-icon" [src]="backIcon">
-                </Image>
-            </StackLayout>
-            <StackLayout col="1" width="70%" height="100%" verticalAlignment="middle" horizontalAlignment="center">
-                <Label class="header-label" [text]="headerLabel"></Label>
-            </StackLayout>
-        </GridLayout>
-    </StackLayout>
-    <StackLayout #footerCard *ngIf="showFooter" height="8%" backgroundColor="#FFFFFF" verticalAlignment="bottom"
-        (loaded)="onFooterLoaded($event)">
-        <GridLayout rows="*" columns="*,*,*,*,*">
-            <StackLayout col="0" row="0" (tap)="onHomeClick()">
-                <Image class="footer-icon" [src]="homeIcon">
-                </Image>
-            </StackLayout>
-            <StackLayout col="1" row="0" (tap)="onProfileClick()">
-                <Image class="footer-icon" [src]="profileIcon">
-                </Image>
-            </StackLayout>
-            <StackLayout col="2" row="0" (tap)="onSearchClick()">
-                <Image class="footer-icon" [src]="searchIcon">
-                </Image>
-            </StackLayout>
-            <StackLayout col="3" row="0" (tap)="onMenuClick()">
-                <Image class="footer-icon" [src]="menuIcon">
-                </Image>
-            </StackLayout>
-            <StackLayout col="4" row="0" (tap)="onCartClick()">
-                <Image class="footer-icon" [src]="cartIcon">
-                </Image>
-            </StackLayout>
-        </GridLayout>
-    </StackLayout>
-</GridLayout>
+<!-- <GridLayout>
+  <router-outlet></router-outlet>
+  <StackLayout *ngIf="showPlayButton" row="5" class="play-container" horizontalAlignment="right" (tap)="onPlayClick()">
+    <Image class="play-icon" src="res://play"></Image>
+  </StackLayout>
+  <ActivityIndicator row="1" #activityIndicator [busy]="showLoading" color="#273BD3" verticalAlignment="middle" width="50" height="50" class="activity-indicator"></ActivityIndicator>
+  <StackLayout #headerCard *ngIf="showHeader" height="8%" backgroundColor="#FFFFFF" verticalAlignment="Top" (loaded)="onHeaderLoaded($event)">
+    <GridLayout columns="auto,auto,auto">
+      <StackLayout col="0" width="15%" height="100%" (tap)="onBackClick()" verticalAlignment="middle">
+        <Image class="header-icon" [src]="backIcon">
+        </Image>
+      </StackLayout>
+      <StackLayout col="1" width="70%" height="100%" verticalAlignment="middle" horizontalAlignment="center">
+        <Label class="header-label" [text]="headerLabel"></Label>
+      </StackLayout>
+    </GridLayout>
+  </StackLayout>
+  <StackLayout #footerCard *ngIf="showFooter" height="8%" backgroundColor="#FFFFFF" verticalAlignment="bottom" (loaded)="onFooterLoaded($event)">
+    <GridLayout rows="*" columns="*,*,*,*,*">
+      <GridLayout col="0" row="0" (tap)="onHomeClick()" rows="auto,auto">
+        <StackLayout row="0" height="75%" width="100%">
+          <Image class="footer-icon" [src]="homeIcon">
+          </Image>
+        </StackLayout>
+        <StackLayout [visibility]="isHomeHighlighted" row="1" class="selected-footerButton">
+        </StackLayout>
+      </GridLayout>
+      <StackLayout col="1" row="0" (tap)="onProfileClick()" rows="auto,auto">
+        <StackLayout row="0" height="75%" width="100%">
+          <Image class="footer-icon" [src]="profileIcon">
+          </Image>
+        </StackLayout>
+        <StackLayout [visibility]="isProfileHighlighted" row="1" class="selected-footerButton">
+        </StackLayout>
+      </StackLayout>
+      <StackLayout col="2" row="0" (tap)="onSearchClick()" rows="auto,auto">
+        <StackLayout row="0" height="75%" width="100%">
+          <Image class="footer-icon" [src]="searchIcon">
+          </Image>
+        </StackLayout>
+        <StackLayout [visibility]="isSearchHighlighted" row="1" class="selected-footerButton">
+        </StackLayout>
+      </StackLayout>
+      <StackLayout col="3" row="0" (tap)="onMenuClick()" rows="auto,auto">
+        <StackLayout row="0" height="75%" width="100%">
+          <Image class="footer-icon" [src]="menuIcon">
+          </Image>
+        </StackLayout>
+        <StackLayout [visibility]="isMenuHighlighted" row="1" class="selected-footerButton">
+        </StackLayout>
+      </StackLayout>
+      <StackLayout col="4" row="0" (tap)="onCartClick()" rows="auto,auto">
+        <StackLayout row="0" height="75%" width="100%">
+          <Image class="footer-icon" [src]="cartIcon">
+          </Image>
+        </StackLayout>
+        <StackLayout [visibility]="isCartHighlighted" row="1" class="selected-footerButton">
+        </StackLayout>
+      </StackLayout>
+    </GridLayout>
+  </StackLayout>
+</GridLayout> -->
+<page-router-outlet></page-router-outlet>

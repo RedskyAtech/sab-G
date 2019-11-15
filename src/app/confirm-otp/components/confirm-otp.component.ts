@@ -1,10 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, AfterContentInit, ElementRef, ViewChild } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
-import { stringify } from "@angular/core/src/util";
 import { Page } from "tns-core-modules/ui/page/page";
+import { User } from '~/app/models/user.model';
+import { ActivatedRoute } from '@angular/router';
+import { Values } from '~/app/values/values';
+import * as Toast from 'nativescript-toast';
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -38,7 +42,9 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
     textfield2: TextField;
     textfield3: TextField;
     textfield4: TextField;
-    constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
+    user: User;
+    constructor(private routerExtensions: RouterExtensions, private route: ActivatedRoute, private userService: UserService, private page: Page, private http: HttpClient) {
+        this.page.actionBarHidden = true;
         // this.isRendering = true;
         this.isLoading = false;
         this.otp1Text = "";
@@ -51,6 +57,7 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
         this.userService.showFooter(false);
         this.mobileBorderColor = "#707070";
         this.mobileBorderWidth = "1";
+        this.user = new User();
     }
     ngAfterContentInit(): void {
         // this.renderingTimeout = setTimeout(() => {
@@ -64,6 +71,11 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
         this.textfield4 = <TextField>this.textField4.nativeElement;
         this.textfield1.focus();
     }
+
+    onBack() {
+        this.routerExtensions.back();
+    }
+
 
     protected get shadowColor(): Color {
         return new Color('#888888')
@@ -143,7 +155,33 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
             alert("Please enter correct otp.");
         }
         else {
-            this.routerExtensions.navigate(['/login']);
+            this.route.queryParams.subscribe(params => {
+                this.user.phone = params["phone"];
+            });
+            this.isLoading = true;
+            this.user.otp = this.otp1Text + this.otp2Text + this.otp3Text + this.otp4Text;
+            console.log(this.user);
+            this.http
+                .post(Values.BASE_URL + "users/verifyUser", this.user)
+                .subscribe((res: any) => {
+                    if (res != "" && res != undefined) {
+                        if (res.isSuccess == true) {
+                            this.isLoading = false;
+                            localStorage.setItem('regToken', res.data.token);
+                            Toast.makeText("User registered successfully", "long").show();
+                            this.routerExtensions.navigate(['/login']);
+                        }
+                    }
+                }, error => {
+                    this.isLoading = false;
+                    console.log(error);
+                    if (error.error.error == undefined) {
+                        alert("May be your network connection is low.")
+                    }
+                    else {
+                        alert(error.error.error);
+                    }
+                });
         }
     }
 

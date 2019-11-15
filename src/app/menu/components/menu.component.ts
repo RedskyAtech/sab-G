@@ -1,21 +1,19 @@
 import { Component, OnInit, AfterContentInit, ViewChild } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
-import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
-import { stringify } from "@angular/core/src/util";
 import { ModalComponent } from "~/app/modals/modal.component";
 
 declare const android: any;
 declare const CGSizeMake: any;
 
 @Component({
-    selector: "ns-options",
+    selector: "ns-menu",
     moduleId: module.id,
-    templateUrl: "./options.component.html",
-    styleUrls: ['./options.component.css']
+    templateUrl: "./menu.component.html",
+    styleUrls: ['./menu.component.css']
 })
-export class OptionsComponent implements OnInit, AfterContentInit {
+export class MenuComponent implements OnInit, AfterContentInit {
     @ViewChild('viewLogoutDialog') viewLogoutDialog: ModalComponent;
 
     // isRendering: boolean;
@@ -24,6 +22,7 @@ export class OptionsComponent implements OnInit, AfterContentInit {
     profilePicture: string;
     userName: string;
     constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
+        this.userService.activeScreen("menu");
         // this.isRendering = true;
         this.isLoading = false;
         this.userService.showFooter(false);
@@ -92,6 +91,26 @@ export class OptionsComponent implements OnInit, AfterContentInit {
         }, 400)
     }
 
+    onNextClick() {
+        this.routerExtensions.navigate(['/home']);
+    }
+
+    onHomeClick() {
+        this.routerExtensions.navigate(['/home']);
+    }
+
+    onMyOrdersClick() {
+        this.routerExtensions.navigate(['/myOrders']);
+    }
+
+    onFAQClick() {
+        alert("FAQ clicked!!!");
+    }
+
+    onProfileClick() {
+        this.routerExtensions.navigate(['/profile']);
+    }
+
     onOutsideClick() {
         this.viewLogoutDialog.hide();
     }
@@ -106,6 +125,7 @@ export class OptionsComponent implements OnInit, AfterContentInit {
 
     onLogoutDialog() {
         this.viewLogoutDialog.hide();
+        this.routerExtensions.navigate(['/login']);
     }
 
 }

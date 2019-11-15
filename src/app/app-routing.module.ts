@@ -3,7 +3,7 @@ import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { Routes, PreloadAllModules } from "@angular/router";
 
 const routes: Routes = [
-    { path: "", redirectTo: "/home", pathMatch: "full" },
+    { path: "", redirectTo: "/login", pathMatch: "full" },
     { path: "login", loadChildren: "./login/login.module#LoginModule" },
     { path: "register", loadChildren: "./register/register.module#RegisterModule" },
     { path: "forgotPassword", loadChildren: "./forgot-password/forgot-password.module#ForgotPasswordModule" },
@@ -12,7 +12,7 @@ const routes: Routes = [
     { path: "shipping", loadChildren: "./shipping/shipping.module#ShippingModule" },
     { path: "addAddress", loadChildren: "./add-address/add-address.module#AddAddressModule" },
     { path: "congratulations", loadChildren: "./congratulations/congratulations.module#CongratulationsModule" },
-    { path: "options", loadChildren: "./options/options.module#OptionsModule" },
+    { path: "menu", loadChildren: "./menu/menu.module#MenuModule" },
     { path: "profile", loadChildren: "./profile/profile.module#ProfileModule" },
     { path: "editProfile", loadChildren: "./edit-profile/edit-profile.module#EditProfileModule" },
     { path: "cart", loadChildren: "./cart/cart.module#CartModule" },
@@ -20,6 +20,7 @@ const routes: Routes = [
     { path: "orderDetails", loadChildren: "./order-details/order-details.module#OrderDetailsModule" },
     { path: "myOrders", loadChildren: "./my-orders/my-orders.module#MyOrdersModule" },
     { path: "home", loadChildren: "./home/home.module#HomeModule" },
+    { path: "categories", loadChildren: "./categories/categories.module#CategoriesModule" },
 ];
 
 @NgModule({

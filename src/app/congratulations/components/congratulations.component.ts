@@ -1,9 +1,6 @@
 import { Component, OnInit, AfterContentInit } from "@angular/core";
-import { Color } from "tns-core-modules/color/color";
-import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
-import { stringify } from "@angular/core/src/util";
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -36,6 +33,6 @@ export class CongratulationsComponent implements OnInit, AfterContentInit {
     }
 
     onGotItClick() {
-        alert("got it clicked");
+        this.routerExtensions.navigate(['/menu']);
     }
 }

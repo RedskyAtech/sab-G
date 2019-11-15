@@ -1,10 +1,10 @@
 import { NgModule } from "@angular/core";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { Routes } from "@angular/router";
-import { OptionsComponent } from "./components/options.component";
+import { CategoriesComponent } from "./components/categories.component";
 
 const routes: Routes = [
-    { path: "", component: OptionsComponent },
+    { path: "", component: CategoriesComponent},
 ];
 
 
@@ -14,4 +14,4 @@ const routes: Routes = [
 })
 
 
-export class OptionsRoutingModule { }
+export class CategoriesRoutingModule { }

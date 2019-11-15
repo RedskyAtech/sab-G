@@ -28,7 +28,7 @@
         <GridLayout row="2" height="20%" width="100%">
             <GridLayout #optionsCard orientation="vertical" verticalAlignment="top" width="90%" height="90%"
                 rows="auto,auto,auto" (loaded)="onOptionsLoaded($event)">
-                <GridLayout row="0" height="49%" width="100%" columns="auto,auto">
+                <GridLayout row="0" height="49%" width="100%" columns="auto,auto" (tap)="onChangePasswordClick()">
                     <StackLayout col="0" height="100%" width="20%" verticalAlignment="middle">
                         <Image class="option-logo" src="res://password"></Image>
                     </StackLayout>
@@ -39,9 +39,9 @@
                 <GridLayout row="1" height="1%" width="100%" verticalAlignment="middle">
                     <StackLayout class="seperator-line"></StackLayout>
                 </GridLayout>
-                <GridLayout row="2" height="50%" width="100%" columns="auto,auto">
-                    <StackLayout col="0" height="100%" width="20%" verticalAlignment="middle">
-                        <Image class="option-logo" src="res://shipping"></Image>
+                <GridLayout row="2" height="50%" width="100%" columns="auto,auto" (tap)="onShippingClick()">
+                    <StackLayout col=" 0" height="100%" width="20%" verticalAlignment="middle">
+                    <Image class="option-logo" src="res://shipping"></Image>
                     </StackLayout>
                     <StackLayout col="1" height="100%" width="80%" verticalAlignment="middle">
                         <Label class="option-heading" text="Shipping"></Label>

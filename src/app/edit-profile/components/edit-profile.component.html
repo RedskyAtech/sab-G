@@ -105,7 +105,8 @@
                         <StackLayout width="90%" height="100%" verticalAlignment="middle">
                             <TextField [hint]="phoneHint" [text]="phoneText" width="100%" fontSize="16%" color="#23A6DB"
                                 style.placeholderColor="#B9B9B9" (textChange)="phoneTextField($event)"
-                                borderColor="transparent" borderWidth="1" autocorrect="false">
+                                borderColor="transparent" borderWidth="1" autocorrect="false" maxLength="10"
+                                keyboardType="number">
                             </TextField>
                         </StackLayout>
                     </GridLayout>

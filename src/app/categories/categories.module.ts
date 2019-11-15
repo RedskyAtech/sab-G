@@ -4,29 +4,28 @@ import { HttpClientModule } from "@angular/common/http";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { GridViewModule } from "nativescript-grid-view/angular";
-import { OptionsComponent } from "./components/options.component";
-import { OptionsRoutingModule } from "./options-routing.module";
+import { CategoriesComponent } from "./components/categories.component";
+import { CategoriesRoutingModule } from "./categories-routing.module";
 
 
 @NgModule({
     bootstrap: [
-        OptionsComponent
+        CategoriesComponent
     ],
     imports: [
         NativeScriptCommonModule,
         NativeScriptFormsModule,
         NgModalModule,
         HttpClientModule,
-        OptionsRoutingModule,
+        CategoriesRoutingModule,
         GridViewModule
     ],
     declarations: [
-        OptionsComponent
+        CategoriesComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
     ]
 })
 
-
-export class OptionsModule { }
+export class CategoriesModule { }
