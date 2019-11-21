@@ -1,12 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, AfterContentInit, ElementRef, ViewChild } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
 import { Page } from "tns-core-modules/ui/page/page";
-import { User } from '~/app/models/user.model';
-import { ActivatedRoute } from '@angular/router';
+import { User } from "~/app/models/user.model";
+import { ActivatedRoute } from "@angular/router";
 import { Values } from '~/app/values/values';
 import * as Toast from 'nativescript-toast';
 
@@ -14,12 +14,12 @@ declare const android: any;
 declare const CGSizeMake: any;
 
 @Component({
-    selector: "ns-confirmOtp",
+    selector: "ns-setPassword",
     moduleId: module.id,
-    templateUrl: "./confirm-otp.component.html",
-    styleUrls: ['./confirm-otp.component.css']
+    templateUrl: "./set-password.component.html",
+    styleUrls: ['./set-password.component.css']
 })
-export class ConfirmOtpComponent implements OnInit, AfterContentInit {
+export class SetPasswordComponent implements OnInit, AfterContentInit {
     @ViewChild("textField1") textField1: ElementRef;
     @ViewChild("textField2") textField2: ElementRef;
     @ViewChild("textField3") textField3: ElementRef;
@@ -42,20 +42,40 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
     textfield2: TextField;
     textfield3: TextField;
     textfield4: TextField;
+    passwordText: string;
+    passwordHint: string;
+    passwordBorderColor: string;
+    passwordBorderWidth: string;
+    passwordSecure: boolean;
+    confirmPasswordText: string;
+    confirmPasswordHint: string;
+    confirmPasswordBorderColor: string;
+    confirmPasswordBorderWidth: string;
+    confirmPasswordSecure: boolean;
     user: User;
-    constructor(private routerExtensions: RouterExtensions, private route: ActivatedRoute, private userService: UserService, private page: Page, private http: HttpClient) {
+    from: string;
+    token: string;
+    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private route: ActivatedRoute, private http: HttpClient) {
         this.page.actionBarHidden = true;
         this.isLoading = false;
         this.otp1Text = "";
         this.otp2Text = "";
         this.otp3Text = "";
         this.otp4Text = "";
-        this.heading = "Enter your OTP code";
-        this.mobileHint = "Enter your mobile number";
+        this.heading = "Enter OTP and Set Password";
+        this.passwordText = "";
+        this.passwordHint = "Enter your password";
+        this.passwordBorderColor = "#707070";
+        this.passwordBorderWidth = "1";
+        this.passwordSecure = true;
         this.nextButton = "Next"
-        this.mobileBorderColor = "#707070";
-        this.mobileBorderWidth = "1";
+        this.confirmPasswordHint = "Confirm your password";
+        this.confirmPasswordBorderColor = "#707070";
+        this.confirmPasswordBorderWidth = "1";
+        this.confirmPasswordSecure = true;
         this.user = new User();
+        this.from = "";
+        this.token = "";
     }
     ngAfterContentInit(): void {
         // this.renderingTimeout = setTimeout(() => {
@@ -148,31 +168,68 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
         }
     }
 
+    public passwordTextField(args) {
+        var textField = <TextField>args.object;
+        this.passwordText = textField.text;
+        this.passwordBorderColor = "#23A6DB";
+        this.passwordBorderWidth = "2";
+    }
+
+    public confirmPasswordTextField(args) {
+        var textField = <TextField>args.object;
+        this.confirmPasswordText = textField.text;
+        this.confirmPasswordBorderColor = "#23A6DB";
+        this.confirmPasswordBorderWidth = "2";
+    }
+
+    onEye() {
+        this.passwordSecure = !this.passwordSecure;
+    }
+
+    onConfirmEye() {
+        this.confirmPasswordSecure = !this.confirmPasswordSecure;
+    }
+
     onNextClick() {
         if (this.otp1Text == "" || this.otp2Text == "" || this.otp3Text == "" || this.otp4Text == "") {
             alert("Please enter correct otp.");
         }
+        else if (this.passwordText == "") {
+            alert("Please enter password.");
+        }
+        else if (this.passwordText.length < 6) {
+            alert("Password should be of minimum six characters long.");
+        }
+        else if (this.confirmPasswordText == "") {
+            alert("Please enter confirm password.");
+        }
+        else if (this.passwordText != this.confirmPasswordText) {
+            alert("Password and confirm password should be same.");
+        }
         else {
             this.route.queryParams.subscribe(params => {
-                this.user.phone = params["phone"];
+                if (params["phone"] != null && params["phone"] != undefined)
+                    this.user.phone = params["phone"];
             });
             this.isLoading = true;
             this.user.otp = this.otp1Text + this.otp2Text + this.otp3Text + this.otp4Text;
-            console.log(this.user);
+            this.user.newPassword = this.passwordText;
+            // let headers = new HttpHeaders({
+            //     "Content-Type": "application/json",
+            //     "x-access-token": this.token
+            // });
             this.http
-                .post(Values.BASE_URL + "users/verifyUser", this.user)
+                .post(Values.BASE_URL + "users/resetPassword", this.user)
                 .subscribe((res: any) => {
                     if (res != "" && res != undefined) {
                         if (res.isSuccess == true) {
                             this.isLoading = false;
-                            localStorage.setItem('regToken', res.data.token);
-                            Toast.makeText("User registered successfully", "long").show();
+                            Toast.makeText("Password reset successfully", "long").show();
                             this.routerExtensions.navigate(['/login']);
                         }
                     }
                 }, error => {
                     this.isLoading = false;
-                    console.log(error);
                     if (error.error.error == undefined) {
                         alert("May be your network connection is low.")
                     }

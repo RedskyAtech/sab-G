@@ -1,77 +1,85 @@
- <Page actionBarHidden="true">
-    <GridLayout rows="auto,auto,auto,auto" class="page">
-        <!-- <GridLayout class="slider" row="0">
+<Page actionBarHidden="true">
+    <GridLayout class="page">
+        <GridLayout rows="auto,auto,auto,auto,auto" width="100%" height="100%">
+            <!-- <GridLayout class="slider" row="0">
             <Image width="100%" height="100%" src="res://slider" stretch="aspectFit"></Image>
         </GridLayout> -->
-        <GridLayout row="0" class="slider">
-            <Carousel #myCarousel ios:indicatorOffset="0,-10" ios:finite="true" ios:bounce="false"
-                android:indicatorAlignment="bottom" showIndicator="true" [selectedPage]="selectedPage" height="100%"
-                width="100%" indicatorColor="#8BDE22" android:indicatorAnimation="swap"
-                indicatorColorUnselected="#23A6DB">
-                <CarouselItem>
-                    <StackLayout width="100%" height="100%">
-                        <Image stretch="aspectFill" [src]="sliderImage1"></Image>
-                    </StackLayout>
-                </CarouselItem>
-                <CarouselItem>
-                    <StackLayout width="100%" height="100%">
-                        <Image stretch="aspectFill" [src]="sliderImage2"></Image>
-                    </StackLayout>
-                </CarouselItem>
-                <CarouselItem>
-                    <StackLayout width="100%" height="100%">
-                        <Image stretch="aspectFill" [src]="sliderImage3"></Image>
-                    </StackLayout>
-                </CarouselItem>
-                <CarouselItem>
-                    <StackLayout width="100%" height="100%">
-                        <Image stretch="aspectFill" [src]="sliderImage4"></Image>
-                    </StackLayout>
-                </CarouselItem>
-            </Carousel>
-        </GridLayout>
-        <GridLayout row="1" width="100%" height="38%">
-            <GridView [items]="categories" colWidth="28%" rowHeight="48%" width="100%" height="100%">
-                <ng-template let-item="item" let-odd="odd">
-                    <GridLayout #categoryCard width="80%" height="90%" backgroundColor="white" rows="auto,auto"
-                        (loaded)="onCategoryLoaded($event)" (tap)="onCategoryClick(item.name)">
-                        <StackLayout row="0" width="100%" height="75%" verticalAlignment="middle">
-                            <Image width="90%" height="90%" stretch="aspectFit" [src]="item.image"></Image>
+            <GridLayout #headerCard (loaded)="onHeaderLoaded($event)" verticalAlignment="top" height="8%" width="100%">
+                <ns-header></ns-header>
+            </GridLayout>
+            <GridLayout row="0" class="slider">
+                <Carousel #myCarousel ios:indicatorOffset="0,-10" ios:finite="true" ios:bounce="false"
+                    android:indicatorAlignment="bottom" showIndicator="true" [selectedPage]="selectedPage" height="100%"
+                    width="100%" indicatorColor="#8BDE22" android:indicatorAnimation="swap"
+                    indicatorColorUnselected="#23A6DB">
+                    <CarouselItem>
+                        <StackLayout width="100%" height="100%">
+                            <Image stretch="aspectFill" [src]="sliderImage1"></Image>
                         </StackLayout>
-                        <StackLayout row="1" width="100%" height="25%" verticalAlignment="top">
-                            <Label [text]="item.name" textWrap="true" fontSize="10%" color="#707070"
-                                textAlignment="center"></Label>
+                    </CarouselItem>
+                    <CarouselItem>
+                        <StackLayout width="100%" height="100%">
+                            <Image stretch="aspectFill" [src]="sliderImage2"></Image>
                         </StackLayout>
-                    </GridLayout>
-                </ng-template>
-            </GridView>
-        </GridLayout>
-        <GridLayout class="season-special" row="2" rows="auto,auto">
-            <StackLayout row="0" height="40%" marginTop="10%" width="100%" verticalAlignment="middle">
-                <Label [text]="offerHeading" color="#FFFFFF" fontSize="25%" textAlignment="center"></Label>
-            </StackLayout>
-            <StackLayout row="1" height="40%" width="100%" verticalAlignment="middle">
-                <StackLayout height="90%" width="40%" borderColor="#FFFFFF" borderWidth="1" borderRadius="5%"
-                    verticalAlignment="middle">
-                    <Label [text]="offer" color="#FFFFFF" fontSize="25%" fontWeight="300"
-                        textAlignment="center"></Label>
+                    </CarouselItem>
+                    <CarouselItem>
+                        <StackLayout width="100%" height="100%">
+                            <Image stretch="aspectFill" [src]="sliderImage3"></Image>
+                        </StackLayout>
+                    </CarouselItem>
+                    <CarouselItem>
+                        <StackLayout width="100%" height="100%">
+                            <Image stretch="aspectFill" [src]="sliderImage4"></Image>
+                        </StackLayout>
+                    </CarouselItem>
+                </Carousel>
+            </GridLayout>
+            <GridLayout row="1" width="100%" height="38%">
+                <GridView [items]="categories" colWidth="28%" rowHeight="48%" width="100%" height="100%">
+                    <ng-template let-item="item" let-odd="odd">
+                        <GridLayout #categoryCard width="80%" height="90%" backgroundColor="white" rows="auto,auto"
+                            (loaded)="onCategoryLoaded($event)" (tap)="onCategoryClick(item)">
+                            <StackLayout row="0" width="100%" height="75%" verticalAlignment="middle">
+                                <Image width="90%" height="90%" stretch="aspectFit" [src]="item.imageUrl"></Image>
+                            </StackLayout>
+                            <StackLayout row="1" width="100%" height="25%" verticalAlignment="top">
+                                <Label [text]="item.name" textWrap="true" fontSize="10%" color="#707070"
+                                    textAlignment="center"></Label>
+                            </StackLayout>
+                        </GridLayout>
+                    </ng-template>
+                </GridView>
+            </GridLayout>
+            <GridLayout class="season-special" row="2" rows="auto,auto">
+                <StackLayout row="0" height="40%" marginTop="10%" width="100%" verticalAlignment="middle">
+                    <Label [text]="offerHeading" color="#FFFFFF" fontSize="25%" textAlignment="center"></Label>
                 </StackLayout>
+                <StackLayout row="1" height="40%" width="100%" verticalAlignment="middle">
+                    <StackLayout height="90%" width="40%" borderColor="#FFFFFF" borderWidth="1" borderRadius="5%"
+                        verticalAlignment="middle">
+                        <Label [text]="offer" color="#FFFFFF" fontSize="25%" fontWeight="300"
+                            textAlignment="center"></Label>
+                    </StackLayout>
+                </StackLayout>
+            </GridLayout>
+            <StackLayout row="3" width="100%" height="8%" verticalAlignment="middle">
+                <Button class="view-button" text="View more" (tap)="onViewMoreClick()"></Button>
+            </StackLayout>
+            <StackLayout row="4" #footerCard (loaded)="onFooterLoaded($event)" height="8%" marginTop="1%" width="100%">
+                <ns-footer></ns-footer>
             </StackLayout>
         </GridLayout>
-        <StackLayout row="3" width="100%" height="8%" verticalAlignment="middle">
-            <Button class="view-button" text="View more" (tap)="onViewMoreClick()"></Button>
-        </StackLayout>
-    </GridLayout>
 
-    <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
+        <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
         <ActivityIndicator horizontalAlignment="center" verticalAlignment="middle" [busy]="!isRendering" rowSpan="1"
             colSpan="1">
         </ActivityIndicator>
     </GridLayout> -->
 
-    <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
-        <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
-            [busy]="isFavouring" rowSpan="1" colSpan="1">
-        </ActivityIndicator>
+        <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
+            <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
+                [busy]="isLoading" rowSpan="1" colSpan="1">
+            </ActivityIndicator>
+        </GridLayout>
     </GridLayout>
 </Page>

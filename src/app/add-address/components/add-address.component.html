@@ -1,107 +1,119 @@
 <Page actionBarHidden="true">
-    <GridLayout rows="auto,auto" class="page">
-        <StackLayout row="0" marginTop="10%" height="25%" width="100%" verticalAlignment="middle">
-            <GridLayout #addressCard orientation="vertical" width="90%" height="90%" rows="auto,auto,auto"
-                (loaded)="onAddressLoaded($event)">
-                <StackLayout row="0" class="textfield-container" height="30%" verticalAlignment="middle">
-                    <Label text="Personal details" fontSize="16%" color="#404040"></Label>
-                </StackLayout>
-                <GridLayout row="1" columns="auto,auto" class="textfield-container" height="30%">
-                    <StackLayout col="0" width="45%" height="auto" borderWidth="1"
-                        [borderBottomColor]="firstNameBorderColor" borderLeftColor="transparent"
-                        borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="firstNameBorderWidth"
-                        verticalAlignment="middle">
-                        <TextField [hint]="firstNameHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
-                            style.placeholderColor="#B9B9B9" (textChange)="firstNameTextField($event)"
-                            borderColor="transparent" borderWidth="1" autocorrect="false">
-                        </TextField>
-                    </StackLayout>
-                    <StackLayout col="1" width="45%" height="auto" marginLeft="10%" orientation="horizontal"
-                        borderWidth="1" [borderBottomColor]="lastNameBorderColor" borderLeftColor="transparent"
-                        borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="lastNameBorderWidth"
-                        verticalAlignment="middle">
-                        <TextField [hint]="lastNameHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
-                            style.placeholderColor="#B9B9B9" (textChange)="lastNameTextField($event)"
-                            borderColor="transparent" borderWidth="1" autocorrect="false">
-                        </TextField>
-                    </StackLayout>
-                </GridLayout>
-                <StackLayout row="2" class="textfield-container" height="35%" borderWidth="1"
-                    [borderBottomColor]="contactNoBorderColor" borderLeftColor="transparent"
-                    borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="contactNoBorderWidth">
-                    <TextField [hint]="contactNoHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
-                        style.placeholderColor="#B9B9B9" (textChange)="contactNoTextField($event)"
-                        borderColor="transparent" borderWidth="1" autocorrect="false" maxLength="10"
-                        keyboardType="number">
-                    </TextField>
-                </StackLayout>
+    <GridLayout class="page">
+        <GridLayout rows="auto,auto,auto" width="100%" height="100%">
+            <GridLayout #headerCard (loaded)="onHeaderLoaded($event)" verticalAlignment="top" height="8%" width="100%">
+                <ns-header></ns-header>
             </GridLayout>
-        </StackLayout>
-        <StackLayout row="1" height="50%" width="100%" verticalAlignment="middle">
-            <GridLayout #addressCard orientation="vertical" width="90%" height="90%" rows="auto,auto,auto,auto,auto"
-                (loaded)="onAddressLoaded($event)">
-                <StackLayout row="0" class="addressField-container" height="10%" verticalAlignment="middle">
-                    <Label text="Address details" fontSize="16%" color="#404040"></Label>
-                </StackLayout>
-                <GridLayout row="1" columns="auto,auto" class="addressField-container" height="18%">
-                    <StackLayout col="0" width="45%" height="auto" borderWidth="1"
-                        [borderBottomColor]="houseNoBorderColor" borderLeftColor="transparent"
-                        borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="houseNoBorderWidth">
-                        <TextField [hint]="houseNoHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
-                            style.placeholderColor="#B9B9B9" (textChange)="houseNoTextField($event)"
-                            borderColor="transparent" borderWidth="1" autocorrect="false" keyboardType="number">
-                        </TextField>
+            <StackLayout row="0" marginTop="10%" height="25%" width="100%" verticalAlignment="middle">
+                <GridLayout #addressCard orientation="vertical" width="90%" height="90%" rows="auto,auto,auto"
+                    (loaded)="onAddressLoaded($event)">
+                    <StackLayout row="0" class="textfield-container" height="30%" verticalAlignment="middle">
+                        <Label text="Personal details" fontSize="16%" color="#404040"></Label>
                     </StackLayout>
-                    <StackLayout col="1" width="45%" height="auto" marginLeft="10%" orientation="horizontal"
-                        borderWidth="1" [borderBottomColor]="apartmentBorderColor" borderLeftColor="transparent"
+                    <GridLayout row="1" columns="auto,auto" class="textfield-container" height="30%">
+                        <StackLayout col="0" width="45%" height="auto" borderWidth="1"
+                            [borderBottomColor]="firstNameBorderColor" borderLeftColor="transparent"
+                            borderRightColor="transparent" borderTopColor="transparent"
+                            [borderWidth]="firstNameBorderWidth" verticalAlignment="middle">
+                            <TextField [hint]="firstNameHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
+                                style.placeholderColor="#B9B9B9" (textChange)="firstNameTextField($event)"
+                                borderColor="transparent" borderWidth="1" autocorrect="false">
+                            </TextField>
+                        </StackLayout>
+                        <StackLayout col="1" width="45%" height="auto" marginLeft="10%" orientation="horizontal"
+                            borderWidth="1" [borderBottomColor]="lastNameBorderColor" borderLeftColor="transparent"
+                            borderRightColor="transparent" borderTopColor="transparent"
+                            [borderWidth]="lastNameBorderWidth" verticalAlignment="middle">
+                            <TextField [hint]="lastNameHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
+                                style.placeholderColor="#B9B9B9" (textChange)="lastNameTextField($event)"
+                                borderColor="transparent" borderWidth="1" autocorrect="false">
+                            </TextField>
+                        </StackLayout>
+                    </GridLayout>
+                    <StackLayout row="2" class="textfield-container" height="35%" borderWidth="1"
+                        [borderBottomColor]="contactNoBorderColor" borderLeftColor="transparent"
                         borderRightColor="transparent" borderTopColor="transparent"
-                        [borderWidth]="apartmentBorderWidth">
-                        <TextField [hint]="apartmentHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
-                            style.placeholderColor="#B9B9B9" (textChange)="apartmentTextField($event)"
+                        [borderWidth]="contactNoBorderWidth">
+                        <TextField [hint]="contactNoHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
+                            style.placeholderColor="#B9B9B9" (textChange)="contactNoTextField($event)"
+                            borderColor="transparent" borderWidth="1" autocorrect="false" maxLength="10"
+                            keyboardType="number">
+                        </TextField>
+                    </StackLayout>
+                </GridLayout>
+            </StackLayout>
+            <StackLayout row="1" height="50%" width="100%" verticalAlignment="middle">
+                <GridLayout #addressCard orientation="vertical" width="90%" height="90%" rows="auto,auto,auto,auto,auto"
+                    (loaded)="onAddressLoaded($event)">
+                    <StackLayout row="0" class="addressField-container" height="10%" verticalAlignment="middle">
+                        <Label text="Address details" fontSize="16%" color="#404040"></Label>
+                    </StackLayout>
+                    <GridLayout row="1" columns="auto,auto" class="addressField-container" height="18%">
+                        <StackLayout col="0" width="45%" height="auto" borderWidth="1"
+                            [borderBottomColor]="houseNoBorderColor" borderLeftColor="transparent"
+                            borderRightColor="transparent" borderTopColor="transparent"
+                            [borderWidth]="houseNoBorderWidth">
+                            <TextField [hint]="houseNoHint" [text]="houseNoText" width="100%" height="100%"
+                                fontSize="16%" color="#23A6DB" style.placeholderColor="#B9B9B9"
+                                (textChange)="houseNoTextField($event)" borderColor="transparent" borderWidth="1"
+                                autocorrect="false">
+                            </TextField>
+                        </StackLayout>
+                        <StackLayout col="1" width="45%" height="auto" marginLeft="10%" orientation="horizontal"
+                            borderWidth="1" [borderBottomColor]="apartmentBorderColor" borderLeftColor="transparent"
+                            borderRightColor="transparent" borderTopColor="transparent"
+                            [borderWidth]="apartmentBorderWidth">
+                            <TextField [hint]="apartmentHint" [text]="apartmentText" width="100%" height="100%"
+                                fontSize="16%" color="#23A6DB" style.placeholderColor="#B9B9B9"
+                                (textChange)="apartmentTextField($event)" borderColor="transparent" borderWidth="1"
+                                autocorrect="false">
+                            </TextField>
+                        </StackLayout>
+                    </GridLayout>
+                    <StackLayout row="2" class="addressField-container" borderWidth="1" height="18%"
+                        [borderBottomColor]="streetBorderColor" borderLeftColor="transparent"
+                        borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="streetBorderWidth">
+                        <TextField [hint]="streetHint" [text]="streetText" width="100%" height="100%" fontSize="16%"
+                            color="#23A6DB" style.placeholderColor="#B9B9B9" (textChange)="streetTextField($event)"
+                            borderColor="transparent" borderWidth="1" autocorrect="false">
+                        </TextField>
+                    </StackLayout>
+                    <StackLayout row="3" class="addressField-container" borderWidth="1" height="18%"
+                        [borderBottomColor]="landmarkBorderColor" borderLeftColor="transparent"
+                        borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="landmarkBorderWidth">
+                        <TextField [hint]="landmarkHint" [text]="landmarkText" width="100%" height="100%" fontSize="16%"
+                            color="#23A6DB" style.placeholderColor="#B9B9B9" (textChange)="landmarkTextField($event)"
+                            borderColor="transparent" borderWidth="1" autocorrect="false">
+                        </TextField>
+                    </StackLayout>
+                    <StackLayout row="4" class="addressField-container" borderWidth="1" height="18%"
+                        [borderBottomColor]="areaBorderColor" borderLeftColor="transparent"
+                        borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="areaBorderWidth">
+                        <TextField [hint]="areaHint" [text]="areaText" width="100%" height="100%" fontSize="16%"
+                            color="#23A6DB" style.placeholderColor="#B9B9B9" (textChange)="areaTextField($event)"
                             borderColor="transparent" borderWidth="1" autocorrect="false">
                         </TextField>
                     </StackLayout>
                 </GridLayout>
-                <StackLayout row="2" class="addressField-container" borderWidth="1" height="18%"
-                    [borderBottomColor]="streetBorderColor" borderLeftColor="transparent" borderRightColor="transparent"
-                    borderTopColor="transparent" [borderWidth]="streetBorderWidth">
-                    <TextField [hint]="streetHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
-                        style.placeholderColor="#B9B9B9" (textChange)="streetTextField($event)"
-                        borderColor="transparent" borderWidth="1" autocorrect="false">
-                    </TextField>
-                </StackLayout>
-                <StackLayout row="3" class="addressField-container" borderWidth="1" height="18%"
-                    [borderBottomColor]="landmarkBorderColor" borderLeftColor="transparent"
-                    borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="landmarkBorderWidth">
-                    <TextField [hint]="landmarkHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
-                        style.placeholderColor="#B9B9B9" (textChange)="landmarkTextField($event)"
-                        borderColor="transparent" borderWidth="1" autocorrect="false">
-                    </TextField>
-                </StackLayout>
-                <StackLayout row="4" class="addressField-container" borderWidth="1" height="18%"
-                    [borderBottomColor]="areaBorderColor" borderLeftColor="transparent" borderRightColor="transparent"
-                    borderTopColor="transparent" [borderWidth]="areaBorderWidth">
-                    <TextField [hint]="areaHint" width="100%" height="100%" fontSize="16%" color="#23A6DB"
-                        style.placeholderColor="#B9B9B9" (textChange)="areaTextField($event)" borderColor="transparent"
-                        borderWidth="1" autocorrect="false">
-                    </TextField>
-                </StackLayout>
-            </GridLayout>
-        </StackLayout>
-        <StackLayout row="1" width="100%" height="10%" verticalAlignment="top" marginTop="47%">
-            <Button class="update-button" [text]="addAddressButton" (tap)="onUpdateProfileClick()"></Button>
-        </StackLayout>
-    </GridLayout>
+            </StackLayout>
+            <StackLayout row="1" width="100%" height="10%" verticalAlignment="top" marginTop="47%">
+                <Button class="update-button" [text]="addAddressButton" (tap)="onAddAddressClick()"></Button>
+            </StackLayout>
+            <StackLayout row="2" #footerCard (loaded)="onFooterLoaded($event)" height="8%" width="100%">
+                <ns-footer></ns-footer>
+            </StackLayout>
+        </GridLayout>
 
-    <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
+        <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
         <ActivityIndicator horizontalAlignment="center" verticalAlignment="middle" [busy]="!isRendering" rowSpan="1"
             colSpan="1">
         </ActivityIndicator>
     </GridLayout> -->
 
-    <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
-        <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
-            [busy]="isFavouring" rowSpan="1" colSpan="1">
-        </ActivityIndicator>
+        <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
+            <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
+                [busy]="isLoading" rowSpan="1" colSpan="1">
+            </ActivityIndicator>
+        </GridLayout>
     </GridLayout>
 </Page>

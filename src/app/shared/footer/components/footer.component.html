@@ -1,7 +1,7 @@
 <Page actionBarHidden="true">
     <GridLayout class="page">
         <StackLayout height="100%" width="100%" backgroundColor="#FFFFFF" verticalAlignment="bottom">
-            <GridLayout rows="*" columns="*,*,*,*">
+            <GridLayout rows="*" columns="*,*,*,*,*">
                 <GridLayout col="0" row="0" (tap)="onHomeClick()" rows="auto,auto">
                     <StackLayout row="0" height="75%" width="100%">
                         <Image class="footer-icon" [src]="homeIcon">
@@ -34,6 +34,14 @@
                     <StackLayout [visibility]="isMenuHighlighted" row="1" class="selected-footerButton">
                     </StackLayout>
                 </StackLayout>
+                <GridLayout col="4" row="0" (tap)="onCartClick()" rows="auto,auto">
+                    <StackLayout row="0" height="75%" width="100%">
+                        <Image class="footer-icon" [src]="cartIcon">
+                        </Image>
+                    </StackLayout>
+                    <StackLayout [visibility]="isCartHighlighted" row="1" class="selected-footerButton">
+                    </StackLayout>
+                </GridLayout>
             </GridLayout>
         </StackLayout>
     </GridLayout>

@@ -1,4 +1,5 @@
 import { Images } from './images.model';
+import { Address } from './address.model';
 export class User {
 
     phone: string;
@@ -8,6 +9,7 @@ export class User {
     image: Images;
     firstName: string;
     lastName: string;
+    address: Address;
     constructor(obj?: any) {
         if (!obj) {
             return;
@@ -18,5 +20,6 @@ export class User {
         this.image = obj.image;
         this.firstName = obj.firstName;
         this.lastName = obj.lastName;
+        this.address = obj.address;
     }
 }

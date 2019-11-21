@@ -9,7 +9,6 @@ export class UserService {
     private _showheader = new Subject<boolean>();
     private _headerlabel = new Subject<string>();
     private _showback = new Subject<string>();
-    private _showaddButton = new Subject<string>();
 
     showloadingState = this._showloadingState.asObservable();
     activescreen = this._activescreen.asObservable();
@@ -17,7 +16,6 @@ export class UserService {
     showheader = this._showheader.asObservable();
     headerlabel = this._headerlabel.asObservable();
     showback = this._showback.asObservable();
-    showaddButton = this._showaddButton.asObservable();
 
     constructor() { }
 
@@ -43,9 +41,5 @@ export class UserService {
 
     showBack(state: string) {
         this._showback.next(state);
-    }
-
-    showAddButton(state: string) {
-        this._showaddButton.next(state);
     }
 }

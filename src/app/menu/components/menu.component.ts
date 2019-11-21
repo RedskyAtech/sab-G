@@ -3,6 +3,8 @@ import { Color } from "tns-core-modules/color/color";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
 import { ModalComponent } from "~/app/modals/modal.component";
+import * as localstorage from "nativescript-localstorage";
+import { Page } from "tns-core-modules/ui/page/page";
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -21,15 +23,10 @@ export class MenuComponent implements OnInit, AfterContentInit {
     renderingTimeout;
     profilePicture: string;
     userName: string;
-    constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
-        this.userService.activeScreen("menu");
+    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page) {
+        this.page.actionBarHidden = true;
         // this.isRendering = true;
-        this.isLoading = false;
-        this.userService.showFooter(false);
-        this.userService.showHeader(false);
-        this.userService.headerLabel("options");
-        this.profilePicture = "res://man";
-        this.userName = "Shinu Verma";
+        // this.isLoading = false;
     }
     ngAfterContentInit(): void {
         // this.renderingTimeout = setTimeout(() => {
@@ -37,7 +34,9 @@ export class MenuComponent implements OnInit, AfterContentInit {
         // }, 5000)
     }
     ngOnInit(): void {
-        throw new Error("Method not implemented.");
+        this.userService.activeScreen("menu");
+        this.profilePicture = "res://man";
+        this.userName = "Shinu Verma";
     }
 
     protected get shadowColor(): Color {
@@ -125,6 +124,8 @@ export class MenuComponent implements OnInit, AfterContentInit {
 
     onLogoutDialog() {
         this.viewLogoutDialog.hide();
+        localstorage.removeItem("token");
+        localstorage.removeItem("userId");
         this.routerExtensions.navigate(['/login']);
     }
 

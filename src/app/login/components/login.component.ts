@@ -142,9 +142,13 @@ export class LoginComponent implements OnInit, AfterContentInit {
                             this.isLoading = false;
                             localstorage.setItem("token", res.data.token);
                             localstorage.setItem("userId", res.data._id);
-                            // this.routerExtensions.navigate(['/home'], {
-                            //     clearHistory: true,
-                            // });
+                            localstorage.setItem("cartId", res.data.cartId);
+                            this.routerExtensions.navigate(['/home'], {
+                                clearHistory: true,
+                            });
+                            this.routerExtensions.navigate(['/home'], {
+                                clearHistory: true,
+                            });
                             Toast.makeText("Login successfully", "long").show();
                         }
                     }

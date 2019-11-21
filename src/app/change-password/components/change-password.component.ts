@@ -1,9 +1,14 @@
+import { User } from './../../models/user.model';
 import { Component, OnInit, AfterContentInit } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
 import * as Toast from 'nativescript-toast';
+import { Page } from "tns-core-modules/ui/page/page";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import * as localstorage from "nativescript-localstorage";
+import { Values } from '~/app/values/values';
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -36,7 +41,9 @@ export class ChangePasswordComponent implements OnInit, AfterContentInit {
     updatePasswordButton: string;
     forgotPassword: string;
     renderingTimeout;
-    constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
+    user: User;
+    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private http: HttpClient) {
+        this.page.actionBarHidden = true;
         // this.isRendering = true;
     }
     ngAfterContentInit(): void {
@@ -63,9 +70,9 @@ export class ChangePasswordComponent implements OnInit, AfterContentInit {
         this.confirmPasswordSecure = true;
         this.updatePasswordButton = "Update password"
         this.forgotPassword = "Forgot password?";
-        this.userService.showFooter(true);
-        this.userService.showHeader(true);
         this.userService.headerLabel("Change Password");
+        this.userService.activeScreen("changePassword")
+        this.user = new User();
     }
 
     protected get shadowColor(): Color {
@@ -98,6 +105,52 @@ export class ChangePasswordComponent implements OnInit, AfterContentInit {
             // this.changeDetector.detectChanges();
         }, 50)
 
+    }
+
+    onHeaderLoaded(args: any) {
+        var headerCard = <any>args.object;
+        setTimeout(() => {
+            if (headerCard.android) {
+                let nativeGridMain = headerCard.android;
+                var shape = new android.graphics.drawable.GradientDrawable();
+                shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+                shape.setColor(android.graphics.Color.parseColor('white'));
+                shape.setCornerRadius(0)
+                nativeGridMain.setBackgroundDrawable(shape);
+                nativeGridMain.setElevation(5)
+            } else if (headerCard.ios) {
+                let nativeGridMain = headerCard.ios;
+                nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
+                nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
+                nativeGridMain.layer.shadowOpacity = 0.5
+                nativeGridMain.layer.shadowRadius = 5.0
+                nativeGridMain.layer.shadowRadius = 5.0
+            }
+            // this.changeDetector.detectChanges();
+        }, 50)
+    }
+
+    onFooterLoaded(args: any) {
+        var footerCard = <any>args.object;
+        setTimeout(() => {
+            if (footerCard.android) {
+                let nativeGridMain = footerCard.android;
+                var shape = new android.graphics.drawable.GradientDrawable();
+                shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+                shape.setColor(android.graphics.Color.parseColor('white'));
+                shape.setCornerRadius(0)
+                nativeGridMain.setBackgroundDrawable(shape);
+                nativeGridMain.setElevation(5)
+            } else if (footerCard.ios) {
+                let nativeGridMain = footerCard.ios;
+                nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
+                nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
+                nativeGridMain.layer.shadowOpacity = 0.5
+                nativeGridMain.layer.shadowRadius = 5.0
+                nativeGridMain.layer.shadowRadius = 5.0
+            }
+            // this.changeDetector.detectChanges();
+        }, 50)
     }
 
     public oldPasswordTextField(args) {
@@ -143,8 +196,38 @@ export class ChangePasswordComponent implements OnInit, AfterContentInit {
             alert("New password and confirm password should be same.");
         }
         else {
-            Toast.makeText("Password changed successffuly.", "long").show();
-            this.routerExtensions.navigate(['/profile']);
+            this.isLoading = true;
+            this.user.password = this.oldPasswordText;
+            this.user.newPassword = this.newPasswordText;
+            // if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
+            let headers = new HttpHeaders({
+                "Content-Type": "application/json",
+                "x-access-token": localstorage.getItem("token")
+            });
+            // }
+            this.http
+                .post(Values.BASE_URL + "users/changePassword", this.user, {
+                    headers: headers
+                }).subscribe((res: any) => {
+                    if (res != "" && res != undefined) {
+                        if (res.isSuccess == true) {
+                            this.isLoading = false;
+                            Toast.makeText("Password changed successfully.", "long").show();
+                            this.routerExtensions.navigate(['/profile']);
+                        }
+                    }
+                }, error => {
+                    this.isLoading = false;
+                    console.log(error);
+                    if (error.error.error == undefined) {
+                        alert("May be your network connection is low.")
+                    }
+                    else {
+                        alert(error.error.error);
+                    }
+                });
+            // Toast.makeText("Password changed successffuly.", "long").show();
+            // this.routerExtensions.navigate(['/profile']);
         }
     }
 

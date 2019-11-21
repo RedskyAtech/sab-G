@@ -19,10 +19,12 @@ export class FooterComponent implements OnInit {
     profileIcon: string;
     searchIcon: string;
     menuIcon: string;
+    cartIcon: string;
     isHomeHighlighted: string;
     isProfileHighlighted: string;
     isSearchHighlighted: string;
     isMenuHighlighted: string;
+    isCartHighlighted: string;
     RouterExtensions: any;
     constructor(private http: HttpClient, private page: Page, private userService: UserService, private routerExtensions: RouterExtensions) {
         this.page.actionBarHidden = true;
@@ -31,10 +33,12 @@ export class FooterComponent implements OnInit {
         this.profileIcon = "res://user_inactive";
         this.searchIcon = "res://search_inactive";
         this.menuIcon = "res://menu_inactive";
+        this.cartIcon = "res://cart_inactive";
         this.isHomeHighlighted = "hidden";
         this.isProfileHighlighted = "hidden";
         this.isSearchHighlighted = "hidden";
         this.isMenuHighlighted = "hidden";
+        this.isCartHighlighted = "hidden";
 
         this.userService.activescreen.subscribe((screen: string) => {
             if (screen == "home" || screen == "products" || screen == "categories" || screen == "addProduct" || screen == "addCategory" || screen == "addSlider" || screen == "addOffer") {
@@ -42,18 +46,28 @@ export class FooterComponent implements OnInit {
                 this.isProfileHighlighted = "hidden";
                 this.isSearchHighlighted = "hidden";
                 this.isMenuHighlighted = "hidden";
+                this.isCartHighlighted = "hidden";
             }
-            if (screen == "profile" || screen == "editProfile" || screen == "addAddress") {
+            if (screen == "profile" || screen == "editProfile" || screen == "addAddress" || screen == "changePassword") {
                 this.isHomeHighlighted = "hidden";
                 this.isProfileHighlighted = "visible";
                 this.isSearchHighlighted = "hidden";
                 this.isMenuHighlighted = "hidden";
+                this.isCartHighlighted = "hidden";
             }
             if (screen == "menu" || screen == "viewOrders" || screen == "orderDetails") {
                 this.isHomeHighlighted = "hidden";
                 this.isProfileHighlighted = "hidden";
                 this.isSearchHighlighted = "hidden";
                 this.isMenuHighlighted = "visible";
+                this.isCartHighlighted = "hidden";
+            }
+            if (screen == "cart") {
+                this.isHomeHighlighted = "hidden";
+                this.isProfileHighlighted = "hidden";
+                this.isSearchHighlighted = "hidden";
+                this.isMenuHighlighted = "hidden";
+                this.isCartHighlighted = "visible";
             }
         });
     }
@@ -77,6 +91,10 @@ export class FooterComponent implements OnInit {
 
     onMenuClick() {
         this.routerExtensions.navigate(['/menu']);
+    }
+
+    onCartClick() {
+        this.routerExtensions.navigate(['/cart']);
     }
 
     protected get shadowColor(): Color {

@@ -87,3 +87,21 @@
     border-color: #273BD3;
     color: #273BD3;
 }
+
+.submit-button{
+    font-size: 12%;
+    border-radius: 30%;
+    text-transform: initial;
+    color:#67CB62;
+    border-color: #67CB62;
+    border-width:1;
+    padding:0;
+    height:60%;
+    width:30%;
+    background-color: #F6F6F6;
+}
+.submit-button:highlighted{
+    background-color: #67CB62;
+    border-color: #F6F6F6;
+    color: #F6F6F6;
+}

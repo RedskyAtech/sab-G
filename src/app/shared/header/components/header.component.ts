@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
     headerLabel: string;
     showHeader: boolean;
     showBackButton: string;
-    showAddButton: string;
+    // showAddButton: string;
     screen: string;
 
     constructor(private http: HttpClient, private page: Page, private userService: UserService, private routerExtensions: RouterExtensions) {
@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
         this.headerLabel = "";
         this.showHeader = true;
         this.showBackButton = "visible";
-        this.showAddButton = "hidden";
+        // this.showAddButton = "hidden";
         this.screen = "";
 
         this.userService.headerlabel.subscribe((label: string) => {
@@ -44,11 +44,11 @@ export class HeaderComponent implements OnInit {
             }
         })
 
-        this.userService.showaddButton.subscribe((state: string) => {
-            if (state != undefined && state != null) {
-                this.showAddButton = state;
-            }
-        })
+        // this.userService.showaddButton.subscribe((state: string) => {
+        //     if (state != undefined && state != null) {
+        //         this.showAddButton = state;
+        //     }
+        // })
 
         this.userService.activescreen.subscribe((screen: string) => {
             this.screen = screen;

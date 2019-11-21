@@ -1,82 +1,91 @@
 <Page actionBarHidden="true">
-    <GridLayout rows="auto,auto,auto,auto,auto" class="page">
-        <GridLayout row="0" class="upper-container" marginTop="8%" verticalAlignment="top">
-            <GridLayout columns="auto,auto">
-                <StackLayout col="0" height="100%" width="50%" verticalAlignment="bottom">
-                    <StackLayout width="120vw" height="120vw" borderWidth="5" borderRadius="60%" borderColor="#B9B9B9">
-                        <Image width="100%" height="100%" [src]="profilePicture">
-                        </Image>
+    <GridLayout class="page">
+        <GridLayout rows="auto,auto,auto,auto,auto,auto" width="100%" height="100%">
+            <GridLayout #headerCard (loaded)="onHeaderLoaded($event)" verticalAlignment="top" height="8%" width="100%">
+                <ns-header></ns-header>
+            </GridLayout>
+            <GridLayout row="0" class="upper-container" marginTop="8%" verticalAlignment="top">
+                <GridLayout columns="auto,auto">
+                    <StackLayout col="0" height="100%" width="50%" verticalAlignment="middle">
+                        <StackLayout width="120vw" height="120vw" borderWidth="5" borderRadius="60%"
+                            borderColor="#B9B9B9">
+                            <Image width="100%" height="100%" borderRadius="60%" [src]="profilePicture">
+                            </Image>
+                        </StackLayout>
                     </StackLayout>
-                </StackLayout>
-                <GridLayout col="1" height="100%" width="50%" verticalAlignment="middle" rows="auto,auto,auto">
-                    <StackLayout row="0" height="20%" width="100%" verticalAlignment="middle" marginTop="20%">
-                        <Label [text]="userName" fontSize="20%" color="#707070" fontWeight="500"></Label>
-                    </StackLayout>
-                    <StackLayout row="1" height="10%" width="100%" verticalAlignment="middle">
-                        <Label [text]="userContact" fontSize="12%" color="#707070" fontWeight="300"></Label>
-                    </StackLayout>
-                    <GridLayout row="2" height="20%" width="100%" verticalAlignment="middle" marginTop="15%">
-                        <Button class="edit-button" [text]="editButton" (tap)="onEditClick()"
-                            horizontalAlignment="left"></Button>
+                    <GridLayout col="1" height="100%" width="50%" verticalAlignment="middle" rows="auto,auto,auto">
+                        <StackLayout row="0" height="20%" width="100%" verticalAlignment="middle" marginTop="20%">
+                            <Label [text]="userName" fontSize="20%" color="#707070" fontWeight="500"></Label>
+                        </StackLayout>
+                        <StackLayout row="1" height="10%" width="100%" verticalAlignment="middle">
+                            <Label [text]="phone" fontSize="12%" color="#707070" fontWeight="300"></Label>
+                        </StackLayout>
+                        <GridLayout row="2" height="20%" width="100%" verticalAlignment="middle" marginTop="15%">
+                            <Button class="edit-button" [text]="editButton" (tap)="onEditClick()"
+                                horizontalAlignment="left"></Button>
+                        </GridLayout>
                     </GridLayout>
                 </GridLayout>
             </GridLayout>
-        </GridLayout>
-        <StackLayout row="1" width="90%" height="10%" verticalAlignment="middle">
-            <Label text="Account" fontSize="20%" fontWeight="500" color="#707070"></Label>
-        </StackLayout>
-        <GridLayout row="2" height="20%" width="100%">
-            <GridLayout #optionsCard orientation="vertical" verticalAlignment="top" width="90%" height="90%"
-                rows="auto,auto,auto" (loaded)="onOptionsLoaded($event)">
-                <GridLayout row="0" height="49%" width="100%" columns="auto,auto" (tap)="onChangePasswordClick()">
-                    <StackLayout col="0" height="100%" width="20%" verticalAlignment="middle">
-                        <Image class="option-logo" src="res://password"></Image>
-                    </StackLayout>
-                    <StackLayout col="1" height="100%" width="80%" verticalAlignment="middle">
-                        <Label class="option-heading" text="Change Password"></Label>
-                    </StackLayout>
+            <StackLayout row="1" width="90%" height="10%" verticalAlignment="middle">
+                <Label text="Account" fontSize="20%" fontWeight="500" color="#707070"></Label>
+            </StackLayout>
+            <GridLayout row="2" height="20%" width="100%">
+                <GridLayout #optionsCard orientation="vertical" verticalAlignment="top" width="90%" height="90%"
+                    rows="auto,auto,auto" (loaded)="onOptionsLoaded($event)">
+                    <GridLayout row="0" height="49%" width="100%" columns="auto,auto" (tap)="onChangePasswordClick()">
+                        <StackLayout col="0" height="100%" width="20%" verticalAlignment="middle">
+                            <Image class="option-logo" src="res://password"></Image>
+                        </StackLayout>
+                        <StackLayout col="1" height="100%" width="80%" verticalAlignment="middle">
+                            <Label class="option-heading" text="Change Password"></Label>
+                        </StackLayout>
+                    </GridLayout>
+                    <GridLayout row="1" height="1%" width="100%" verticalAlignment="middle">
+                        <StackLayout class="seperator-line"></StackLayout>
+                    </GridLayout>
+                    <GridLayout row="2" height="50%" width="100%" columns="auto,auto" (tap)="onShippingClick()">
+                        <StackLayout col=" 0" height="100%" width="20%" verticalAlignment="middle">
+                            <Image class="option-logo" src="res://shipping"></Image>
+                        </StackLayout>
+                        <StackLayout col="1" height="100%" width="80%" verticalAlignment="middle">
+                            <Label class="option-heading" text="Shipping"></Label>
+                        </StackLayout>
+                    </GridLayout>
                 </GridLayout>
-                <GridLayout row="1" height="1%" width="100%" verticalAlignment="middle">
-                    <StackLayout class="seperator-line"></StackLayout>
-                </GridLayout>
-                <GridLayout row="2" height="50%" width="100%" columns="auto,auto" (tap)="onShippingClick()">
-                    <StackLayout col=" 0" height="100%" width="20%" verticalAlignment="middle">
-                    <Image class="option-logo" src="res://shipping"></Image>
+            </GridLayout>
+            <StackLayout row="3" width="90%" height="10%" verticalAlignment="middle">
+                <Label text="Notifications" fontSize="20%" fontWeight="500" color="#707070"></Label>
+            </StackLayout>
+            <GridLayout row="4" height="12%" width="100%">
+                <GridLayout #optionsCard orientation="vertical" verticalAlignment="top" width="90%" height="90%"
+                    (loaded)="onOptionsLoaded($event)" columns="auto,auto">
+                    <StackLayout col="0" height="100%" width="65%" marginLeft="5%" verticalAlignment="middle">
+                        <Label class="option-heading" text="App Notifications"></Label>
                     </StackLayout>
-                    <StackLayout col="1" height="100%" width="80%" verticalAlignment="middle">
-                        <Label class="option-heading" text="Shipping"></Label>
+                    <StackLayout col="1" height="100%" width="30%" verticalAlignment="middle">
+                        <!-- <Image class="option-logo" src="res://home"></Image> -->
+                        <Switch color="#67CB62" backgroundColor="#B9B9B9" offBackgroundColor="#B9B9B9"
+                            horizontalAlignment="center">
+                        </Switch>
                     </StackLayout>
                 </GridLayout>
             </GridLayout>
+            <StackLayout row="5" #footerCard (loaded)="onFooterLoaded($event)" marginTop="10%" height="8%" width="100%">
+                <ns-footer></ns-footer>
+            </StackLayout>
         </GridLayout>
-        <StackLayout row="3" width="90%" height="10%" verticalAlignment="middle">
-            <Label text="Notifications" fontSize="20%" fontWeight="500" color="#707070"></Label>
-        </StackLayout>
-        <GridLayout row="4" height="12%" width="100%">
-            <GridLayout #optionsCard orientation="vertical" verticalAlignment="top" width="90%" height="90%"
-                (loaded)="onOptionsLoaded($event)" columns="auto,auto">
-                <StackLayout col="0" height="100%" width="65%" marginLeft="5%" verticalAlignment="middle">
-                    <Label class="option-heading" text="App Notifications"></Label>
-                </StackLayout>
-                <StackLayout col="1" height="100%" width="30%" verticalAlignment="middle">
-                    <!-- <Image class="option-logo" src="res://home"></Image> -->
-                    <Switch color="#67CB62" backgroundColor="#B9B9B9" offBackgroundColor="#B9B9B9"
-                        horizontalAlignment="center">
-                    </Switch>
-                </StackLayout>
-            </GridLayout>
-        </GridLayout>
-    </GridLayout>
 
-    <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
+        <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
         <ActivityIndicator horizontalAlignment="center" verticalAlignment="middle" [busy]="!isRendering" rowSpan="1"
             colSpan="1">
         </ActivityIndicator>
     </GridLayout> -->
 
-    <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
-        <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
-            [busy]="isFavouring" rowSpan="1" colSpan="1">
-        </ActivityIndicator>
+        <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
+            <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
+                [busy]="isLoading" rowSpan="1" colSpan="1">
+            </ActivityIndicator>
+        </GridLayout>
     </GridLayout>
 </Page>

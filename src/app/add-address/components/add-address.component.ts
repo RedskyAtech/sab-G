@@ -1,8 +1,15 @@
+import { User } from '~/app/models/user.model';
 import { Component, OnInit, AfterContentInit } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
+import { Page } from "tns-core-modules/ui/page/page";
+import { Address } from '~/app/models/address.model';
+import { HttpClient } from '@angular/common/http';
+import { Values } from '~/app/values/values';
+import * as localstorage from "nativescript-localstorage";
+import * as Toast from 'nativescript-toast';
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -29,7 +36,7 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
     contactNoHint: string;
     contactNoBorderColor: string;
     contactNoBorderWidth: string;
-    houseNoText: string;
+    houseNoText: number;
     houseNoHint: string;
     houseNoBorderColor: string;
     houseNoBorderWidth: string;
@@ -51,7 +58,11 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
     areaBorderWidth: string;
     addAddressButton: string;
     renderingTimeout;
-    constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
+    user: User;
+    address: Address;
+    token: string;
+    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private http: HttpClient, ) {
+        this.page.actionBarHidden = true;
         // this.isRendering = true;
     }
     ngAfterContentInit(): void {
@@ -73,7 +84,7 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
         this.contactNoHint = "*Contact number to say hello";
         this.contactNoBorderColor = "#707070";
         this.contactNoBorderWidth = "1";
-        this.houseNoText = "";
+        this.houseNoText = 0;
         this.houseNoHint = "*House no";
         this.houseNoBorderColor = "#707070";
         this.houseNoBorderWidth = "1";
@@ -97,6 +108,14 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
         this.userService.showFooter(true);
         this.userService.showHeader(true);
         this.userService.headerLabel("Add new address");
+        this.user = new User();
+        this.address = new Address();
+        this.user.address = new Address();
+        this.token = "";
+        if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
+            this.token = localstorage.getItem("token");
+            this.getAddress();
+        }
     }
 
     protected get shadowColor(): Color {
@@ -131,6 +150,79 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
 
     }
 
+    onHeaderLoaded(args: any) {
+        var headerCard = <any>args.object;
+        setTimeout(() => {
+            if (headerCard.android) {
+                let nativeGridMain = headerCard.android;
+                var shape = new android.graphics.drawable.GradientDrawable();
+                shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+                shape.setColor(android.graphics.Color.parseColor('white'));
+                shape.setCornerRadius(0)
+                nativeGridMain.setBackgroundDrawable(shape);
+                nativeGridMain.setElevation(5)
+            } else if (headerCard.ios) {
+                let nativeGridMain = headerCard.ios;
+                nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
+                nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
+                nativeGridMain.layer.shadowOpacity = 0.5
+                nativeGridMain.layer.shadowRadius = 5.0
+                nativeGridMain.layer.shadowRadius = 5.0
+            }
+            // this.changeDetector.detectChanges();
+        }, 50)
+    }
+
+    onFooterLoaded(args: any) {
+        var footerCard = <any>args.object;
+        setTimeout(() => {
+            if (footerCard.android) {
+                let nativeGridMain = footerCard.android;
+                var shape = new android.graphics.drawable.GradientDrawable();
+                shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+                shape.setColor(android.graphics.Color.parseColor('white'));
+                shape.setCornerRadius(0)
+                nativeGridMain.setBackgroundDrawable(shape);
+                nativeGridMain.setElevation(5)
+            } else if (footerCard.ios) {
+                let nativeGridMain = footerCard.ios;
+                nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
+                nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
+                nativeGridMain.layer.shadowOpacity = 0.5
+                nativeGridMain.layer.shadowRadius = 5.0
+                nativeGridMain.layer.shadowRadius = 5.0
+            }
+            // this.changeDetector.detectChanges();
+        }, 50)
+    }
+
+    getAddress() {
+        this.isLoading = true;
+        this.http
+            .get(Values.BASE_URL + "users/" + localstorage.getItem("userId"), {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": this.token
+                }
+            })
+            .subscribe((res: any) => {
+                if (res != null && res != undefined) {
+                    if (res.isSuccess == true) {
+                        console.trace(res);
+                        this.houseNoText = res.data.profile.address.houseNo;
+                        this.apartmentText = res.data.profile.address.apartmentName;
+                        this.streetText = res.data.profile.address.streetDetails;
+                        this.areaText = res.data.profile.address.areaDetails;
+                        this.landmarkText = res.data.profile.address.landmark;
+                        this.isLoading = false;
+                    }
+                }
+            }, error => {
+                this.isLoading = false;
+                console.log("ERROR::::", error.error.error);
+            });
+    }
+
     public firstNameTextField(args) {
         var textField = <TextField>args.object;
         this.firstNameText = textField.text;
@@ -151,7 +243,7 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
     }
     public houseNoTextField(args) {
         var textField = <TextField>args.object;
-        this.houseNoText = textField.text;
+        this.houseNoText = parseInt(textField.text);
         this.houseNoBorderColor = "#23A6DB";
         this.houseNoBorderWidth = "2";
     }
@@ -179,12 +271,12 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
         this.areaBorderColor = "#23A6DB";
         this.areaBorderWidth = "2";
     }
-    onUpdateProfileClick() {
+    onAddAddressClick() {
         // if (this.contactNoText == "") {
         //     alert("Please enter contact number.");
         // }
         // else if (this.contactNoText.length < 10) {
-        //     alert("Please enter ten digit contact number.")
+        //     alert("Please enter ten digit contact number.");
         // }
         // else if (this.houseNoText == "") {
         //     alert("Please enter house number.");
@@ -193,8 +285,42 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
         //     alert("Please enter area.");
         // }
         // else {
-        this.routerExtensions.navigate(['/congratulations']);
+        // this.routerExtensions.navigate(['/congratulations']);
         // }
+        if (this.houseNoText != 0) {
+            this.user.address.houseNo = this.houseNoText;
+        }
+        if (this.apartmentText != "") {
+            this.user.address.apartmentName = this.apartmentText;
+        }
+        if (this.streetText != "") {
+            this.user.address.streetDetails = this.streetText;
+        }
+        if (this.landmarkText != "") {
+            this.user.address.landmark = this.landmarkText;
+        }
+        if (this.areaText != "") {
+            this.user.address.areaDetails = this.areaText;
+        }
+        this.http
+            .put(Values.BASE_URL + "users/" + localstorage.getItem("userId"), this.user, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": this.token
+                }
+            })
+            .subscribe((res: any) => {
+                if (res != null && res != undefined) {
+                    if (res.isSuccess == true) {
+                        Toast.makeText("Address is successfully updated!!!", "long").show();
+                        this.isLoading = false;
+                        this.routerExtensions.back();
+                    }
+                }
+            }, error => {
+                this.isLoading = false;
+                console.log("ERROR::::", error.error.error);
+            });
     }
 
 }

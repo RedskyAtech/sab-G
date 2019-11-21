@@ -6,6 +6,8 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { GridViewModule } from "nativescript-grid-view/angular";
 import { HomeComponent } from "./components/home.component";
 import { HomeRoutingModule } from "./home-routing.module";
+import { HeaderModule } from "../shared/header/header.module";
+import { FooterModule } from "../shared/footer/footer.module";
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { HomeRoutingModule } from "./home-routing.module";
         NgModalModule,
         HttpClientModule,
         HomeRoutingModule,
-        GridViewModule
+        GridViewModule,
+        HeaderModule,
+        FooterModule
     ],
     declarations: [
         HomeComponent

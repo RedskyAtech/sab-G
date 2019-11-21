@@ -1,3 +1,5 @@
+import { Cart } from './../../models/cart.model';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Component, OnInit, AfterContentInit, ViewChild } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
@@ -5,6 +7,11 @@ import { UserService } from "~/app/services/user.service";
 import { ActivatedRoute } from "@angular/router";
 import * as Toast from 'nativescript-toast';
 import { ModalComponent } from "~/app/modals/modal.component";
+import * as localstorage from "nativescript-localstorage";
+import { Values } from '~/app/values/values';
+import { Page } from 'tns-core-modules/ui/page/page';
+import { Product } from '~/app/models/product.model';
+import { Dimensions } from '~/app/models/dimensions.model';
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -26,15 +33,20 @@ export class ProductsComponent implements OnInit, AfterContentInit {
   weights;
   heading: string;
   addButton: string;
-
-  constructor(private routerExtensions: RouterExtensions, private userService: UserService, private route: ActivatedRoute) {
+  categoryId: string;
+  token: string;
+  headers: HttpHeaders;
+  query: string;
+  pageNo: number;
+  items: number;
+  oldWeight: number;
+  index: number;
+  cart: Cart;
+  product: Product;
+  dimensions: Dimensions;
+  constructor(private routerExtensions: RouterExtensions, private userService: UserService, private route: ActivatedRoute, private http: HttpClient, private page: Page) {
+    this.page.actionBarHidden = true;
     // this.isRendering = true;
-    this.weightDialog.show();
-    this.route.queryParams.subscribe(params => {
-      if (params["from"] != "") {
-        this.heading = params["categoryName"];
-      }
-    });
   }
   ngAfterContentInit(): void {
     // this.renderingTimeout = setTimeout(() => {
@@ -46,37 +58,68 @@ export class ProductsComponent implements OnInit, AfterContentInit {
     this.weights = [];
     this.isLoading = false;
     this.addButton = "Add";
-    this.userService.showFooter(true);
-    this.userService.showHeader(true);
-    this.userService.headerLabel(this.heading);
+    this.categoryId = "";
+    this.token = "";
+    this.query = "";
+    this.pageNo = 1;
+    this.items = 10;
+    // this.weight = "1 kg";
+    this.index = 0;
+    this.oldWeight = 0;
+    this.cart = new Cart();
+    this.product = new Product();
+    this.cart.product = new Product();
+    this.cart.product.dimensions = new Dimensions();
+    this.route.queryParams.subscribe(params => {
+      if (params["from"] != "") {
+        this.heading = params["categoryName"];
+        this.categoryId = params["categoryId"];
+      }
+    });
     this.weights.push(
-      { value: "100 g" },
-      { value: "200 g" },
-      { value: "300 g" },
-      { value: "400 g" },
-      { value: "500 g" },
-      { value: "600 g" },
-      { value: "700 g" },
-      { value: "800 g" },
-      { value: "900 g" },
-      { value: "1 kg" },
-      { value: "2 kg" },
-      { value: "3 kg" },
-      { value: "4 kg" },
-      { value: "5 kg" }
+      { value: "100", unit: "g" },
+      { value: "200", unit: "g" },
+      { value: "300", unit: "g" },
+      { value: "400", unit: "g" },
+      { value: "500", unit: "g" },
+      { value: "600", unit: "g" },
+      { value: "700", unit: "g" },
+      { value: "800", unit: "g" },
+      { value: "900", unit: "g" },
+      { value: "1", unit: "kg" },
+      { value: "2", unit: "kg" },
+      { value: "3", unit: "kg" },
+      { value: "4", unit: "kg" },
+      { value: "5", unit: "kg" },
+      { value: "6", unit: "kg" },
+      { value: "7", unit: "kg" },
+      { value: "8", unit: "kg" },
+      { value: "9", unit: "kg" },
+      { value: "10", unit: "kg" }
+
     );
-    this.products.push(
-      { image: "res://onion", name: "Onion", MRP: "31.50", price: "25", weight: "500 g" },
-      { image: "res://lady_finger", name: "Lady finger", MRP: "31.50", price: "25", weight: "1 kg" },
-      { image: "res://potato", name: "Potato", MRP: "31.50", price: "25", weight: "1 kg" },
-      { image: "res://tomato", name: "Tomato", MRP: "31.50", price: "25", weight: "1 kg" },
-      { image: "res://palak", name: "Palak", MRP: "31.50", price: "25", weight: "1 kg" },
-      { image: "res://onion", name: "Onion", MRP: "31.50", price: "25", weight: "1 kg" },
-      { image: "res://lady_finger", name: "Lady finger", MRP: "31.50", price: "25", weight: "1 kg" },
-      { image: "res://potato", name: "Potato", MRP: "31.50", price: "25", weight: "1 kg" },
-      { image: "res://tomato", name: "Tomato", MRP: "31.50", price: "25", weight: "1 kg" },
-      { image: "res://palak", name: "Palak", MRP: "31.50", price: "25", weight: "1 kg" },
-    );
+    this.userService.headerLabel(this.heading);
+    this.userService.activeScreen("products");
+    // this.products.push(
+    //   { image: "res://onion", name: "Onion", MRP: "31.50", price: "25", weight: "500 g" },
+    //   { image: "res://lady_finger", name: "Lady finger", MRP: "31.50", price: "25", weight: "1 kg" },
+    //   { image: "res://potato", name: "Potato", MRP: "31.50", price: "25", weight: "1 kg" },
+    //   { image: "res://tomato", name: "Tomato", MRP: "31.50", price: "25", weight: "1 kg" },
+    //   { image: "res://palak", name: "Palak", MRP: "31.50", price: "25", weight: "1 kg" },
+    //   { image: "res://onion", name: "Onion", MRP: "31.50", price: "25", weight: "1 kg" },
+    //   { image: "res://lady_finger", name: "Lady finger", MRP: "31.50", price: "25", weight: "1 kg" },
+    //   { image: "res://potato", name: "Potato", MRP: "31.50", price: "25", weight: "1 kg" },
+    //   { image: "res://tomato", name: "Tomato", MRP: "31.50", price: "25", weight: "1 kg" },
+    //   { image: "res://palak", name: "Palak", MRP: "31.50", price: "25", weight: "1 kg" },
+    // );
+    if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
+      this.token = localstorage.getItem("token");
+      this.headers = new HttpHeaders({
+        "Content-Type": "application/json",
+        "x-access-token": this.token
+      });
+      this.getProducts();
+    }
   }
 
   protected get shadowColor(): Color {
@@ -133,8 +176,143 @@ export class ProductsComponent implements OnInit, AfterContentInit {
     }, 10)
   }
 
-  onAddToCart() {
+  onHeaderLoaded(args: any) {
+    var headerCard = <any>args.object;
+    setTimeout(() => {
+      if (headerCard.android) {
+        let nativeGridMain = headerCard.android;
+        var shape = new android.graphics.drawable.GradientDrawable();
+        shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+        shape.setColor(android.graphics.Color.parseColor('white'));
+        shape.setCornerRadius(0)
+        nativeGridMain.setBackgroundDrawable(shape);
+        nativeGridMain.setElevation(5)
+      } else if (headerCard.ios) {
+        let nativeGridMain = headerCard.ios;
+        nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
+        nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
+        nativeGridMain.layer.shadowOpacity = 0.5
+        nativeGridMain.layer.shadowRadius = 5.0
+        nativeGridMain.layer.shadowRadius = 5.0
+      }
+      // this.changeDetector.detectChanges();
+    }, 50)
+  }
+
+  onFooterLoaded(args: any) {
+    var footerCard = <any>args.object;
+    setTimeout(() => {
+      if (footerCard.android) {
+        let nativeGridMain = footerCard.android;
+        var shape = new android.graphics.drawable.GradientDrawable();
+        shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+        shape.setColor(android.graphics.Color.parseColor('white'));
+        shape.setCornerRadius(0)
+        nativeGridMain.setBackgroundDrawable(shape);
+        nativeGridMain.setElevation(5)
+      } else if (footerCard.ios) {
+        let nativeGridMain = footerCard.ios;
+        nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
+        nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
+        nativeGridMain.layer.shadowOpacity = 0.5
+        nativeGridMain.layer.shadowRadius = 5.0
+        nativeGridMain.layer.shadowRadius = 5.0
+      }
+      // this.changeDetector.detectChanges();
+    }, 50)
+  }
+
+  getProducts() {
+    // this.isLoading = true;
+    // this.query = `_id=${this.categoryId}&pageNo=${this.pageNo}&items=${this.items}`
+    console.log(Values.BASE_URL + `products?_id=${this.categoryId}&pageNo=${this.pageNo}&items=${this.items}`);
+    this.http
+      .get(Values.BASE_URL + `products?_id=${this.categoryId}&pageNo=${this.pageNo}&items=${this.items}`, {
+        headers: this.headers
+      })
+      .subscribe((res: any) => {
+        if (res != null && res != undefined) {
+          if (res.isSuccess == true) {
+            console.trace("PRODUCTS:::::", res);
+            if (res.data.products.length > 0) {
+              for (var i = 0; i < res.data.products.length; i++) {
+                //   // console.log(res.data.)
+                this.products.push({
+                  id: res.data.products[i]._id,
+                  name: res.data.products[i].name,
+                  imageUrl: res.data.products[i].image.url,
+                  thumbnail: res.data.products[i].image.thumbnail,
+                  resize_url: res.data.products[i].image.resize_url,
+                  resize_thumbnail: res.data.products[i].image.resize_thumbnail,
+                  price: res.data.products[i].price,
+                  marketPrice: res.data.products[i].marketPrice,
+                  weightValue: res.data.products[i].dimensions.value,
+                  weightUnit: res.data.products[i].dimensions.unit,
+                  index: i
+                });
+              }
+              // this.pageNo = this.pageNo + 1;
+              // this.getProducts();
+            }
+            this.isLoading = false;
+          }
+        }
+      }, error => {
+        this.isLoading = false;
+        console.log("ERROR::::", error.error.error);
+      });
+  }
+
+  onAddToCart(item: any) {
     Toast.makeText("Product is added to cart.", "long").show();
+    if (localstorage.getItem("cartId") != null && localstorage.getItem("cartId") != undefined) {
+      this.isLoading = true;
+      this.cart.product._id = item.id;
+      this.cart.product.dimensions.value = item.weightValue;
+      this.cart.product.dimensions.unit = item.weightUnit;
+      this.cart.product.price = item.price;
+      this.cart.product.quantity = 1;
+      this.http
+        .put(Values.BASE_URL + "carts/" + localstorage.getItem("cartId"), this.cart, {
+          headers: this.headers
+        })
+        .subscribe((res: any) => {
+          if (res != null && res != undefined) {
+            if (res.isSuccess == true) {
+              console.log(res);
+              this.isLoading = false;
+            }
+          }
+        }, error => {
+          this.isLoading = false;
+          console.log("ERROR::::", error.error.error);
+        });
+    }
+  }
+
+  onSelectWeight(item: any) {
+    this.index = item.index;
+    if (item.weightUnit == "g") {
+      this.oldWeight = parseInt(item.weightValue) / 1000;
+    }
+    else {
+      this.oldWeight = parseInt(item.weightValue);
+    }
+    this.weightDialog.show();
+  }
+
+  onWeight(item: any) {
+    this.products[this.index].weightUnit = item.unit;
+    this.products[this.index].weightValue = item.value;
+    if (item.unit == "g") {
+      var weightValue = item.value / 1000;
+    }
+    else {
+      weightValue = item.value;
+    }
+    this.products[this.index].price = (this.products[this.index].price / this.oldWeight) * weightValue;
+    this.products[this.index].marketPrice = (this.products[this.index].marketPrice / this.oldWeight) * weightValue;
+    this.weightDialog.hide();
   }
 
   onOutsideClick() {

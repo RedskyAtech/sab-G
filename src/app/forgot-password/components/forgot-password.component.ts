@@ -1,8 +1,12 @@
+import { User } from './../../models/user.model';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, AfterContentInit } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
+import { Page } from "tns-core-modules/ui/page/page";
+import { Values } from '~/app/values/values';
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -25,17 +29,20 @@ export class ForgotPasswordComponent implements OnInit, AfterContentInit {
     renderingTimeout;
     mobileBorderColor: string;
     mobileBorderWidth: string;
-    constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
+    user: User;
+    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private http: HttpClient) {
+        this.page.actionBarHidden = true;
         // this.isRendering = true;
         this.isLoading = false;
         this.mobileText = "";
         this.heading = "Forgot Password";
         this.mobileHint = "Enter your mobile number";
         this.sendOtpButton = "Send OTP"
-        this.userService.showFooter(false);
-        this.userService.showHeader(false);
+        // this.userService.showFooter(false);
+        // this.userService.showHeader(false);
         this.mobileBorderColor = "#707070";
         this.mobileBorderWidth = "1";
+        this.user = new User();
     }
     ngAfterContentInit(): void {
         // this.renderingTimeout = setTimeout(() => {
@@ -93,7 +100,33 @@ export class ForgotPasswordComponent implements OnInit, AfterContentInit {
             alert("Mobile number should be of ten digits.");
         }
         else {
-            this.routerExtensions.navigate(['/confirmOtp']);
+            this.isLoading = true;
+            this.user.phone = this.mobileText;
+            this.http
+                .post(Values.BASE_URL + "users/forgotPassword", this.user)
+                .subscribe((res: any) => {
+                    if (res != "" && res != undefined) {
+                        if (res.isSuccess == true) {
+                            console.log(res);
+                            this.isLoading = false;
+                            this.routerExtensions.navigate(['/setPassword'], {
+                                queryParams: {
+                                    "token": res.data.token,
+                                    "phone": this.mobileText
+                                },
+                                clearHistory: true,
+                            });
+                        }
+                    }
+                }, error => {
+                    this.isLoading = false;
+                    if (error.error.error == undefined) {
+                        alert("May be your network connection is low.")
+                    }
+                    else {
+                        alert(error.error.error);
+                    }
+                });
         }
     }
 
