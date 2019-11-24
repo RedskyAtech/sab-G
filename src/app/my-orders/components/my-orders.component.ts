@@ -2,6 +2,10 @@ import { Component, OnInit, AfterContentInit } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
+import { Page } from "tns-core-modules/ui/page/page";
+import * as localstorage from "nativescript-localstorage";
+import { HttpHeaders, HttpClient } from "@angular/common/http";
+import { Values } from "~/app/values/values";
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -28,8 +32,14 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
     dateTime: string;
     isCurrentButton: boolean;
     isPastButton: boolean;
+    token: string;
+    headers: HttpHeaders;
+    query: string;
+    pageNo: number;
+    items: number;
 
-    constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
+    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private http: HttpClient) {
+        this.page.actionBarHidden = true;
         // this.isRendering = true;
         this.isCurrentButton = true;
         this.isPastButton = false;
@@ -50,18 +60,21 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
         this.deliveryCharges = "FREE";
         this.total = "120"
         this.dateTime = "22 Aug 9:30"
-        this.userService.showFooter(true);
-        this.userService.showHeader(true);
         this.userService.headerLabel("My orders");
-        this.waitingProducts.push(
-            { image: "res://onion", date: "22 Aug 9:30", quantity: "3", price: "95", orderStatus: "Waiting for progress" },
-            { image: "res://lady_finger", date: "22 Aug 2:30", quantity: "4", price: "105", orderStatus: "Waiting for progress" },
-            { image: "res://potato", date: "22 Aug 4:15", quantity: "5", price: "170", orderStatus: "Waiting for progress" },
-            { image: "res://tomato", date: "22 Aug 9:30", quantity: "6", price: "200", orderStatus: "Waiting for progress" },
-            { image: "res://palak", date: "22 Aug 2:30", quantity: "7", price: "150", orderStatus: "Waiting for progress" },
-            { image: "res://tomato", date: "22 Aug 9:30", quantity: "6", price: "200", orderStatus: "Waiting for progress" },
-            { image: "res://palak", date: "22 Aug 2:30", quantity: "7", price: "150", orderStatus: "Waiting for progress" },
-        );
+        this.userService.showBack("visible");
+        this.userService.activeScreen("myOrders");
+        this.query = "";
+        this.pageNo = 1;
+        this.items = 10;
+        // this.waitingProducts.push(
+        //     { image: "res://onion", date: "22 Aug 9:30", quantity: "3", price: "95", orderStatus: "Waiting for progress" },
+        //     { image: "res://lady_finger", date: "22 Aug 2:30", quantity: "4", price: "105", orderStatus: "Waiting for progress" },
+        //     { image: "res://potato", date: "22 Aug 4:15", quantity: "5", price: "170", orderStatus: "Waiting for progress" },
+        //     { image: "res://tomato", date: "22 Aug 9:30", quantity: "6", price: "200", orderStatus: "Waiting for progress" },
+        //     { image: "res://palak", date: "22 Aug 2:30", quantity: "7", price: "150", orderStatus: "Waiting for progress" },
+        //     { image: "res://tomato", date: "22 Aug 9:30", quantity: "6", price: "200", orderStatus: "Waiting for progress" },
+        //     { image: "res://palak", date: "22 Aug 2:30", quantity: "7", price: "150", orderStatus: "Waiting for progress" },
+        // );
         this.orderedProducts.push(
             { image: "res://potato", date: "22 Aug 4:15", quantity: "5", price: "170", orderStatus: "Order delivered" },
             { image: "res://tomato", date: "22 Aug 9:30", quantity: "6", price: "200", orderStatus: "Order delivered" },
@@ -70,6 +83,14 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
             { image: "res://palak", date: "22 Aug 2:30", quantity: "7", price: "150", orderStatus: "Order delivered" },
         );
         this.products = this.waitingProducts;
+        if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
+            this.token = localstorage.getItem("token");
+            this.headers = new HttpHeaders({
+                "Content-Type": "application/json",
+                "x-access-token": this.token
+            });
+            this.getOrders();
+        }
     }
 
     protected get shadowColor(): Color {
@@ -150,6 +171,100 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
         }, 10)
     }
 
+    onHeaderLoaded(args: any) {
+        var headerCard = <any>args.object;
+        setTimeout(() => {
+            if (headerCard.android) {
+                let nativeGridMain = headerCard.android;
+                var shape = new android.graphics.drawable.GradientDrawable();
+                shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+                shape.setColor(android.graphics.Color.parseColor('white'));
+                shape.setCornerRadius(0)
+                nativeGridMain.setBackgroundDrawable(shape);
+                nativeGridMain.setElevation(5)
+            } else if (headerCard.ios) {
+                let nativeGridMain = headerCard.ios;
+                nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
+                nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
+                nativeGridMain.layer.shadowOpacity = 0.5
+                nativeGridMain.layer.shadowRadius = 5.0
+                nativeGridMain.layer.shadowRadius = 5.0
+            }
+            // this.changeDetector.detectChanges();
+        }, 50)
+    }
+
+    onFooterLoaded(args: any) {
+        var footerCard = <any>args.object;
+        setTimeout(() => {
+            if (footerCard.android) {
+                let nativeGridMain = footerCard.android;
+                var shape = new android.graphics.drawable.GradientDrawable();
+                shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+                shape.setColor(android.graphics.Color.parseColor('white'));
+                shape.setCornerRadius(0)
+                nativeGridMain.setBackgroundDrawable(shape);
+                nativeGridMain.setElevation(5)
+            } else if (footerCard.ios) {
+                let nativeGridMain = footerCard.ios;
+                nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
+                nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
+                nativeGridMain.layer.shadowOpacity = 0.5
+                nativeGridMain.layer.shadowRadius = 5.0
+                nativeGridMain.layer.shadowRadius = 5.0
+            }
+            // this.changeDetector.detectChanges();
+        }, 50)
+    }
+
+    getOrders() {
+        this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${this.pageNo}&items=${this.items}`
+        this.http
+            .get(Values.BASE_URL + "orders?" + this.query, {
+                headers: this.headers
+            })
+            .subscribe((res: any) => {
+                if (res != null && res != undefined) {
+                    if (res.isSuccess == true) {
+                        if (res.data.orders.length > 0) {
+                            // console.log("Orders Length::::::", res.data.orders.length);
+                            console.trace("ORDERS:::", res);
+                            for (var i = 0; i < res.data.orders.length; i++) {
+                                if (res.data.orders[i].status == "pending") {
+                                    var status = "Waiting for progress";
+                                }
+                                var date = res.data.orders[i].date;
+                                var dateTime = new Date(date);
+                                var hours = dateTime.getHours();
+                                var ampm = "am";
+                                if (hours > 12) {
+                                    var hours = hours - 12;
+                                    var ampm = "pm";
+                                }
+                                var minutes = dateTime.getMinutes().toString();
+                                if (minutes.length < 2) {
+                                    minutes = "0" + minutes;
+                                }
+                                date = dateTime.getDate().toString() + "/" + (dateTime.getMonth() + 1).toString() + "/" + dateTime.getFullYear().toString() + " (" + hours + ":" + minutes + " " + ampm + ")";
+
+                                this.waitingProducts.push({
+                                    id: res.data.orders[i]._id,
+                                    image: res.data.orders[i].products[0].image.url,
+                                    status: status,
+                                    quantity: res.data.orders[i].products.length + 1,
+                                    grandTotal: res.data.orders[i].grandTotal,
+                                    date: date
+                                })
+                            }
+                        }
+                    }
+                }
+            }, error => {
+                this.isLoading = false;
+                console.log("ERROR::::", error.error.error);
+            });
+    }
+
     onCurrentClick() {
         this.isCurrentButton = true;
         this.isPastButton = false;
@@ -164,8 +279,11 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
         this.products = this.orderedProducts;
     }
 
-    onDetailsClick() {
-        // alert("details clicked");
-        this.routerExtensions.navigate(['/orderDetails']);
+    onDetailsClick(item: any) {
+        this.routerExtensions.navigate(['/orderDetails'], {
+            queryParams: {
+                "orderId": item.id
+            },
+        });
     }
 }

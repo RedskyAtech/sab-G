@@ -1,3 +1,5 @@
+import { FooterModule } from './../shared/footer/footer.module';
+import { HeaderModule } from './../shared/header/header.module';
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NgModalModule } from "../modals/ng-modal";
 import { HttpClientModule } from "@angular/common/http";
@@ -18,7 +20,9 @@ import { MyOrdersRoutingModule } from "./my-orders-routing.module";
         NgModalModule,
         HttpClientModule,
         MyOrdersRoutingModule,
-        GridViewModule
+        GridViewModule,
+        HeaderModule,
+        FooterModule
     ],
     declarations: [
         MyOrdersComponent

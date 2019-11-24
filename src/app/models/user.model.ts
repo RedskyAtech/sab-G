@@ -1,3 +1,4 @@
+import { DeliveryAddress } from './deliveryAddress.model';
 import { Images } from './images.model';
 import { Address } from './address.model';
 export class User {
@@ -10,6 +11,7 @@ export class User {
     firstName: string;
     lastName: string;
     address: Address;
+    deliveryAddress: DeliveryAddress;
     constructor(obj?: any) {
         if (!obj) {
             return;
@@ -21,5 +23,6 @@ export class User {
         this.firstName = obj.firstName;
         this.lastName = obj.lastName;
         this.address = obj.address;
+        this.deliveryAddress = obj.deliveryAddress;
     }
 }

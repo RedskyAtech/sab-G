@@ -55,14 +55,14 @@ export class FooterComponent implements OnInit {
                 this.isMenuHighlighted = "hidden";
                 this.isCartHighlighted = "hidden";
             }
-            if (screen == "menu" || screen == "viewOrders" || screen == "orderDetails") {
+            if (screen == "menu" || screen == "orderDetails" || screen == "congratulations" || screen == "myOrders") {
                 this.isHomeHighlighted = "hidden";
                 this.isProfileHighlighted = "hidden";
                 this.isSearchHighlighted = "hidden";
                 this.isMenuHighlighted = "visible";
                 this.isCartHighlighted = "hidden";
             }
-            if (screen == "cart") {
+            if (screen == "cart" || screen == "addAddress") {
                 this.isHomeHighlighted = "hidden";
                 this.isProfileHighlighted = "hidden";
                 this.isSearchHighlighted = "hidden";

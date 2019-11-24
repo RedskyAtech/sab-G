@@ -251,8 +251,8 @@ export class ProductsComponent implements OnInit, AfterContentInit {
                   index: i
                 });
               }
-              // this.pageNo = this.pageNo + 1;
-              // this.getProducts();
+              this.pageNo = this.pageNo + 1;
+              this.getProducts();
             }
             this.isLoading = false;
           }
@@ -272,6 +272,7 @@ export class ProductsComponent implements OnInit, AfterContentInit {
       this.cart.product.dimensions.unit = item.weightUnit;
       this.cart.product.price = item.price;
       this.cart.product.quantity = 1;
+      console.log(this.cart);
       this.http
         .put(Values.BASE_URL + "carts/" + localstorage.getItem("cartId"), this.cart, {
           headers: this.headers

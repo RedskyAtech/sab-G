@@ -314,6 +314,7 @@ export class CartComponent implements OnInit, AfterContentInit {
     }
 
     getCart() {
+        this.isLoading = true;
         this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${this.pageNo}&items=${this.items}`
         this.http
             .get(Values.BASE_URL + "carts?" + this.query, {
@@ -344,12 +345,11 @@ export class CartComponent implements OnInit, AfterContentInit {
                                     index: i
                                 });
                             }
-
-                            this.isLoading = false;
                         }
                         else {
                             this.isCart = false;
                         }
+                        this.isLoading = false;
                     }
                 }
             }, error => {

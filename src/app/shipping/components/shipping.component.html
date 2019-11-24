@@ -56,7 +56,7 @@
 
     <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
         <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
-            [busy]="isFavouring" rowSpan="1" colSpan="1">
+            [busy]="isLoading" rowSpan="1" colSpan="1">
         </ActivityIndicator>
     </GridLayout>
 </Page>
