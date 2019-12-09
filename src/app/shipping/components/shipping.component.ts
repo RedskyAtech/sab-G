@@ -1,9 +1,16 @@
+import { User } from '~/app/models/user.model';
 import { Component, OnInit, AfterContentInit } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
 import * as Toast from 'nativescript-toast';
+import { Page } from "tns-core-modules/ui/page/page";
+import { Address } from '~/app/models/address.model';
+import { Values } from '~/app/values/values';
+import * as localstorage from "nativescript-localstorage";
+import { HttpClient } from '@angular/common/http';
+
 declare const android: any;
 declare const CGSizeMake: any;
 
@@ -33,10 +40,14 @@ export class ShippingComponent implements OnInit, AfterContentInit {
     floorHint: string;
     floorBorderColor: string;
     floorBorderWidth: string;
-    updateProfileButton: string;
+    addAddressButton: string;
     forgotPassword: string;
     renderingTimeout;
-    constructor(private routerExtensions: RouterExtensions, private userService: UserService) {
+    user: User;
+    address: Address;
+    token: string;
+    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private http: HttpClient) {
+        this.page.actionBarHidden = true;
         // this.isRendering = true;
     }
     ngAfterContentInit(): void {
@@ -62,11 +73,18 @@ export class ShippingComponent implements OnInit, AfterContentInit {
         this.floorHint = "Floor";
         this.floorBorderColor = "#707070";
         this.floorBorderWidth = "1";
-        this.updateProfileButton = "Update Profile"
+        this.addAddressButton = "Add Address";
         this.forgotPassword = "Forgot password?";
-        this.userService.showFooter(true);
-        this.userService.showHeader(true);
-        this.userService.headerLabel("Shipping");
+        this.userService.headerLabel("Address");
+        this.userService.activeScreen("shipping");
+        this.user = new User();
+        this.address = new Address();
+        this.user.address = new Address();
+        this.token = "";
+        if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
+            this.token = localstorage.getItem("token");
+            this.getAddress();
+        }
     }
 
     protected get shadowColor(): Color {
@@ -75,6 +93,39 @@ export class ShippingComponent implements OnInit, AfterContentInit {
 
     protected get shadowOffset(): number {
         return 2.0
+    }
+
+    getAddress() {
+        this.isLoading = true;
+        this.http
+            .get(Values.BASE_URL + "users/" + localstorage.getItem("userId"), {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": this.token
+                }
+            })
+            .subscribe((res: any) => {
+                if (res != null && res != undefined) {
+                    if (res.isSuccess == true) {
+                        console.trace(res);
+                        if (res.data.profile.address) {
+                            this.addAddressButton = "Update address";
+                        }
+                        // this.houseNoText = res.data.profile.address.houseNo;
+                        this.apartmentText = res.data.profile.address.apartmentName;
+                        this.cityText = res.data.profile.address.city;
+                        this.addressLineText = res.data.profile.address.addressLine;
+                        this.floorText = res.data.profile.address.floor;
+                        // this.streetText = res.data.profile.address.streetDetails;
+                        // this.areaText = res.data.profile.address.areaDetails;
+                        // this.landmarkText = res.data.profile.address.landmark;
+                        this.isLoading = false;
+                    }
+                }
+            }, error => {
+                this.isLoading = false;
+                console.log("ERROR::::", error.error.error);
+            });
     }
 
     onShippingLoaded(args: any) {
@@ -99,6 +150,52 @@ export class ShippingComponent implements OnInit, AfterContentInit {
             // this.changeDetector.detectChanges();
         }, 50)
 
+    }
+
+    onHeaderLoaded(args: any) {
+        var headerCard = <any>args.object;
+        setTimeout(() => {
+            if (headerCard.android) {
+                let nativeGridMain = headerCard.android;
+                var shape = new android.graphics.drawable.GradientDrawable();
+                shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+                shape.setColor(android.graphics.Color.parseColor('white'));
+                shape.setCornerRadius(0)
+                nativeGridMain.setBackgroundDrawable(shape);
+                nativeGridMain.setElevation(5)
+            } else if (headerCard.ios) {
+                let nativeGridMain = headerCard.ios;
+                nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
+                nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
+                nativeGridMain.layer.shadowOpacity = 0.5
+                nativeGridMain.layer.shadowRadius = 5.0
+                nativeGridMain.layer.shadowRadius = 5.0
+            }
+            // this.changeDetector.detectChanges();
+        }, 50)
+    }
+
+    onFooterLoaded(args: any) {
+        var footerCard = <any>args.object;
+        setTimeout(() => {
+            if (footerCard.android) {
+                let nativeGridMain = footerCard.android;
+                var shape = new android.graphics.drawable.GradientDrawable();
+                shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+                shape.setColor(android.graphics.Color.parseColor('white'));
+                shape.setCornerRadius(0)
+                nativeGridMain.setBackgroundDrawable(shape);
+                nativeGridMain.setElevation(5)
+            } else if (footerCard.ios) {
+                let nativeGridMain = footerCard.ios;
+                nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
+                nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
+                nativeGridMain.layer.shadowOpacity = 0.5
+                nativeGridMain.layer.shadowRadius = 5.0
+                nativeGridMain.layer.shadowRadius = 5.0
+            }
+            // this.changeDetector.detectChanges();
+        }, 50)
     }
 
     public cityTextField(args) {
@@ -127,17 +224,41 @@ export class ShippingComponent implements OnInit, AfterContentInit {
         this.floorBorderWidth = "2";
     }
 
-    onUpdateProfileClick() {
-        if (this.cityText == "") {
-            alert("Please enter city.");
+    onAddAddress() {
+        this.isLoading = true;
+        if (this.apartmentText != "") {
+            this.user.address.apartmentName = this.apartmentText;
         }
-        else if (this.addressLineText == "") {
-            alert("Please enter address line.");
+        if (this.cityText != "") {
+            this.user.address.city = this.cityText;
         }
-        else {
-            Toast.makeText("Shipping address updated successffuly.", "long").show();
-            this.routerExtensions.navigate(['/profile']);
+        if (this.addressLineText != "") {
+            this.user.address.addressLine = this.addressLineText;
         }
+        if (this.floorText != "") {
+            this.user.address.floor = this.floorText;
+        }
+        console.log(this.user);
+        this.http
+            .put(Values.BASE_URL + "users/" + localstorage.getItem("userId"), this.user, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": this.token
+                }
+            })
+            .subscribe((res: any) => {
+                if (res != null && res != undefined) {
+                    if (res.isSuccess == true) {
+                        console.log("ADDRESS:::", res);
+                        Toast.makeText("Profile address is successfully added!!!", "long").show();
+                        this.isLoading = false;
+                        this.routerExtensions.navigate(['/profile']);
+                    }
+                }
+            }, error => {
+                this.isLoading = false;
+                console.log("ERROR::::", error.error.error);
+            });
     }
 
     onCancelClick() {

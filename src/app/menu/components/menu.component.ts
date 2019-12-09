@@ -5,6 +5,8 @@ import { UserService } from "~/app/services/user.service";
 import { ModalComponent } from "~/app/modals/modal.component";
 import * as localstorage from "nativescript-localstorage";
 import { Page } from "tns-core-modules/ui/page/page";
+import { Values } from "~/app/values/values";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -23,7 +25,10 @@ export class MenuComponent implements OnInit, AfterContentInit {
     renderingTimeout;
     profilePicture: string;
     userName: string;
-    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page) {
+    token: string;
+    headers: HttpHeaders;
+    userId: string;
+    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private http: HttpClient) {
         this.page.actionBarHidden = true;
         // this.isRendering = true;
         // this.isLoading = false;
@@ -36,7 +41,36 @@ export class MenuComponent implements OnInit, AfterContentInit {
     ngOnInit(): void {
         this.userService.activeScreen("menu");
         this.profilePicture = "res://man";
-        this.userName = "Shinu Verma";
+        this.userName = "";
+        this.token = "";
+        this.userId = "";
+        if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
+            this.token = localstorage.getItem("token");
+            this.headers = new HttpHeaders({
+                "Content-Type": "application/json",
+                "x-access-token": this.token
+            });
+            if (localstorage.getItem("userId") != null && localstorage.getItem("userId") != undefined) {
+                this.userId = localstorage.getItem("userId")
+            }
+        }
+        this.getProfile();
+        this.page.on('navigatedTo', (data) => {
+            if (data.isBackNavigation) {
+                this.userService.activeScreen("menu");
+                if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
+                    this.token = localstorage.getItem("token");
+                    this.headers = new HttpHeaders({
+                        "Content-Type": "application/json",
+                        "x-access-token": this.token
+                    });
+                    if (localstorage.getItem("userId") != null && localstorage.getItem("userId") != undefined) {
+                        this.userId = localstorage.getItem("userId")
+                    }
+                }
+                this.getProfile();
+            }
+        });
     }
 
     protected get shadowColor(): Color {
@@ -88,6 +122,40 @@ export class MenuComponent implements OnInit, AfterContentInit {
                 nativeImageView.layer.shadowRadius = 5.0
             }
         }, 400)
+    }
+
+    getProfile() {
+        this.isLoading = true;
+        this.http
+            .get(Values.BASE_URL + "users/" + this.userId, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": this.token
+                }
+            })
+            .subscribe((res: any) => {
+                if (res != null && res != undefined) {
+                    if (res.isSuccess == true) {
+                        console.trace("PROFILE:::", res);
+                        this.isLoading = false;
+                        if (res.data.profile.firstName != undefined) {
+                            console.log("dshdskjhdkjh dshkdjh dshkfdkj");
+                            this.userName = res.data.profile.firstName;
+                            if (res.data.profile.lastName != undefined) {
+                                this.userName = this.userName + " " + res.data.profile.lastName;
+                            }
+                        }
+                        this.profilePicture = res.data.profile.image.url;
+                    }
+                }
+            }, error => {
+                this.isLoading = false;
+                if (error.error.error == undefined) {
+                    alert("May be your network connection is low.")
+                } else {
+                    console.log("ERROR::::", error.error.error);
+                }
+            });
     }
 
     onNextClick() {

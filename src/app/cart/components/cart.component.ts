@@ -68,7 +68,7 @@ export class CartComponent implements OnInit, AfterContentInit {
         this.product = new Product();
         this.cart.product = new Product();
         this.isCart = false;
-        this.cartMessage = "Cart is empty";
+        this.cartMessage = "";
         this.dimensions = new Dimensions();
         this.cart.product.dimensions = new Dimensions();
         if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
@@ -269,12 +269,17 @@ export class CartComponent implements OnInit, AfterContentInit {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
                         this.isLoading = false;
-                        this.cartProducts[item.index].quantity = res.data.products[item.index].quantity;
-                        this.subtotal = res.data.grandTotal;
-                        this.totalItems = res.data.products.length;
-                        this.total = res.data.grandTotal;
-                        // this.cartProducts = [];
-                        // this.getCart();
+                        console.log(this.cart.product.quantity);
+                        if (this.cart.product.quantity == 0) {
+                            this.cartProducts = [];
+                            this.getCart();
+                        }
+                        else {
+                            this.cartProducts[item.index].quantity = res.data.products[item.index].quantity;
+                            this.subtotal = res.data.grandTotal;
+                            this.totalItems = res.data.products.length;
+                            this.total = res.data.grandTotal;
+                        }
                     }
                 }
             }, error => {
@@ -326,6 +331,7 @@ export class CartComponent implements OnInit, AfterContentInit {
                         console.trace("CARTS:::::", res);
                         if (res.data.products.length > 0) {
                             this.isCart = true;
+                            this.cartMessage = "";
                             this.subtotal = res.data.grandTotal;
                             this.totalItems = res.data.products.length;
                             this.total = res.data.grandTotal;
@@ -348,6 +354,7 @@ export class CartComponent implements OnInit, AfterContentInit {
                         }
                         else {
                             this.isCart = false;
+                            this.cartMessage = "Cart is empty.";
                         }
                         this.isLoading = false;
                     }

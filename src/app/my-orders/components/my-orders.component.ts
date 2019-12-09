@@ -21,9 +21,7 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
     // isRendering: boolean;
     isLoading: boolean;
     renderingTimeout;
-    orderedProducts;
-    waitingProducts;
-    products;
+    orders;
     subtotal: string;
     savedRs: string;
     totalItems: string;
@@ -37,7 +35,9 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
     query: string;
     pageNo: number;
     items: number;
-
+    history: boolean;
+    orderMessage: string;
+    isOrders: boolean;
     constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private http: HttpClient) {
         this.page.actionBarHidden = true;
         // this.isRendering = true;
@@ -50,9 +50,7 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
         // }, 5000)
     }
     ngOnInit(): void {
-        this.orderedProducts = [];
-        this.waitingProducts = [];
-        this.products = [];
+        this.orders = [];
         this.isLoading = false;
         this.subtotal = "125";
         this.savedRs = "5.00";
@@ -66,6 +64,9 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
         this.query = "";
         this.pageNo = 1;
         this.items = 10;
+        this.history = false;
+        this.orderMessage = "";
+        this.isOrders = true;
         // this.waitingProducts.push(
         //     { image: "res://onion", date: "22 Aug 9:30", quantity: "3", price: "95", orderStatus: "Waiting for progress" },
         //     { image: "res://lady_finger", date: "22 Aug 2:30", quantity: "4", price: "105", orderStatus: "Waiting for progress" },
@@ -75,14 +76,13 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
         //     { image: "res://tomato", date: "22 Aug 9:30", quantity: "6", price: "200", orderStatus: "Waiting for progress" },
         //     { image: "res://palak", date: "22 Aug 2:30", quantity: "7", price: "150", orderStatus: "Waiting for progress" },
         // );
-        this.orderedProducts.push(
-            { image: "res://potato", date: "22 Aug 4:15", quantity: "5", price: "170", orderStatus: "Order delivered" },
-            { image: "res://tomato", date: "22 Aug 9:30", quantity: "6", price: "200", orderStatus: "Order delivered" },
-            { image: "res://palak", date: "22 Aug 2:30", quantity: "7", price: "150", orderStatus: "Order delivered" },
-            { image: "res://tomato", date: "22 Aug 9:30", quantity: "6", price: "200", orderStatus: "Order delivered" },
-            { image: "res://palak", date: "22 Aug 2:30", quantity: "7", price: "150", orderStatus: "Order delivered" },
-        );
-        this.products = this.waitingProducts;
+        // this.orderedProducts.push(
+        //     { image: "res://potato", date: "22 Aug 4:15", quantity: "5", price: "170", orderStatus: "Order delivered" },
+        //     { image: "res://tomato", date: "22 Aug 9:30", quantity: "6", price: "200", orderStatus: "Order delivered" },
+        //     { image: "res://palak", date: "22 Aug 2:30", quantity: "7", price: "150", orderStatus: "Order delivered" },
+        //     { image: "res://tomato", date: "22 Aug 9:30", quantity: "6", price: "200", orderStatus: "Order delivered" },
+        //     { image: "res://palak", date: "22 Aug 2:30", quantity: "7", price: "150", orderStatus: "Order delivered" },
+        // );
         if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
             this.token = localstorage.getItem("token");
             this.headers = new HttpHeaders({
@@ -91,6 +91,12 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
             });
             this.getOrders();
         }
+        this.page.on('navigatedTo', (data) => {
+            if (data.isBackNavigation) {
+                this.userService.headerLabel("My orders");
+                this.userService.activeScreen("myOrders");
+            }
+        });
     }
 
     protected get shadowColor(): Color {
@@ -218,7 +224,8 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
     }
 
     getOrders() {
-        this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${this.pageNo}&items=${this.items}`
+        this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${this.pageNo}&items=${this.items}&history=${this.history}`
+        // console.log(this.query);
         this.http
             .get(Values.BASE_URL + "orders?" + this.query, {
                 headers: this.headers
@@ -227,11 +234,21 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
                         if (res.data.orders.length > 0) {
-                            // console.log("Orders Length::::::", res.data.orders.length);
+                            this.isOrders = true;
+                            this.orderMessage = "";
                             console.trace("ORDERS:::", res);
                             for (var i = 0; i < res.data.orders.length; i++) {
                                 if (res.data.orders[i].status == "pending") {
                                     var status = "Waiting for progress";
+                                }
+                                else if (res.data.orders[i].status == "rejected") {
+                                    var status = "Order has been rejected.";
+                                }
+                                else if (res.data.orders[i].status == "confirmed") {
+                                    var status = "Order has been confirmed.";
+                                }
+                                else {
+                                    var status = "Order has been delivered.";
                                 }
                                 var date = res.data.orders[i].date;
                                 var dateTime = new Date(date);
@@ -241,20 +258,35 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
                                     var hours = hours - 12;
                                     var ampm = "pm";
                                 }
+                                var finalHours = "";
+                                if (hours < 10) {
+                                    finalHours = "0" + hours;
+                                }
+                                else {
+                                    finalHours = hours.toString();
+                                }
                                 var minutes = dateTime.getMinutes().toString();
                                 if (minutes.length < 2) {
                                     minutes = "0" + minutes;
                                 }
-                                date = dateTime.getDate().toString() + "/" + (dateTime.getMonth() + 1).toString() + "/" + dateTime.getFullYear().toString() + " (" + hours + ":" + minutes + " " + ampm + ")";
-
-                                this.waitingProducts.push({
+                                date = dateTime.getDate().toString() + "/" + (dateTime.getMonth() + 1).toString() + "/" + dateTime.getFullYear().toString() + " (" + finalHours + ":" + minutes + " " + ampm + ")";
+                                this.orders.push({
                                     id: res.data.orders[i]._id,
                                     image: res.data.orders[i].products[0].image.url,
                                     status: status,
-                                    quantity: res.data.orders[i].products.length + 1,
+                                    quantity: res.data.orders[i].products.length,
                                     grandTotal: res.data.orders[i].grandTotal,
-                                    date: date
+                                    date: date,
+                                    orderId: res.data.orders[i].orderId
                                 })
+                            }
+                            this.pageNo = this.pageNo + 1;
+                            this.getOrders();
+                        }
+                        else {
+                            if (this.pageNo == 1) {
+                                this.isOrders = false;
+                                this.orderMessage = "There is no orders.";
                             }
                         }
                     }
@@ -268,15 +300,19 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
     onCurrentClick() {
         this.isCurrentButton = true;
         this.isPastButton = false;
-        this.products = [];
-        this.products = this.waitingProducts;
+        this.orders = [];
+        this.history = false;
+        this.pageNo = 1;
+        this.getOrders();
     }
 
     onPastClick() {
         this.isCurrentButton = false;
         this.isPastButton = true;
-        this.products = [];
-        this.products = this.orderedProducts;
+        this.orders = [];
+        this.history = true;
+        this.pageNo = 1;
+        this.getOrders();
     }
 
     onDetailsClick(item: any) {

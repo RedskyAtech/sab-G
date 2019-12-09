@@ -106,22 +106,36 @@
             <StackLayout row="1" width="90%" height="10%" verticalAlignment="middle">
                 <Label text="Account" fontSize="20%" fontWeight="500" color="#707070"></Label>
             </StackLayout>
-            <GridLayout row="2" height="20%" width="100%">
+            <GridLayout row="2" height="30%" width="100%">
                 <GridLayout #optionsCard orientation="vertical" verticalAlignment="top" width="90%" height="90%"
-                    rows="auto,auto,auto" (loaded)="onOptionsLoaded($event)">
-                    <GridLayout row="0" height="49%" width="100%">
+                    rows="auto,auto,auto,auto,auto" (loaded)="onOptionsLoaded($event)">
+                    <GridLayout row="0" height="33%" width="100%">
                         <StackLayout width="90%" height="100%" verticalAlignment="middle">
                             <!-- <Label class="option-heading" text="Change Password"></Label> -->
-                            <TextField [hint]="nameHint" [text]="nameText" width="100%" fontSize="16%" color="#23A6DB"
-                                style.placeholderColor="#B9B9B9" (textChange)="nameTextField($event)"
-                                borderColor="transparent" borderWidth="1" autocorrect="false">
+                            <TextField [hint]="firstNameHint" [text]="firstNameText" width="100%" fontSize="16%"
+                                color="#23A6DB" style.placeholderColor="#B9B9B9"
+                                (textChange)="firstNameTextField($event)" borderColor="transparent" borderWidth="1"
+                                autocorrect="false">
                             </TextField>
                         </StackLayout>
                     </GridLayout>
                     <GridLayout row="1" height="1%" width="100%" verticalAlignment="middle">
                         <StackLayout class="seperator-line"></StackLayout>
                     </GridLayout>
-                    <GridLayout row="2" height="49%" width="100%">
+                    <GridLayout row="2" height="33%" width="100%">
+                        <StackLayout width="90%" height="100%" verticalAlignment="middle">
+                            <!-- <Label class="option-heading" text="Change Password"></Label> -->
+                            <TextField [hint]="lastNameHint" [text]="lastNameText" width="100%" fontSize="16%"
+                                color="#23A6DB" style.placeholderColor="#B9B9B9"
+                                (textChange)="lastNameTextField($event)" borderColor="transparent" borderWidth="1"
+                                autocorrect="false">
+                            </TextField>
+                        </StackLayout>
+                    </GridLayout>
+                    <GridLayout row="3" height="1%" width="100%" verticalAlignment="middle">
+                        <StackLayout class="seperator-line"></StackLayout>
+                    </GridLayout>
+                    <GridLayout row="4" height="33%" width="100%">
                         <StackLayout width="90%" height="100%" verticalAlignment="middle">
                             <TextField [hint]="phoneHint" editable="false" [text]="phoneText" width="100%"
                                 fontSize="16%" color="#23A6DB" style.placeholderColor="#B9B9B9"
@@ -158,7 +172,7 @@
                 <Button class="submit-button" [text]="submitButton" (tap)="onSubmitClick()"
                     horizontalAlignment="center"></Button>
             </GridLayout>
-            <StackLayout row="5" #footerCard (loaded)="onFooterLoaded($event)" marginTop="10%" height="8%" width="100%">
+            <StackLayout row="5" #footerCard (loaded)="onFooterLoaded($event)" height="8%" width="100%">
                 <ns-footer></ns-footer>
             </StackLayout>
         </GridLayout>

@@ -10,6 +10,10 @@
         </ng-template>
       </GridView>
     </CardView>
+    <StackLayout *ngIf="!isProducts" width="95%" height="10%" verticalAlignment="middle">
+      <Label [text]="productMessage" fontSize="16%" color="#8BDE22" fontWeight="500" textAlignment="center"
+        textWrap="true"></Label>
+    </StackLayout>
     <GridLayout #headerCard (loaded)="onHeaderLoaded($event)" verticalAlignment="top" height="8%" width="100%">
       <ns-header></ns-header>
     </GridLayout>

@@ -28,32 +28,26 @@
                                     <Label [text]="item.name" color="#707070" fontSize="18%"
                                         textAlignment="left"></Label>
                                 </StackLayout>
-                                <GridLayout row="1" width="95%" height="25%" columns="auto,auto"
-                                    verticalAlignment="middle">
-                                    <StackLayout col="0" height="100%" width="70%" verticalAlignment="middle"
+                                <GridLayout row="1" width="95%" height="25%" verticalAlignment="middle">
+                                    <!-- <StackLayout col="0" height="100%" width="70%" verticalAlignment="middle"
                                         orientation="horizontal">
                                         <Label text="MRP " color="#707070" fontSize="12%" textAlignment="left"></Label>
                                         <Label text="Rs " color="#707070" fontSize="12%" textAlignment="left"></Label>
                                         <Label [text]="item.marketPrice" color="#707070" fontSize="12%"
                                             textAlignment="left"></Label>
-                                    </StackLayout>
+                                    </StackLayout> -->
                                     <!-- <StackLayout col="0" height="1" width="32%" horizontalAlignment="left"
                                         verticalAlignment="middle" marginLeft="18%" backgroundColor="#707070">
                                     </StackLayout> -->
-                                    <StackLayout col="1" height="100%" width="30%" verticalAlignment="middle"
-                                        orientation="horizontal">
-                                        <Label [text]="item.weightValue" color="#707070" fontSize="12%" fontWeight="500"
-                                            textAlignment="left"></Label>
-                                        <Label text=" "></Label>
-                                        <Label [text]="item.weightUnit" color="#707070" fontSize="12%" fontWeight="500"
-                                            textAlignment="left"></Label>
+                                    <StackLayout height="100%" width="50%" verticalAlignment="middle"
+                                        horizontalAlignment="left">
+                                        <Label [text]="item.weightValue+' '+item.weightUnit" color="#707070"
+                                            fontSize="12%" fontWeight="500" textAlignment="left"></Label>
                                     </StackLayout>
                                 </GridLayout>
                                 <StackLayout row="2" width="95%" height="35%" verticalAlignment="middle"
                                     orientation="horizontal">
-                                    <Label text="Rs " color="#404040" fontSize="18%" textAlignment="left"
-                                        fontWeight="500"></Label>
-                                    <Label [text]="item.price" color="#404040" fontSize="18%" textAlignment="left"
+                                    <Label [text]="'Rs '+item.price" color="#404040" fontSize="18%" textAlignment="left"
                                         fontWeight="500"></Label>
                                 </StackLayout>
                             </GridLayout>

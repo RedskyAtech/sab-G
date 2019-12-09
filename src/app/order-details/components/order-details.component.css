@@ -8,7 +8,7 @@
 
 .price-heading-container{
     width:50%;
-    margin-left:10%;
+    /* margin-left:10%; */
     height:100%;
     vertical-align:middle;
 }
@@ -19,7 +19,7 @@
 }
 
 .price-detail-container{
-    width:30%;
+    width:50%;
     height:100%;
     vertical-align:middle;
     horizontal-align:right;

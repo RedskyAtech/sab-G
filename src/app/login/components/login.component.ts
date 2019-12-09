@@ -57,7 +57,9 @@ export class LoginComponent implements OnInit, AfterContentInit {
         this.passwordBorderWidth = "1";
         this.passwordSecure = true;
         this.user = new User();
-        if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
+        console.log(localstorage.getItem("token"));
+        if (localstorage.getItem("token")) {
+            console.log("jhgjh hjghjg jhgg");
             this.routerExtensions.navigate(['/home']);
         }
     }

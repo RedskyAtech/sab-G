@@ -28,11 +28,17 @@ export class OrderDetailsComponent implements OnInit, AfterContentInit {
     totalItems: string;
     deliveryCharges: string;
     total: string;
-    dateTime: string;
+    date: string;
     token: string;
     headers: HttpHeaders;
+    id: string;
+    address: string;
+    name: string;
+    city: string;
+    apartment: string;
+    contactNumber: string;
+    orderStatus: string;
     orderId: string;
-
     constructor(private routerExtensions: RouterExtensions, private userService: UserService, private route: ActivatedRoute, private http: HttpClient, private page: Page) {
         this.page.actionBarHidden = true;
         // this.isRendering = true;
@@ -45,16 +51,23 @@ export class OrderDetailsComponent implements OnInit, AfterContentInit {
     ngOnInit(): void {
         this.orderedProducts = [];
         this.isLoading = false;
-        this.subtotal = "125";
+        this.subtotal = "";
         this.savedRs = "5.00";
-        this.totalItems = "5";
+        this.totalItems = "";
         this.deliveryCharges = "FREE";
-        this.total = "120"
-        this.dateTime = "22 Aug 9:30"
+        this.total = "";
+        this.date = "";
         this.userService.headerLabel("Order details");
         this.userService.activeScreen("orderDetails");
+        this.address = "";
+        this.name = "";
+        this.city = "";
+        this.apartment = "";
+        this.contactNumber = "";
+        this.orderStatus = "";
+        this.orderId = "";
         this.route.queryParams.subscribe(params => {
-            this.orderId = params["orderId"];
+            this.id = params["orderId"];
         });
         if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
             this.token = localstorage.getItem("token");
@@ -64,13 +77,13 @@ export class OrderDetailsComponent implements OnInit, AfterContentInit {
             });
             this.getOrderDetails();
         }
-        this.orderedProducts.push(
-            { image: "res://onion", name: "Onion", MRP: "31.50", price: "25", weight: "1", dimension: "kg", quantity: "1" },
-            { image: "res://lady_finger", name: "Lady finger", MRP: "31.50", price: "25", weight: "500", dimension: "g", quantity: "1" },
-            { image: "res://potato", name: "Potato", MRP: "31.50", price: "25", weight: "1", dimension: "kg", quantity: "1" },
-            { image: "res://tomato", name: "Tomato", MRP: "31.50", price: "25", weight: "2", dimension: "kg", quantity: "1" },
-            { image: "res://palak", name: "Palak", MRP: "31.50", price: "25", weight: "1", dimension: "kg", quantity: "1" },
-        );
+        // this.orderedProducts.push(
+        //     { image: "res://onion", name: "Onion", MRP: "31.50", price: "25", weight: "1", dimension: "kg", quantity: "1" },
+        //     { image: "res://lady_finger", name: "Lady finger", MRP: "31.50", price: "25", weight: "500", dimension: "g", quantity: "1" },
+        //     { image: "res://potato", name: "Potato", MRP: "31.50", price: "25", weight: "1", dimension: "kg", quantity: "1" },
+        //     { image: "res://tomato", name: "Tomato", MRP: "31.50", price: "25", weight: "2", dimension: "kg", quantity: "1" },
+        //     { image: "res://palak", name: "Palak", MRP: "31.50", price: "25", weight: "1", dimension: "kg", quantity: "1" },
+        // );
     }
 
     protected get shadowColor(): Color {
@@ -199,14 +212,64 @@ export class OrderDetailsComponent implements OnInit, AfterContentInit {
 
     getOrderDetails() {
         this.http
-            .get(Values.BASE_URL + "orders/" + this.orderId, {
+            .get(Values.BASE_URL + "orders/" + this.id, {
                 headers: this.headers
             })
             .subscribe((res: any) => {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
-                        // console.log("Orders Length::::::", res.data.orders.length);
                         console.trace("ORDER DETAILS:::", res);
+                        if (res.data.status == "rejected") {
+                            this.orderStatus = "Order has been rejected.";
+                        }
+                        else if (res.data.status == "confirmed") {
+                            this.orderStatus = "Order has been confirmed.";
+                        }
+                        else if (res.data.status == "delivered") {
+                            this.orderStatus = "Order has been delivered.";
+                        }
+                        else {
+                            this.orderStatus = "Waiting for progress.";
+                        }
+                        var dateTime = new Date(res.data.date);
+                        var hours = dateTime.getHours();
+                        var ampm = "am";
+                        if (hours > 12) {
+                            var hours = hours - 12;
+                            var ampm = "pm";
+                        }
+                        var finalHours = "";
+                        if (hours < 10) {
+                            finalHours = "0" + hours;
+                        }
+                        else {
+                            finalHours = hours.toString();
+                        }
+                        var minutes = dateTime.getMinutes().toString();
+                        if (minutes.length < 2) {
+                            minutes = "0" + minutes;
+                        }
+                        this.date = dateTime.getDate().toString() + "/" + (dateTime.getMonth() + 1).toString() + "/" + dateTime.getFullYear().toString() + " (" + finalHours + ":" + minutes + " " + ampm + ")";
+                        this.orderId = res.data.orderId;
+                        for (var i = 0; i < res.data.products.length; i++) {
+                            this.orderedProducts.push({
+                                image: res.data.products[i].image.url,
+                                name: res.data.products[i].name,
+                                price: res.data.products[i].price,
+                                total: res.data.products[i].total,
+                                weightValue: res.data.products[i].dimensions.value,
+                                weightUnit: res.data.products[i].dimensions.unit,
+                                quantity: res.data.products[i].quantity,
+                            })
+                        }
+                        this.subtotal = res.data.grandTotal;
+                        this.totalItems = res.data.products.length;
+                        this.total = res.data.grandTotal;
+                        this.address = res.data.deliveryAddress.addressLine;
+                        this.name = res.data.deliveryAddress.firstName + " " + res.data.deliveryAddress.lastName;
+                        this.city = res.data.deliveryAddress.city;
+                        this.apartment = res.data.deliveryAddress.apartmentName + "(" + res.data.deliveryAddress.floor + "th floor)";
+                        this.contactNumber = res.data.deliveryAddress.contactNumber;
                     }
                 }
             }, error => {

@@ -3,7 +3,10 @@
     <!-- <GridLayout class="slider" row="0">
             <Image width="100%" height="100%" src="res://slider" stretch="aspectFit"></Image>
         </GridLayout> -->
-
+    <StackLayout *ngIf="!isCategories" width="95%" height="10%" verticalAlignment="middle">
+      <Label [text]="categoryMessage" fontSize="16%" color="#8BDE22" fontWeight="500" textAlignment="center"
+        textWrap="true"></Label>
+    </StackLayout>
     <GridLayout #headerCard (loaded)="onHeaderLoaded($event)" verticalAlignment="top" height="8%" width="100%">
       <ns-header></ns-header>
     </GridLayout>

@@ -26,7 +26,8 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
     offer: string;
     selectedPage: number;
     token: string;
-
+    isCategories: boolean;
+    categoryMessage: string;
     constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private http: HttpClient) {
         this.page.actionBarHidden = true;
         // this.isRendering = true;
@@ -53,7 +54,8 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
         this.userService.activeScreen("categories");
         this.selectedPage = 0;
         this.token = "";
-
+        this.isCategories = true;
+        this.categoryMessage = "";
         if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
             this.token = localstorage.getItem("token");
             this.getCategories();
@@ -150,15 +152,23 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
                         console.trace(res);
-                        for (var i = 0; i < res.data.length; i++) {
-                            this.categories.push({
-                                id: res.data[i]._id,
-                                name: res.data[i].name,
-                                imageUrl: res.data[i].image.url,
-                                thumbnail: res.data[i].thumbnail,
-                                resize_url: res.data[i].resize_url,
-                                resize_thumbnail: res.data[i].resize_thumbnail
-                            });
+                        if (res.data.length > 0) {
+                            this.isCategories = true;
+                            this.categoryMessage = "";
+                            for (var i = 0; i < res.data.length; i++) {
+                                this.categories.push({
+                                    id: res.data[i]._id,
+                                    name: res.data[i].name,
+                                    imageUrl: res.data[i].image.url,
+                                    thumbnail: res.data[i].thumbnail,
+                                    resize_url: res.data[i].resize_url,
+                                    resize_thumbnail: res.data[i].resize_thumbnail
+                                });
+                            }
+                        }
+                        else {
+                            this.isCategories = false;
+                            this.categoryMessage = "There is no categories.";
                         }
                         this.isLoading = false;
                     }

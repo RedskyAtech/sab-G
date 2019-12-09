@@ -40,8 +40,10 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
     userName: string;
     userContact: string;
     changePhotoButton: string;
-    nameHint: string;
-    nameText: string;
+    firstNameHint: string;
+    firstNameText: string;
+    lastNameHint: string;
+    lastNameText: string;
     phoneHint: string;
     phoneText: string;
     // emailHint: string;
@@ -76,8 +78,10 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
     ngOnInit(): void {
         this.isLoading = false;
         this.changePhotoButton = "Change Photo";
-        this.nameHint = "Enter name";
-        this.nameText = "Abcde Fghij";
+        this.firstNameHint = "Enter first name";
+        this.firstNameText = "";
+        this.lastNameHint = "Enter last name";
+        this.lastNameText = "";
         this.phoneHint = "Enter your mobile number";
         this.phoneText = "1234567890";
         // this.emailHint = "Enter your email";
@@ -102,7 +106,8 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
         }
         this.route.queryParams.subscribe(params => {
             this.phoneText = params["phone"];
-            this.nameText = params["userName"];
+            this.firstNameText = params["firstName"];
+            this.lastNameText = params["lastName"];
             this.url = params["imageUrl"];
             if (this.url != "") {
                 this.profilePicture = "undefined";
@@ -269,9 +274,14 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
         }, 400)
     }
 
-    public nameTextField(args) {
+    public firstNameTextField(args) {
         var textField = <TextField>args.object;
-        this.nameText = textField.text;
+        this.firstNameText = textField.text;
+    }
+
+    public lastNameTextField(args) {
+        var textField = <TextField>args.object;
+        this.lastNameText = textField.text;
     }
 
     public phoneTextField(args) {
@@ -306,8 +316,34 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
     }
 
     onRemoveAccountDialog() {
-        this.userService.showFooter(true);
-        this.viewRemoveAccountDialog.hide();
+        this.isLoading = true;
+        this.http
+            .delete(Values.BASE_URL + "users/" + localstorage.getItem("userId"), {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-access-token": this.token
+                }
+            })
+            .subscribe((res: any) => {
+                if (res != null && res != undefined) {
+                    if (res.isSuccess == true) {
+                        Toast.makeText("User is successfully deleted!!!", "long").show();
+                        localstorage.removeItem("token");
+                        localstorage.removeItem("userId");
+                        this.isLoading = false;
+                        this.routerExtensions.navigate(['/login'], {
+                            clearHistory: true
+                        });
+                    }
+                }
+            }, error => {
+                this.isLoading = false;
+                console.log("ERROR::::", error.error.error);
+            });
+
+
+        // this.userService.showFooter(true);
+        // this.viewRemoveAccountDialog.hide();
     }
 
     onRemoveAccount() {
@@ -447,7 +483,8 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
     }
 
     updateUser() {
-        this.user.firstName = this.nameText;
+        this.user.firstName = this.firstNameText;
+        this.user.lastName = this.lastNameText;
         this.user.image.url = this.url;
         this.user.image.thumbnail = this.thumbnail;
         this.user.image.resize_url = this.resize_url;

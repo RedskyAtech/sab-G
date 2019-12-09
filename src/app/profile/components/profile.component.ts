@@ -33,6 +33,8 @@ export class ProfileComponent implements OnInit, AfterContentInit {
     thumbnail: string;
     resize_url: string;
     resize_thumbnail: string;
+    firstName: string;
+    lastName: string;
     constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private http: HttpClient) {
         this.page.actionBarHidden = true;
         // this.isRendering = true;
@@ -48,6 +50,8 @@ export class ProfileComponent implements OnInit, AfterContentInit {
         this.userService.headerLabel("My profile");
         this.profilePicture = "res://man";
         this.userName = "";
+        this.firstName = "";
+        this.lastName = "";
         this.phone = "";
         this.editButton = "Edit";
         this.token = "";
@@ -178,13 +182,20 @@ export class ProfileComponent implements OnInit, AfterContentInit {
                     if (res.isSuccess == true) {
                         console.trace("PROFILE:::", res);
                         this.phone = res.data.phone;
-                        this.userName = res.data.profile.firstName;
+                        this.isLoading = false;
+                        if (res.data.profile.firstName != undefined) {
+                            this.userName = res.data.profile.firstName;
+                            if (res.data.profile.lastName != undefined) {
+                                this.userName = this.userName + " " + res.data.profile.lastName;
+                            }
+                        }
+                        this.firstName = res.data.profile.firstName;
+                        this.lastName = res.data.profile.lastName;
                         this.profilePicture = res.data.profile.image.url;
                         this.imageUrl = res.data.profile.image.url;
                         this.thumbnail = res.data.profile.image.thumbnail;
                         this.resize_url = res.data.profile.image.resize_url;
                         this.resize_thumbnail = res.data.profile.image.resize_thumbnail;
-                        this.isLoading = false;
                     }
                 }
             }, error => {
@@ -204,7 +215,8 @@ export class ProfileComponent implements OnInit, AfterContentInit {
                 "thumbnail": this.thumbnail,
                 "resize_url": this.resize_url,
                 "resize_thumbnail": this.resize_thumbnail,
-                "userName": this.userName,
+                "firstName": this.firstName,
+                "lastName": this.lastName,
                 "phone": this.phone,
             },
         });

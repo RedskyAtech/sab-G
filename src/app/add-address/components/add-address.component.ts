@@ -239,6 +239,7 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
                         console.trace(res);
+                        this.isLoading = false;
                         if (res.data.profile.deliveryAddress) {
                             this.addAddressButton = "Update address";
                         }
@@ -253,7 +254,6 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
                         // this.streetText = res.data.profile.address.streetDetails;
                         // this.areaText = res.data.profile.address.areaDetails;
                         // this.landmarkText = res.data.profile.address.landmark;
-                        this.isLoading = false;
                     }
                 }
             }, error => {
@@ -265,33 +265,33 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
     public firstNameTextField(args) {
         var textField = <TextField>args.object;
         this.firstNameText = textField.text;
-        this.firstNameBorderColor = "#23A6DB";
-        this.firstNameBorderWidth = "2";
+        // this.firstNameBorderColor = "#23A6DB";
+        // this.firstNameBorderWidth = "2";
     }
     public lastNameTextField(args) {
         var textField = <TextField>args.object;
         this.lastNameText = textField.text;
-        this.lastNameBorderColor = "#23A6DB";
-        this.lastNameBorderWidth = "2";
+        // this.lastNameBorderColor = "#23A6DB";
+        // this.lastNameBorderWidth = "2";
     }
     public contactNoTextField(args) {
         var textField = <TextField>args.object;
         this.contactNoText = textField.text;
-        this.contactNoBorderColor = "#23A6DB";
-        this.contactNoBorderWidth = "2";
+        // this.contactNoBorderColor = "#23A6DB";
+        // this.contactNoBorderWidth = "2";
     }
     public cityTextField(args) {
         var textField = <TextField>args.object;
         this.cityText = textField.text;
-        this.cityBorderColor = "#23A6DB";
-        this.cityBorderWidth = "2";
+        // this.cityBorderColor = "#23A6DB";
+        // this.cityBorderWidth = "2";
     }
 
     public addressLineTextField(args) {
         var textField = <TextField>args.object;
         this.addressLineText = textField.text;
-        this.addressLineBorderColor = "#23A6DB";
-        this.addressLineBorderWidth = "2";
+        // this.addressLineBorderColor = "#23A6DB";
+        // this.addressLineBorderWidth = "2";
     }
     // public houseNoTextField(args) {
     //     var textField = <TextField>args.object;
@@ -302,15 +302,15 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
     public apartmentTextField(args) {
         var textField = <TextField>args.object;
         this.apartmentText = textField.text;
-        this.apartmentBorderColor = "#23A6DB";
-        this.apartmentBorderWidth = "2";
+        // this.apartmentBorderColor = "#23A6DB";
+        // this.apartmentBorderWidth = "2";
     }
 
     public floorTextField(args) {
         var textField = <TextField>args.object;
         this.floorText = textField.text;
-        this.floorBorderColor = "#23A6DB";
-        this.floorBorderWidth = "2";
+        // this.floorBorderColor = "#23A6DB";
+        // this.floorBorderWidth = "2";
     }
     // public streetTextField(args) {
     //     var textField = <TextField>args.object;
@@ -403,27 +403,38 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
     }
 
     onPlaceOrderClick() {
-        this.order.cart._id = localstorage.getItem("cartId");
-        this.http
-            .post(Values.BASE_URL + "orders", this.order, {
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-access-token": this.token
-                }
-            })
-            .subscribe((res: any) => {
-                if (res != null && res != undefined) {
-                    if (res.isSuccess == true) {
-                        Toast.makeText("Order is successfully placed!!!", "long").show();
-                        this.isLoading = false;
-                        this.routerExtensions.navigate(['/congratulations']);
-
+        if (this.firstNameText == "" || this.firstNameText == undefined) {
+            alert("Please enter your firstname.");
+        }
+        else if (this.contactNoText == "" || this.contactNoText == undefined) {
+            alert("Please enter your contact number.");
+        }
+        else if (this.addressLineText == "" || this.addressLineText == undefined) {
+            alert("Please enter your address.");
+        }
+        else {
+            this.order.cart._id = localstorage.getItem("cartId");
+            this.http
+                .post(Values.BASE_URL + "orders", this.order, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-access-token": this.token
                     }
-                }
-            }, error => {
-                this.isLoading = false;
-                console.log("ERROR::::", error.error.error);
-            });
+                })
+                .subscribe((res: any) => {
+                    if (res != null && res != undefined) {
+                        if (res.isSuccess == true) {
+                            Toast.makeText("Order is successfully placed!!!", "long").show();
+                            this.isLoading = false;
+                            this.routerExtensions.navigate(['/congratulations']);
+
+                        }
+                    }
+                }, error => {
+                    this.isLoading = false;
+                    console.log("ERROR::::", error.error.error);
+                });
+        }
     }
 
 }

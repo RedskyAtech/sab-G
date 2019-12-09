@@ -237,9 +237,9 @@ export class ChangePasswordComponent implements OnInit, AfterContentInit {
         this.routerExtensions.back();
     }
 
-    onForgotPassword() {
-        this.routerExtensions.navigate(['/forgotPassword']);
-    }
+    // onForgotPassword() {
+    //     this.routerExtensions.navigate(['/forgotPassword']);
+    // }
 
     onOldEyeClick() {
         this.oldPasswordSecure = !this.oldPasswordSecure;

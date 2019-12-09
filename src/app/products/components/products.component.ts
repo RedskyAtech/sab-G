@@ -44,6 +44,8 @@ export class ProductsComponent implements OnInit, AfterContentInit {
   cart: Cart;
   product: Product;
   dimensions: Dimensions;
+  isProducts: boolean;
+  productMessage: string;
   constructor(private routerExtensions: RouterExtensions, private userService: UserService, private route: ActivatedRoute, private http: HttpClient, private page: Page) {
     this.page.actionBarHidden = true;
     // this.isRendering = true;
@@ -70,6 +72,8 @@ export class ProductsComponent implements OnInit, AfterContentInit {
     this.product = new Product();
     this.cart.product = new Product();
     this.cart.product.dimensions = new Dimensions();
+    this.isProducts = true;
+    this.productMessage = "";
     this.route.queryParams.subscribe(params => {
       if (params["from"] != "") {
         this.heading = params["categoryName"];
@@ -120,6 +124,12 @@ export class ProductsComponent implements OnInit, AfterContentInit {
       });
       this.getProducts();
     }
+    this.page.on('navigatedTo', (data) => {
+      if (data.isBackNavigation) {
+        this.userService.headerLabel(this.heading);
+        this.userService.activeScreen("products");
+      }
+    });
   }
 
   protected get shadowColor(): Color {
@@ -235,6 +245,8 @@ export class ProductsComponent implements OnInit, AfterContentInit {
           if (res.isSuccess == true) {
             console.trace("PRODUCTS:::::", res);
             if (res.data.products.length > 0) {
+              this.isProducts = true;
+              this.productMessage = "";
               for (var i = 0; i < res.data.products.length; i++) {
                 //   // console.log(res.data.)
                 this.products.push({
@@ -251,8 +263,15 @@ export class ProductsComponent implements OnInit, AfterContentInit {
                   index: i
                 });
               }
+              this.isLoading = false;
               this.pageNo = this.pageNo + 1;
               this.getProducts();
+            }
+            else {
+              if (this.pageNo == 1) {
+                this.isProducts = false;
+                this.productMessage = "There is no products."
+              }
             }
             this.isLoading = false;
           }
@@ -272,7 +291,7 @@ export class ProductsComponent implements OnInit, AfterContentInit {
       this.cart.product.dimensions.unit = item.weightUnit;
       this.cart.product.price = item.price;
       this.cart.product.quantity = 1;
-      console.log(this.cart);
+      console.log("CART BODY::::::", this.cart);
       this.http
         .put(Values.BASE_URL + "carts/" + localstorage.getItem("cartId"), this.cart, {
           headers: this.headers

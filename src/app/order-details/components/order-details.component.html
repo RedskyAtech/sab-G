@@ -7,12 +7,15 @@
             <ns-footer></ns-footer>
         </GridLayout>
         <GridLayout rows="auto,auto,auto" width="100%" height="100%">
-            <StackLayout row="0" height="8%" width="100%" marginTop="8%" verticalAlignment="middle">
-                <StackLayout width="40%" height="70%" borderRadius="25%" backgroundColor="#DBDBDB"
-                    verticalAlignment="middle">
-                    <Label [text]="dateTime" textAlignment="center" fontSize="16%" color="#FFFFFF"></Label>
+            <GridLayout row="0" height="5%" width="100%" marginTop="8%" columns="auto,auto">
+                <StackLayout col="0" width="50%" marginLeft="5%" height="70%" borderRadius="35%"
+                    backgroundColor="#DBDBDB" verticalAlignment="middle">
+                    <Label [text]="date" textAlignment="center" fontSize="16%" color="#FFFFFF"></Label>
                 </StackLayout>
-            </StackLayout>
+                <StackLayout col="1" width="40%" height="70%" verticalAlignment="middle">
+                    <Label [text]="orderId" textAlignment="center" fontSize="16%" color="#8BDE22"></Label>
+                </StackLayout>
+            </GridLayout>
             <GridLayout row="1" width="100%" height="42%">
                 <GridView [items]="orderedProducts" colWidth="90%" rowHeight="32%" marginTop="2%" width="100%"
                     height="100%" backgroundColor="transparent">
@@ -24,66 +27,57 @@
                                 verticalAlignment="middle" (loaded)="onPrductImageLoaded($event)">
                                 <Image width="90%" height="90%" [src]="item.image"></Image>
                             </StackLayout>
-                            <GridLayout col="1" width="50%" height="100%" rows="auto,auto,auto">
+                            <GridLayout col="1" width="75%" height="100%" rows="auto,auto,auto">
                                 <StackLayout row="0" width="95%" height="40%" verticalAlignment="middle">
                                     <Label [text]="item.name" color="#707070" fontSize="18%"
                                         textAlignment="left"></Label>
                                 </StackLayout>
                                 <GridLayout row="1" width="95%" height="25%" columns="auto,auto"
                                     verticalAlignment="middle">
-                                    <StackLayout col="0" height="100%" width="70%" verticalAlignment="middle"
-                                        orientation="horizontal">
-                                        <Label text="MRP " color="#707070" fontSize="12%" textAlignment="left"></Label>
-                                        <Label text="Rs " color="#707070" fontSize="12%" textAlignment="left"></Label>
-                                        <Label [text]="item.MRP" color="#707070" fontSize="12%"
-                                            textAlignment="left"></Label>
+                                    <StackLayout col="1" height="100%" width="50%" verticalAlignment="middle"
+                                        horizontalAlignment="left">
+                                        <Label [text]="'Quantity '+item.quantity" color="#707070" fontSize="12%"
+                                            fontWeight="500" textAlignment="left"></Label>
                                     </StackLayout>
-                                    <StackLayout col="0" height="1" width="32%" horizontalAlignment="left"
+                                    <!-- <StackLayout height="1" width="32%" horizontalAlignment="left"
                                         verticalAlignment="middle" marginLeft="18%" backgroundColor="#707070">
-                                    </StackLayout>
-                                    <StackLayout col="1" height="100%" width="30%" verticalAlignment="middle"
-                                        orientation="horizontal">
-                                        <Label [text]="item.weight" color="#707070" fontSize="12%" fontWeight="500"
-                                            textAlignment="left"></Label>
-                                        <Label text=" "></Label>
-                                        <Label [text]="item.dimension" color="#707070" fontSize="12%" fontWeight="500"
-                                            textAlignment="left"></Label>
+                                    </StackLayout> -->
+                                    <StackLayout col="0" height="100%" width="50%" verticalAlignment="middle"
+                                        horizontalAlignment="left">
+                                        <Label [text]="item.weightValue+' '+item.weightUnit" color="#707070"
+                                            fontSize="12%" fontWeight="500" textAlignment="left"></Label>
                                     </StackLayout>
                                 </GridLayout>
-                                <StackLayout row="2" width="95%" height="35%" verticalAlignment="middle"
-                                    orientation="horizontal">
-                                    <Label text="Rs " color="#404040" fontSize="18%" textAlignment="left"
-                                        fontWeight="500"></Label>
-                                    <Label [text]="item.price" color="#404040" fontSize="18%" textAlignment="left"
-                                        fontWeight="500"></Label>
-                                </StackLayout>
+                                <GridLayout row="2" width="95%" height="35%" columns="auto,auto"
+                                    verticalAlignment="middle">
+                                    <StackLayout col="0" height="100%" width="50%" verticalAlignment="middle"
+                                        horizontalAlignment="left">
+                                        <Label [text]="'Rs '+item.price " color="#404040" fontSize="18%"
+                                            textAlignment="left" fontWeight="500"></Label>
+                                    </StackLayout>
+                                    <StackLayout col="1" height="100%" width="50%" verticalAlignment="middle"
+                                        horizontalAlignment="left">
+                                        <Label [text]="'Total Rs '+item.total " color="#404040" fontSize="18%"
+                                            textAlignment="left" fontWeight="500"></Label>
+                                    </StackLayout>
+                                </GridLayout>
                             </GridLayout>
                         </GridLayout>
                     </ng-template>
                 </GridView>
             </GridLayout>
-            <StackLayout row="2" height="37%" width="100%" marginBottom="5%" backgroundColor="#F6F6F6">
+            <StackLayout row="2" height="40%" width="100%" marginBottom="5%" backgroundColor="#F6F6F6">
                 <GridLayout #priceCard orientation="vertical" width="90%" height="85%" marginTop="2%"
-                    rows="auto,auto,auto,auto,auto,auto,auto" (loaded)="onPriceCardLoaded($event)">
-                    <GridLayout row="0" width="100%" height="15%" columns="auto,auto">
+                    rows="auto,auto,auto,auto,auto,auto,auto,auto,auto,auto,auto" (loaded)="onPriceCardLoaded($event)">
+                    <GridLayout row="0" width="95%" height="10%" columns="auto,auto">
                         <StackLayout class="price-heading-container" col="0">
                             <Label class="price-heading" text="Subtotal"></Label>
                         </StackLayout>
                         <StackLayout class="price-detail-container" col="1">
-                            <Label class="price-detail" text="Rs "></Label>
-                            <Label class="price-detail" [text]="subtotal"></Label>
+                            <Label class="price-detail" [text]="'Rs '+subtotal "></Label>
                         </StackLayout>
                     </GridLayout>
-                    <GridLayout row="1" width="100%" height="15%" columns="auto,auto">
-                        <StackLayout class="price-heading-container" col="0">
-                            <Label class="price-heading" text="Saved Rs"></Label>
-                        </StackLayout>
-                        <StackLayout class="price-detail-container" col="1">
-                            <Label class="price-detail" text="Rs "></Label>
-                            <Label class="price-detail" [text]="savedRs"></Label>
-                        </StackLayout>
-                    </GridLayout>
-                    <GridLayout row="2" width="100%" height="15%" columns="auto,auto">
+                    <GridLayout row="1" width="95%" height="10%" columns="auto,auto">
                         <StackLayout class="price-heading-container" col="0">
                             <Label class="price-heading" text="Total Items"></Label>
                         </StackLayout>
@@ -91,7 +85,7 @@
                             <Label class="price-detail" [text]="totalItems"></Label>
                         </StackLayout>
                     </GridLayout>
-                    <GridLayout row="3" width="100%" height="15%" columns="auto,auto">
+                    <GridLayout row="2" width="95%" height="10%" columns="auto,auto">
                         <StackLayout class="price-heading-container" col="0">
                             <Label class="price-heading" text="Delivery Charges"></Label>
                         </StackLayout>
@@ -100,19 +94,57 @@
                                 [text]="deliveryCharges"></Label>
                         </StackLayout>
                     </GridLayout>
-                    <GridLayout row="4" width="100%" height="15%" columns="auto,auto">
+                    <GridLayout row="3" width="95%" height="10%" columns="auto,auto">
                         <StackLayout class="price-heading-container" col="0">
                             <Label class="price-heading" text="Total"></Label>
                         </StackLayout>
                         <StackLayout class="price-detail-container" col="1">
-                            <Label class="price-detail" text="Rs "></Label>
-                            <Label class="price-detail" [text]="total"></Label>
+                            <Label class="price-detail" [text]="'Rs '+total"></Label>
                         </StackLayout>
                     </GridLayout>
-                    <StackLayout row="5" width="80%" height="2" marginTop="5%" backgroundColor="#DBDBDB"></StackLayout>
-                    <StackLayout row="6" width="80%" height="18%" verticalAlignment="middle">
-                        <Label text="Waiting for progress" textAlignment="center" fontSize="16%"
-                            color="#DBDBDB"></Label>
+                    <GridLayout row="4" width="95%" height="10%" columns="auto,auto">
+                        <StackLayout class="price-heading-container" col="0">
+                            <Label class="price-heading" text="Name"></Label>
+                        </StackLayout>
+                        <StackLayout class="price-detail-container" col="1">
+                            <Label class="price-detail" [text]="name"></Label>
+                        </StackLayout>
+                    </GridLayout>
+                    <GridLayout row="5" width="95%" height="10%" columns="auto,auto">
+                        <StackLayout class="price-heading-container" col="0">
+                            <Label class="price-heading" text="Address line"></Label>
+                        </StackLayout>
+                        <StackLayout class="price-detail-container" col="1">
+                            <Label class="price-detail" [text]="address"></Label>
+                        </StackLayout>
+                    </GridLayout>
+                    <GridLayout row="6" width="95%" height="10%" columns="auto,auto">
+                        <StackLayout class="price-heading-container" col="0">
+                            <Label class="price-heading" text="City"></Label>
+                        </StackLayout>
+                        <StackLayout class="price-detail-container" col="1">
+                            <Label class="price-detail" [text]="city"></Label>
+                        </StackLayout>
+                    </GridLayout>
+                    <GridLayout row="7" width="95%" height="10%" columns="auto,auto">
+                        <StackLayout class="price-heading-container" col="0">
+                            <Label class="price-heading" text="Apartment"></Label>
+                        </StackLayout>
+                        <StackLayout class="price-detail-container" col="1">
+                            <Label class="price-detail" [text]="apartment"></Label>
+                        </StackLayout>
+                    </GridLayout>
+                    <GridLayout row="8" width="95%" height="10%" columns="auto,auto">
+                        <StackLayout class="price-heading-container" col="0">
+                            <Label class="price-heading" text="Contact number"></Label>
+                        </StackLayout>
+                        <StackLayout class="price-detail-container" col="1">
+                            <Label class="price-detail" [text]="contactNumber"></Label>
+                        </StackLayout>
+                    </GridLayout>
+                    <StackLayout row="9" width="95%" height="1" backgroundColor="#DBDBDB"></StackLayout>
+                    <StackLayout row="10" width="95%" height="9%" verticalAlignment="middle">
+                        <Label [text]="orderStatus" textAlignment="center" fontSize="16%" color="#8BDE22"></Label>
                     </StackLayout>
                 </GridLayout>
             </StackLayout>

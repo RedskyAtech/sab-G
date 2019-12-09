@@ -6,6 +6,10 @@
         <GridLayout #footerCard (loaded)="onFooterLoaded($event)" verticalAlignment="bottom" height="8%" width="100%">
             <ns-footer></ns-footer>
         </GridLayout>
+        <StackLayout *ngIf="!isOrders" width="95%" height="10%" verticalAlignment="middle">
+            <Label [text]="orderMessage" fontSize="16%" color="#8BDE22" fontWeight="500" textAlignment="center"
+                textWrap="true"></Label>
+        </StackLayout>
         <GridLayout rows="auto,auto" width="100%" height="100%">
             <GridLayout row="0" columns="auto,auto" height="15%" width="100%" marginTop="8%">
                 <StackLayout col="0" height="100%" width="50%" verticalAlignment="middle">
@@ -20,7 +24,7 @@
                 </StackLayout>
             </GridLayout>
             <GridLayout row="1" width="100%" height="69%">
-                <GridView [items]="products" colWidth="90%" rowHeight="23%" marginTop="2%" width="100%" height="100%"
+                <GridView [items]="orders" colWidth="90%" rowHeight="23%" marginTop="2%" width="100%" height="100%"
                     backgroundColor="transparent">
                     <ng-template let-item="item" let-odd="odd">
                         <GridLayout #cartCard width="90%" height="90%" backgroundColor="white" marginLeft="8%"
@@ -31,28 +35,32 @@
                                 <Image width="90%" height="90%" [src]="item.image"></Image>
                             </StackLayout>
                             <GridLayout col="1" width="50%" height="100%" rows="auto,auto,auto">
-                                <StackLayout row="0" width="95%" height="35%" verticalAlignment="middle">
+                                <StackLayout row="0" width="95%" height="34%" verticalAlignment="middle">
                                     <Label [text]="item.date" color="#707070" fontSize="12%"
                                         textAlignment="left"></Label>
                                 </StackLayout>
-                                <StackLayout row="1" width="95%" height="30%">
+                                <StackLayout row="1" width="95%" height="33%" verticalAlignment="middle">
                                     <Label [text]="item.quantity+' Items'" color="#707070" fontSize="18%"
                                         verticalAlignment="middle" textAlignment="left"></Label>
                                 </StackLayout>
-                                <StackLayout row="2" width="95%" height="35%" verticalAlignment="middle">
-                                    <Label [text]="item.status" color="#DBDBDB" fontSize="12%" textAlignment="left"
+                                <StackLayout row="2" width="95%" height="34%" verticalAlignment="middle">
+                                    <Label [text]="item.status" color="#8BDE22" fontSize="12%" textAlignment="left"
                                         fontWeight="500"></Label>
                                 </StackLayout>
                             </GridLayout>
-                            <GridLayout col="2" width="25%" height="100%" rows="auto,auto">
-                                <StackLayout row="0" height="50%" width="100%" orientation="horizontal"
+                            <GridLayout col="2" width="25%" height="100%" rows="auto,auto,auto">
+                                <StackLayout row="0" width="95%" height="34%" verticalAlignment="middle">
+                                    <Label [text]="item.orderId" color="#8BDE22" fontSize="12%" textAlignment="center"
+                                        fontWeight="500"></Label>
+                                </StackLayout>
+                                <StackLayout row="1" height="33%" width="100%" orientation="horizontal"
                                     horizontalAlignment="center">
                                     <Label text="Rs " color="#404040" fontSize="18%" verticalAlignment="middle"
                                         textAlignment="center" fontWeight="500"></Label>
                                     <Label [text]="item.grandTotal" color="#404040" fontSize="18%"
                                         verticalAlignment="middle" textAlignment="center" fontWeight="500"></Label>
                                 </StackLayout>
-                                <StackLayout row="1" height="50%" width="100%" orientation="horizontal"
+                                <StackLayout row="2" height="34%" width="100%" orientation="horizontal"
                                     horizontalAlignment="center">
                                     <Button class="details-button" text="Details" (tap)="onDetailsClick(item)"></Button>
                                 </StackLayout>
