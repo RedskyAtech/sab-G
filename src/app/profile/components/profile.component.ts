@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit, AfterContentInit {
         this.isLoading = false;
         this.userService.activeScreen("profile");
         this.userService.headerLabel("My profile");
-        this.profilePicture = "res://man";
+        this.profilePicture = "res://profile";
         this.userName = "";
         this.firstName = "";
         this.lastName = "";
@@ -182,20 +182,27 @@ export class ProfileComponent implements OnInit, AfterContentInit {
                     if (res.isSuccess == true) {
                         console.trace("PROFILE:::", res);
                         this.phone = res.data.phone;
-                        this.isLoading = false;
-                        if (res.data.profile.firstName != undefined) {
-                            this.userName = res.data.profile.firstName;
-                            if (res.data.profile.lastName != undefined) {
-                                this.userName = this.userName + " " + res.data.profile.lastName;
+                        if (res.data.profile) {
+                            if (res.data.profile.firstName != undefined) {
+                                this.firstName = res.data.profile.firstName;
+                                this.userName = res.data.profile.firstName;
+                                if (res.data.profile.lastName != undefined) {
+                                    this.userName = this.userName + " " + res.data.profile.lastName;
+                                    this.lastName = res.data.profile.lastName;
+                                }
+                            }
+                            if (res.data.profile.image) {
+                                this.profilePicture = res.data.profile.image.url;
+                                if (this.profilePicture == "") {
+                                    this.profilePicture = "res://profile";
+                                }
+                                this.imageUrl = res.data.profile.image.url;
+                                this.thumbnail = res.data.profile.image.thumbnail;
+                                this.resize_url = res.data.profile.image.resize_url;
+                                this.resize_thumbnail = res.data.profile.image.resize_thumbnail;
                             }
                         }
-                        this.firstName = res.data.profile.firstName;
-                        this.lastName = res.data.profile.lastName;
-                        this.profilePicture = res.data.profile.image.url;
-                        this.imageUrl = res.data.profile.image.url;
-                        this.thumbnail = res.data.profile.image.thumbnail;
-                        this.resize_url = res.data.profile.image.resize_url;
-                        this.resize_thumbnail = res.data.profile.image.resize_thumbnail;
+                        this.isLoading = false;
                     }
                 }
             }, error => {

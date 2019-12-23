@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit, AfterContentInit {
     getCategories() {
         this.isLoading = true;
         this.http
-            .get(Values.BASE_URL + "categories", {
+            .get(Values.BASE_URL + "categories?pageNo=${this.pageNo}&items=${this.items}&status=active", {
                 headers: {
                     "Content-Type": "application/json",
                     "x-access-token": this.token
@@ -105,15 +105,30 @@ export class HomeComponent implements OnInit, AfterContentInit {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
                         console.trace(res);
-                        for (var i = 0; i < 6; i++) {
-                            this.categories.push({
-                                id: res.data[i]._id,
-                                name: res.data[i].name,
-                                imageUrl: res.data[i].image.url,
-                                thumbnail: res.data[i].thumbnail,
-                                resize_url: res.data[i].resize_url,
-                                resize_thumbnail: res.data[i].resize_thumbnail
-                            });
+                        this.isLoading = false;
+                        if (res.data.category.length > 6) {
+                            for (var i = 0; i < 6; i++) {
+                                this.categories.push({
+                                    id: res.data.category[i]._id,
+                                    name: res.data.category[i].name,
+                                    imageUrl: res.data.category[i].image.url,
+                                    thumbnail: res.data.category[i].thumbnail,
+                                    resize_url: res.data.category[i].resize_url,
+                                    resize_thumbnail: res.data.category[i].resize_thumbnail
+                                });
+                            }
+                        }
+                        else {
+                            for (var i = 0; i < res.data.category.length; i++) {
+                                this.categories.push({
+                                    id: res.data.category[i]._id,
+                                    name: res.data.category[i].name,
+                                    imageUrl: res.data.category[i].image.url,
+                                    thumbnail: res.data.category[i].thumbnail,
+                                    resize_url: res.data.category[i].resize_url,
+                                    resize_thumbnail: res.data.category[i].resize_thumbnail
+                                });
+                            }
                         }
                         this.isLoading = false;
                         this.getOffer();
@@ -143,8 +158,20 @@ export class HomeComponent implements OnInit, AfterContentInit {
                     if (res.isSuccess == true) {
                         console.log("OFFER:::", res);
                         this.isLoading = false;
-                        this.offerHeading = res.data[0].offers[0].heading;
-                        this.offer = res.data[0].offers[0].description;
+                        if (res.data[0].offers[0].heading == "" || res.data[0].offers[0].heading == undefined || res.data[0].offers[0].heading == null) {
+                            this.offerHeading = "Save more with";
+                        }
+                        else {
+                            this.offerHeading = res.data[0].offers[0].heading;
+                        }
+                        if (res.data[0].offers[0].description == "" || res.data[0].offers[0].description == undefined || res.data[0].offers[0].description == null) {
+                            this.offer = "sabG";
+                        }
+                        else {
+                            this.offer = res.data[0].offers[0].description;
+                        }
+                        // this.offerHeading = res.data[0].offers[0].heading;
+                        // this.offer = res.data[0].offers[0].description;
                         this.getSlider();
                     }
                 }
@@ -240,6 +267,29 @@ export class HomeComponent implements OnInit, AfterContentInit {
                 nativeGridMain.setElevation(5)
             } else if (categoryCard.ios) {
                 let nativeGridMain = categoryCard.ios;
+                nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
+                nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
+                nativeGridMain.layer.shadowOpacity = 0.5
+                nativeGridMain.layer.shadowRadius = 5.0
+                nativeGridMain.layer.shadowRadius = 5.0
+            }
+            // this.changeDetector.detectChanges();
+        }, 10)
+    }
+
+    onSliderLoaded(args: any) {
+        var sliderImage = <any>args.object;
+        setTimeout(() => {
+            if (sliderImage.android) {
+                let nativeGridMain = sliderImage.android;
+                var shape = new android.graphics.drawable.GradientDrawable();
+                shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
+                shape.setColor(android.graphics.Color.parseColor('white'));
+                shape.setCornerRadius(10)
+                nativeGridMain.setBackgroundDrawable(shape);
+                nativeGridMain.setElevation(5)
+            } else if (sliderImage.ios) {
+                let nativeGridMain = sliderImage.ios;
                 nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
                 nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
                 nativeGridMain.layer.shadowOpacity = 0.5

@@ -2,8 +2,8 @@ import { RouterExtensions } from 'nativescript-angular/router/router-extensions'
 import { Component, OnInit, Input } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Page } from "tns-core-modules/ui/page/page";
-import { UserService } from "~/app/services/user.service";
 import { Color } from "tns-core-modules/color/color";
+import { UserService } from '~/app/services/user.service';
 
 declare const android: any;
 declare const CGSizeMake: any;

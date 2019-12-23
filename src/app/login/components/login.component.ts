@@ -57,9 +57,7 @@ export class LoginComponent implements OnInit, AfterContentInit {
         this.passwordBorderWidth = "1";
         this.passwordSecure = true;
         this.user = new User();
-        console.log(localstorage.getItem("token"));
         if (localstorage.getItem("token")) {
-            console.log("jhgjh hjghjg jhgg");
             this.routerExtensions.navigate(['/home']);
         }
     }
@@ -145,13 +143,24 @@ export class LoginComponent implements OnInit, AfterContentInit {
                             localstorage.setItem("token", res.data.token);
                             localstorage.setItem("userId", res.data._id);
                             localstorage.setItem("cartId", res.data.cartId);
-                            this.routerExtensions.navigate(['/home'], {
-                                clearHistory: true,
-                            });
-                            this.routerExtensions.navigate(['/home'], {
-                                clearHistory: true,
-                            });
-                            Toast.makeText("Login successfully", "long").show();
+                            if (res.data.isVerified == false) {
+                                alert("Please verify the phone number.");
+                                this.routerExtensions.navigate(['./confirmOtp'], {
+                                    queryParams: {
+                                        "phone": res.data.phone,
+                                        "from": "login"
+                                    },
+                                });
+                            }
+                            else {
+                                localstorage.setItem("token", res.data.token);
+                                localstorage.setItem("userId", res.data._id);
+                                localstorage.setItem("cartId", res.data.cartId);
+                                this.routerExtensions.navigate(['/home'], {
+                                    clearHistory: true,
+                                });
+                                Toast.makeText("Login successfully", "long").show();
+                            }
                         }
                     }
                 }, error => {

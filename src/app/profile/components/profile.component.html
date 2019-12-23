@@ -1,9 +1,13 @@
 <Page actionBarHidden="true">
     <GridLayout class="page">
-        <GridLayout rows="auto,auto,auto,auto,auto,auto" width="100%" height="100%">
-            <GridLayout #headerCard (loaded)="onHeaderLoaded($event)" verticalAlignment="top" height="8%" width="100%">
-                <ns-header></ns-header>
-            </GridLayout>
+        <GridLayout #headerCard (loaded)="onHeaderLoaded($event)" verticalAlignment="top" height="8%" width="100%">
+            <ns-header></ns-header>
+        </GridLayout>
+        <StackLayout #footerCard (loaded)="onFooterLoaded($event)" verticalAlignment="bottom" height="8%"
+            width="100%">
+            <ns-footer></ns-footer>
+        </StackLayout>
+        <GridLayout rows="auto,auto,auto" width="100%" height="100%">
             <GridLayout row="0" class="upper-container" marginTop="8%" verticalAlignment="top">
                 <GridLayout columns="auto,auto">
                     <StackLayout col="0" height="100%" width="50%" verticalAlignment="middle">
@@ -54,7 +58,7 @@
                     </GridLayout>
                 </GridLayout>
             </GridLayout>
-            <StackLayout row="3" width="90%" height="10%" verticalAlignment="middle">
+            <!-- <StackLayout row="3" width="90%" height="10%" verticalAlignment="middle">
                 <Label text="Notifications" fontSize="20%" fontWeight="500" color="#707070"></Label>
             </StackLayout>
             <GridLayout row="4" height="12%" width="100%">
@@ -63,17 +67,14 @@
                     <StackLayout col="0" height="100%" width="65%" marginLeft="5%" verticalAlignment="middle">
                         <Label class="option-heading" text="App Notifications"></Label>
                     </StackLayout>
-                    <StackLayout col="1" height="100%" width="30%" verticalAlignment="middle">
-                        <!-- <Image class="option-logo" src="res://home"></Image> -->
-                        <Switch color="#67CB62" backgroundColor="#B9B9B9" offBackgroundColor="#B9B9B9"
+                    <StackLayout col="1" height="100%" width="30%" verticalAlignment="middle"> -->
+            <!-- <Image class="option-logo" src="res://home"></Image> -->
+            <!-- <Switch color="#67CB62" backgroundColor="#B9B9B9" offBackgroundColor="#B9B9B9"
                             horizontalAlignment="center">
                         </Switch>
                     </StackLayout>
                 </GridLayout>
-            </GridLayout>
-            <StackLayout row="5" #footerCard (loaded)="onFooterLoaded($event)" marginTop="10%" height="8%" width="100%">
-                <ns-footer></ns-footer>
-            </StackLayout>
+            </GridLayout> -->
         </GridLayout>
 
         <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">

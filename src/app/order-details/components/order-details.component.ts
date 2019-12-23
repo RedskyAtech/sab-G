@@ -211,6 +211,7 @@ export class OrderDetailsComponent implements OnInit, AfterContentInit {
     }
 
     getOrderDetails() {
+        this.isLoading = true;
         this.http
             .get(Values.BASE_URL + "orders/" + this.id, {
                 headers: this.headers
@@ -219,6 +220,7 @@ export class OrderDetailsComponent implements OnInit, AfterContentInit {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
                         console.trace("ORDER DETAILS:::", res);
+                        this.isLoading = false;
                         if (res.data.status == "rejected") {
                             this.orderStatus = "Order has been rejected.";
                         }
@@ -266,9 +268,19 @@ export class OrderDetailsComponent implements OnInit, AfterContentInit {
                         this.totalItems = res.data.products.length;
                         this.total = res.data.grandTotal;
                         this.address = res.data.deliveryAddress.addressLine;
-                        this.name = res.data.deliveryAddress.firstName + " " + res.data.deliveryAddress.lastName;
+                        if (res.data.deliveryAddress.firstName != undefined) {
+                            this.name = res.data.deliveryAddress.firstName;
+                        }
+                        if (res.data.deliveryAddress.firstName != undefined && res.data.deliveryAddress.lastName != undefined) {
+                            this.name = res.data.deliveryAddress.firstName + " " + res.data.deliveryAddress.lastName;
+                        }
                         this.city = res.data.deliveryAddress.city;
-                        this.apartment = res.data.deliveryAddress.apartmentName + "(" + res.data.deliveryAddress.floor + "th floor)";
+                        if (res.data.deliveryAddress.apartmentName != undefined) {
+                            this.apartment = res.data.deliveryAddress.apartmentName
+                        }
+                        if (res.data.deliveryAddress.apartmentName != undefined && res.data.deliveryAddress.floor != undefined) {
+                            this.apartment = res.data.deliveryAddress.apartmentName + "(" + res.data.deliveryAddress.floor + "th floor)";
+                        }
                         this.contactNumber = res.data.deliveryAddress.contactNumber;
                     }
                 }

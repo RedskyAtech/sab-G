@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, AfterViewInit } from "@angular/core";
+import { Component, NgZone, OnInit, AfterContentInit, AfterViewInit } from "@angular/core";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions'
 import { Router } from "@angular/router";
 import { UserService } from "./services/user.service";
@@ -7,6 +7,9 @@ import { Color } from "tns-core-modules/color/color";
 import { Carousel, CarouselItem } from 'nativescript-carousel';
 import { requestPermissions } from "nativescript-permissions";
 import { Folder, path, File } from "tns-core-modules/file-system";
+import * as Toast from 'nativescript-toast';
+import { exit } from 'nativescript-exit';
+import * as application from "tns-core-modules/application";
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -50,8 +53,9 @@ export class AppComponent implements OnInit, AfterContentInit, AfterViewInit {
     backIcon: string;
     file: File;
     folder: Folder;
+    tries: number;
 
-    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private router: Router) {
+    constructor(private routerExtensions: RouterExtensions, private userService: UserService, private router: Router, private ngZone: NgZone) {
         // this.isRendering = false;
         // this.backIcon = "res://back";
         // this.homeIcon = "res://home_inactive";
@@ -64,6 +68,32 @@ export class AppComponent implements OnInit, AfterContentInit, AfterViewInit {
         // this.isSearchHighlighted = "hidden";
         // this.isMenuHighlighted = "hidden";
         // this.isCartHighlighted = "hidden";
+
+        this.ngZone.run(() => {
+            this.tries = 0;
+            application.android.on(application.AndroidApplication.activityBackPressedEvent, (data: application.AndroidActivityBackPressedEventData) => {
+                var screen = this.userService.currentPage
+                console.log("SCREEN::::", screen);
+                if (screen == "home") {
+                    data.cancel = (this.tries++ > 1) ? false : true;
+                    if (this.tries == 1) {
+                        Toast.makeText("Press again to exit", "short").show();
+                    }
+                    if (this.tries == 2) {
+                        exit();
+                    }
+                    setTimeout(() => {
+                        this.tries = 0;
+                    }, 1000);
+                } else if (screen == 'login') {
+                    exit();
+                }
+                else {
+                    data.cancel = true;
+                    this.routerExtensions.back();
+                }
+            });
+        });
 
         var permissions: Array<any> = new Array<any>();
         permissions.push(android.Manifest.permission.READ_EXTERNAL_STORAGE);

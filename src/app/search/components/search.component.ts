@@ -1,4 +1,4 @@
-import { Cart } from './../../models/cart.model';
+import { Cart } from '../../models/cart.model';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Component, OnInit, AfterContentInit, ViewChild } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
@@ -12,6 +12,7 @@ import { Values } from '~/app/values/values';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { Product } from '~/app/models/product.model';
 import { Dimensions } from '~/app/models/dimensions.model';
+import { TextField } from "tns-core-modules/ui/text-field";
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -19,10 +20,10 @@ declare const CGSizeMake: any;
 @Component({
   selector: "ns-products",
   moduleId: module.id,
-  templateUrl: "./products.component.html",
-  styleUrls: ['./products.component.css']
+  templateUrl: "./search.component.html",
+  styleUrls: ['./search.component.css']
 })
-export class ProductsComponent implements OnInit, AfterContentInit {
+export class SearchComponent implements OnInit, AfterContentInit {
 
   @ViewChild('weightDialog') weightDialog: ModalComponent;
 
@@ -46,6 +47,11 @@ export class ProductsComponent implements OnInit, AfterContentInit {
   dimensions: Dimensions;
   isProducts: boolean;
   productMessage: string;
+  productName: string;
+  searchHint: string;
+  searchBorderColor: string;
+  searchBorderWidth: string;
+  searchButton: string;
   constructor(private routerExtensions: RouterExtensions, private userService: UserService, private route: ActivatedRoute, private http: HttpClient, private page: Page) {
     this.page.actionBarHidden = true;
     // this.isRendering = true;
@@ -74,14 +80,42 @@ export class ProductsComponent implements OnInit, AfterContentInit {
     this.cart.product.dimensions = new Dimensions();
     this.isProducts = true;
     this.productMessage = "";
+    this.productName = "";
+    this.searchHint = "Search products here";
+    this.searchBorderColor = "#707070"
+    this.searchBorderWidth = "1";
+    this.searchButton = "Search";
     this.route.queryParams.subscribe(params => {
       if (params["from"] != "") {
         this.heading = params["categoryName"];
         this.categoryId = params["categoryId"];
       }
     });
+    this.weights.push(
+      { value: "100", unit: "g" },
+      { value: "200", unit: "g" },
+      { value: "300", unit: "g" },
+      { value: "400", unit: "g" },
+      { value: "500", unit: "g" },
+      { value: "600", unit: "g" },
+      { value: "700", unit: "g" },
+      { value: "800", unit: "g" },
+      { value: "900", unit: "g" },
+      { value: "1", unit: "kg" },
+      { value: "2", unit: "kg" },
+      { value: "3", unit: "kg" },
+      { value: "4", unit: "kg" },
+      { value: "5", unit: "kg" },
+      { value: "6", unit: "kg" },
+      { value: "7", unit: "kg" },
+      { value: "8", unit: "kg" },
+      { value: "9", unit: "kg" },
+      { value: "10", unit: "kg" }
+
+    );
     this.userService.headerLabel(this.heading);
-    this.userService.activeScreen("products");
+    this.userService.activeScreen("search");
+    this.userService.headerLabel("Search");
     // this.products.push(
     //   { image: "res://onion", name: "Onion", MRP: "31.50", price: "25", weight: "500 g" },
     //   { image: "res://lady_finger", name: "Lady finger", MRP: "31.50", price: "25", weight: "1 kg" },
@@ -100,14 +134,25 @@ export class ProductsComponent implements OnInit, AfterContentInit {
         "Content-Type": "application/json",
         "x-access-token": this.token
       });
-      this.getProducts();
+      // this.getProducts();
     }
     this.page.on('navigatedTo', (data) => {
       if (data.isBackNavigation) {
         this.userService.headerLabel(this.heading);
-        this.userService.activeScreen("products");
+        this.userService.activeScreen("search");
+        this.userService.headerLabel("Search");
       }
     });
+  }
+
+  public searchTextField(args) {
+    var textField = <TextField>args.object;
+    this.productName = textField.text;
+    this.searchBorderColor = "#23A6DB";
+    this.searchBorderWidth = "2";
+    if (this.productName == "") {
+      this.products = [];
+    }
   }
 
   protected get shadowColor(): Color {
@@ -210,47 +255,51 @@ export class ProductsComponent implements OnInit, AfterContentInit {
     }, 50)
   }
 
+  onSearch() {
+    this.getProducts();
+  }
+
   getProducts() {
     // this.isLoading = true;
     // this.query = `_id=${this.categoryId}&pageNo=${this.pageNo}&items=${this.items}`
-    console.log(Values.BASE_URL + `products?_id=${this.categoryId}&pageNo=${this.pageNo}&items=${this.items}&status=active`);
+    console.log(Values.BASE_URL + `products/search?pageNo=${this.pageNo}&items=${this.items}&name=${this.productName}`);
     this.http
-      .get(Values.BASE_URL + `products?_id=${this.categoryId}&pageNo=${this.pageNo}&items=${this.items}`, {
+      .get(Values.BASE_URL + `products/search?pageNo=${this.pageNo}&items=${this.items}&name=${this.productName}`, {
         headers: this.headers
       })
       .subscribe((res: any) => {
         if (res != null && res != undefined) {
           if (res.isSuccess == true) {
             console.trace("PRODUCTS:::::", res);
-            if (res.data.products.length > 0) {
-              this.isProducts = true;
-              this.productMessage = "";
-              for (var i = 0; i < res.data.products.length; i++) {
-                //   // console.log(res.data.)
-                this.products.push({
-                  id: res.data.products[i]._id,
-                  name: res.data.products[i].name,
-                  imageUrl: res.data.products[i].image.url,
-                  thumbnail: res.data.products[i].image.thumbnail,
-                  resize_url: res.data.products[i].image.resize_url,
-                  resize_thumbnail: res.data.products[i].image.resize_thumbnail,
-                  price: res.data.products[i].price,
-                  marketPrice: res.data.products[i].marketPrice,
-                  weightValue: res.data.products[i].dimensions.value,
-                  weightUnit: res.data.products[i].dimensions.unit,
-                  index: i
-                });
-              }
-              this.isLoading = false;
-              this.pageNo = this.pageNo + 1;
-              this.getProducts();
-            }
-            else {
-              if (this.pageNo == 1) {
-                this.isProducts = false;
-                this.productMessage = "There is no products."
-              }
-            }
+            this.products = [];
+            // if (res.data.products.length > 0) {
+            //   this.isProducts = true;
+            //   this.productMessage = "";
+            //   for (var i = 0; i < res.data.products.length; i++) {
+            //     //   // console.log(res.data.)
+            this.products.push({
+              id: res.data._id,
+              name: res.data.name,
+              imageUrl: res.data.image.url,
+              thumbnail: res.data.image.thumbnail,
+              resize_url: res.data.image.resize_url,
+              resize_thumbnail: res.data.image.resize_thumbnail,
+              price: res.data.price,
+              marketPrice: res.data.marketPrice,
+              weightValue: res.data.dimensions.value,
+              weightUnit: res.data.dimensions.unit,
+            });
+            //   }
+            //   this.isLoading = false;
+            //   this.pageNo = this.pageNo + 1;
+            //   this.getProducts();
+            // }
+            // else {
+            //   if (this.pageNo == 1) {
+            //     this.isProducts = false;
+            //     this.productMessage = "There is no products."
+            //   }
+            // }
             this.isLoading = false;
           }
         }
@@ -291,73 +340,10 @@ export class ProductsComponent implements OnInit, AfterContentInit {
   onSelectWeight(item: any) {
     this.index = item.index;
     if (item.weightUnit == "g") {
-      this.weights = [];
-      this.weights.push(
-        { value: "100", unit: "g" },
-        { value: "200", unit: "g" },
-        { value: "300", unit: "g" },
-        { value: "400", unit: "g" },
-        { value: "500", unit: "g" },
-        { value: "600", unit: "g" },
-        { value: "700", unit: "g" },
-        { value: "800", unit: "g" },
-        { value: "900", unit: "g" },
-        { value: "1", unit: "kg" },
-        { value: "2", unit: "kg" },
-        { value: "3", unit: "kg" },
-        { value: "4", unit: "kg" },
-        { value: "5", unit: "kg" },
-        { value: "6", unit: "kg" },
-        { value: "7", unit: "kg" },
-        { value: "8", unit: "kg" },
-        { value: "9", unit: "kg" },
-        { value: "10", unit: "kg" }
-      );
       this.oldWeight = parseInt(item.weightValue) / 1000;
     }
     else {
       this.oldWeight = parseInt(item.weightValue);
-      if (item.weightUnit == "kg") {
-        this.weights = [];
-        this.weights.push(
-          { value: "100", unit: "g" },
-          { value: "200", unit: "g" },
-          { value: "300", unit: "g" },
-          { value: "400", unit: "g" },
-          { value: "500", unit: "g" },
-          { value: "600", unit: "g" },
-          { value: "700", unit: "g" },
-          { value: "800", unit: "g" },
-          { value: "900", unit: "g" },
-          { value: "1", unit: "kg" },
-          { value: "2", unit: "kg" },
-          { value: "3", unit: "kg" },
-          { value: "4", unit: "kg" },
-          { value: "5", unit: "kg" },
-          { value: "6", unit: "kg" },
-          { value: "7", unit: "kg" },
-          { value: "8", unit: "kg" },
-          { value: "9", unit: "kg" },
-          { value: "10", unit: "kg" }
-        );
-      }
-      else {
-        this.weights = [];
-        this.weights.push(
-          { value: "1", unit: "piece" },
-          { value: "2", unit: "piece" },
-          { value: "3", unit: "piece" },
-          { value: "4", unit: "piece" },
-          { value: "5", unit: "piece" },
-          { value: "6", unit: "piece" },
-          { value: "7", unit: "piece" },
-          { value: "8", unit: "piece" },
-          { value: "9", unit: "piece" },
-          { value: "10", unit: "piece" },
-          { value: "11", unit: "piece" },
-          { value: "12", unit: "piece" }
-        );
-      }
     }
     this.weightDialog.show();
   }
@@ -371,20 +357,8 @@ export class ProductsComponent implements OnInit, AfterContentInit {
     else {
       weightValue = item.value;
     }
-    console.log(((this.products[this.index].price / this.oldWeight) * weightValue));
-    console.log(((this.products[this.index].price / this.oldWeight) * weightValue).toString().includes("."));
-    if (((this.products[this.index].price / this.oldWeight) * weightValue).toString().includes(".")) {
-      this.products[this.index].price = ((this.products[this.index].price / this.oldWeight) * weightValue).toPrecision(4);
-    }
-    else {
-      this.products[this.index].price = ((this.products[this.index].price / this.oldWeight) * weightValue);
-    }
-    if (((this.products[this.index].marketPrice / this.oldWeight) * weightValue).toString().includes(".")) {
-      this.products[this.index].marketPrice = ((this.products[this.index].marketPrice / this.oldWeight) * weightValue).toPrecision(4);
-    }
-    else {
-      this.products[this.index].marketPrice = ((this.products[this.index].marketPrice / this.oldWeight) * weightValue);
-    }
+    this.products[this.index].price = (this.products[this.index].price / this.oldWeight) * weightValue;
+    this.products[this.index].marketPrice = (this.products[this.index].marketPrice / this.oldWeight) * weightValue;
     this.weightDialog.hide();
   }
 

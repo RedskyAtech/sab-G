@@ -28,6 +28,9 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
     token: string;
     isCategories: boolean;
     categoryMessage: string;
+    query: string;
+    pageNo: number;
+    items: number;
     constructor(private routerExtensions: RouterExtensions, private userService: UserService, private page: Page, private http: HttpClient) {
         this.page.actionBarHidden = true;
         // this.isRendering = true;
@@ -56,6 +59,9 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
         this.token = "";
         this.isCategories = true;
         this.categoryMessage = "";
+        this.query = "";
+        this.pageNo = 1;
+        this.items = 10;
         if (localstorage.getItem("token") != null && localstorage.getItem("token") != undefined) {
             this.token = localstorage.getItem("token");
             this.getCategories();
@@ -140,9 +146,10 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
     }
 
     getCategories() {
+        this.query = `pageNo=${this.pageNo}&items=${this.items}&status=active`
         this.isLoading = true;
         this.http
-            .get(Values.BASE_URL + "categories", {
+            .get(Values.BASE_URL + "categories?" + this.query, {
                 headers: {
                     "Content-Type": "application/json",
                     "x-access-token": this.token
@@ -152,23 +159,28 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
                         console.trace(res);
-                        if (res.data.length > 0) {
+                        if (res.data.category.length > 0) {
                             this.isCategories = true;
                             this.categoryMessage = "";
-                            for (var i = 0; i < res.data.length; i++) {
+                            for (var i = 0; i < res.data.category.length; i++) {
                                 this.categories.push({
-                                    id: res.data[i]._id,
-                                    name: res.data[i].name,
-                                    imageUrl: res.data[i].image.url,
-                                    thumbnail: res.data[i].thumbnail,
-                                    resize_url: res.data[i].resize_url,
-                                    resize_thumbnail: res.data[i].resize_thumbnail
+                                    id: res.data.category[i]._id,
+                                    name: res.data.category[i].name,
+                                    imageUrl: res.data.category[i].image.url,
+                                    thumbnail: res.data.category[i].thumbnail,
+                                    resize_url: res.data.category[i].resize_url,
+                                    resize_thumbnail: res.data.category[i].resize_thumbnail
                                 });
                             }
+                            this.isLoading = false;
+                            this.pageNo = this.pageNo + 1;
+                            this.getCategories();
                         }
                         else {
-                            this.isCategories = false;
-                            this.categoryMessage = "There is no categories.";
+                            if (this.pageNo == 1) {
+                                this.isCategories = false;
+                                this.categoryMessage = "There is no categories.";
+                            }
                         }
                         this.isLoading = false;
                     }

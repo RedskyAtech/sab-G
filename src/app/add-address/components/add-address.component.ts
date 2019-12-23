@@ -330,25 +330,79 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
     //     this.areaBorderColor = "#23A6DB";
     //     this.areaBorderWidth = "2";
     // }
-    onAddAddressClick() {
-        // if (this.contactNoText == "") {
-        //     alert("Please enter contact number.");
-        // }
-        // else if (this.contactNoText.length < 10) {
-        //     alert("Please enter ten digit contact number.");
-        // }
-        // else if (this.houseNoText == "") {
-        //     alert("Please enter house number.");
-        // }
-        // else if (this.areaText == "") {
-        //     alert("Please enter area.");
-        // }
-        // else {
-        // this.routerExtensions.navigate(['/congratulations']);
-        // }
-        // if (this.houseNoText != 0) {
-        //     this.user.address.houseNo = this.houseNoText;
-        // }
+    // onAddAddressClick() {
+    //     // if (this.contactNoText == "") {
+    //     //     alert("Please enter contact number.");
+    //     // }
+    //     // else if (this.contactNoText.length < 10) {
+    //     //     alert("Please enter ten digit contact number.");
+    //     // }
+    //     // else if (this.houseNoText == "") {
+    //     //     alert("Please enter house number.");
+    //     // }
+    //     // else if (this.areaText == "") {
+    //     //     alert("Please enter area.");
+    //     // }
+    //     // else {
+    //     // this.routerExtensions.navigate(['/congratulations']);
+    //     // }
+    //     // if (this.houseNoText != 0) {
+    //     //     this.user.address.houseNo = this.houseNoText;
+    //     // }
+    //     if (this.firstNameText != "") {
+    //         this.user.deliveryAddress.firstName = this.firstNameText;
+    //     }
+    //     if (this.lastNameText != "") {
+    //         this.user.deliveryAddress.lastName = this.lastNameText;
+    //     }
+    //     if (this.contactNoText != "") {
+    //         this.user.deliveryAddress.contactNumber = this.contactNoText;
+    //     }
+    //     if (this.apartmentText != "") {
+    //         this.user.deliveryAddress.apartmentName = this.apartmentText;
+    //     }
+    //     if (this.cityText != "") {
+    //         this.user.deliveryAddress.city = this.cityText;
+    //     }
+    //     if (this.addressLineText != "") {
+    //         this.user.deliveryAddress.addressLine = this.addressLineText;
+    //     }
+    //     if (this.floorText != "") {
+    //         this.user.deliveryAddress.floor = this.floorText;
+    //     }
+    //     // if (this.streetText != "") {
+    //     //     this.user.address.streetDetails = this.streetText;
+    //     // }
+    //     // if (this.landmarkText != "") {
+    //     //     this.user.address.landmark = this.landmarkText;
+    //     // }
+    //     // if (this.areaText != "") {
+    //     //     this.user.address.areaDetails = this.areaText;
+    //     // }
+    //     console.log(this.user);
+    //     this.http
+    //         .put(Values.BASE_URL + "users/" + localstorage.getItem("userId"), this.user, {
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 "x-access-token": this.token
+    //             }
+    //         })
+    //         .subscribe((res: any) => {
+    //             if (res != null && res != undefined) {
+    //                 if (res.isSuccess == true) {
+    //                     console.log("ADDRESS:::", res);
+    //                     Toast.makeText("Address is successfully updated!!!", "long").show();
+    //                     this.isLoading = false;
+    //                     // this.routerExtensions.back();
+    //                 }
+    //             }
+    //         }, error => {
+    //             this.isLoading = false;
+    //             console.log("ERROR::::", error.error.error);
+    //         });
+    // }
+
+    onPlaceOrderClick() {
         if (this.firstNameText != "") {
             this.user.deliveryAddress.firstName = this.firstNameText;
         }
@@ -370,16 +424,6 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
         if (this.floorText != "") {
             this.user.deliveryAddress.floor = this.floorText;
         }
-        // if (this.streetText != "") {
-        //     this.user.address.streetDetails = this.streetText;
-        // }
-        // if (this.landmarkText != "") {
-        //     this.user.address.landmark = this.landmarkText;
-        // }
-        // if (this.areaText != "") {
-        //     this.user.address.areaDetails = this.areaText;
-        // }
-        console.log(this.user);
         this.http
             .put(Values.BASE_URL + "users/" + localstorage.getItem("userId"), this.user, {
                 headers: {
@@ -390,9 +434,41 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
             .subscribe((res: any) => {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
-                        console.log("ADDRESS:::", res);
+                        // console.log("ADDRESS:::", res);
                         Toast.makeText("Address is successfully updated!!!", "long").show();
-                        this.isLoading = false;
+                        // this.isLoading = false;
+                        if (this.firstNameText == "" || this.firstNameText == undefined) {
+                            alert("Please enter your firstname.");
+                        }
+                        else if (this.contactNoText == "" || this.contactNoText == undefined) {
+                            alert("Please enter your contact number.");
+                        }
+                        else if (this.addressLineText == "" || this.addressLineText == undefined) {
+                            alert("Please enter your address.");
+                        }
+                        else {
+                            this.order.cart._id = localstorage.getItem("cartId");
+                            this.http
+                                .post(Values.BASE_URL + "orders", this.order, {
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "x-access-token": this.token
+                                    }
+                                })
+                                .subscribe((res: any) => {
+                                    if (res != null && res != undefined) {
+                                        if (res.isSuccess == true) {
+                                            Toast.makeText("Order is successfully placed!!!", "long").show();
+                                            this.isLoading = false;
+                                            this.routerExtensions.navigate(['/congratulations']);
+
+                                        }
+                                    }
+                                }, error => {
+                                    this.isLoading = false;
+                                    console.log("ERROR::::", error.error.error);
+                                });
+                        }
                         // this.routerExtensions.back();
                     }
                 }
@@ -400,41 +476,6 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
                 this.isLoading = false;
                 console.log("ERROR::::", error.error.error);
             });
-    }
-
-    onPlaceOrderClick() {
-        if (this.firstNameText == "" || this.firstNameText == undefined) {
-            alert("Please enter your firstname.");
-        }
-        else if (this.contactNoText == "" || this.contactNoText == undefined) {
-            alert("Please enter your contact number.");
-        }
-        else if (this.addressLineText == "" || this.addressLineText == undefined) {
-            alert("Please enter your address.");
-        }
-        else {
-            this.order.cart._id = localstorage.getItem("cartId");
-            this.http
-                .post(Values.BASE_URL + "orders", this.order, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "x-access-token": this.token
-                    }
-                })
-                .subscribe((res: any) => {
-                    if (res != null && res != undefined) {
-                        if (res.isSuccess == true) {
-                            Toast.makeText("Order is successfully placed!!!", "long").show();
-                            this.isLoading = false;
-                            this.routerExtensions.navigate(['/congratulations']);
-
-                        }
-                    }
-                }, error => {
-                    this.isLoading = false;
-                    console.log("ERROR::::", error.error.error);
-                });
-        }
     }
 
 }

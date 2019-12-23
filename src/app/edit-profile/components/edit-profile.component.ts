@@ -49,7 +49,7 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
     // emailHint: string;
     // emailText: string;
     private imageCropper: ImageCropper;
-    profilePicture: string | ImageSource = "res://man";
+    profilePicture: string | ImageSource = "res://profile";
     file: any;
     url: string;
     thumbnail: string;

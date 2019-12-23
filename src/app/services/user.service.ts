@@ -17,6 +17,8 @@ export class UserService {
     headerlabel = this._headerlabel.asObservable();
     showback = this._showback.asObservable();
 
+    currentPage: string;
+
     constructor() { }
 
     showLoadingState(state: boolean) {
@@ -25,6 +27,7 @@ export class UserService {
 
     activeScreen(screen: string) {
         this._activescreen.next(screen);
+        this.currentPage = screen;
     }
 
     showFooter(state: boolean) {

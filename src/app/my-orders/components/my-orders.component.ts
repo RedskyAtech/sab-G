@@ -89,6 +89,7 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
                 "Content-Type": "application/json",
                 "x-access-token": this.token
             });
+            this.isLoading = true;
             this.getOrders();
         }
         this.page.on('navigatedTo', (data) => {
@@ -280,12 +281,14 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
                                     orderId: res.data.orders[i].orderId
                                 })
                             }
+                            this.isLoading = false;
                             this.pageNo = this.pageNo + 1;
                             this.getOrders();
                         }
                         else {
                             if (this.pageNo == 1) {
                                 this.isOrders = false;
+                                this.isLoading = false;
                                 this.orderMessage = "There is no orders.";
                             }
                         }
@@ -303,6 +306,7 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
         this.orders = [];
         this.history = false;
         this.pageNo = 1;
+        this.isLoading = true;
         this.getOrders();
     }
 
@@ -312,6 +316,7 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
         this.orders = [];
         this.history = true;
         this.pageNo = 1;
+        this.isLoading = true;
         this.getOrders();
     }
 

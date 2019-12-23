@@ -17,6 +17,7 @@ const routes: Routes = [
     { path: "editProfile", loadChildren: "./edit-profile/edit-profile.module#EditProfileModule" },
     { path: "cart", loadChildren: "./cart/cart.module#CartModule" },
     { path: "products", loadChildren: "./products/products.module#ProductsModule" },
+    { path: "search", loadChildren: "./search/search.module#SearchModule" },
     { path: "orderDetails", loadChildren: "./order-details/order-details.module#OrderDetailsModule" },
     { path: "myOrders", loadChildren: "./my-orders/my-orders.module#MyOrdersModule" },
     { path: "home", loadChildren: "./home/home.module#HomeModule" },

@@ -43,6 +43,7 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
     textfield3: TextField;
     textfield4: TextField;
     user: User;
+    from: string;
     constructor(private routerExtensions: RouterExtensions, private route: ActivatedRoute, private userService: UserService, private page: Page, private http: HttpClient) {
         this.page.actionBarHidden = true;
         this.isLoading = false;
@@ -56,6 +57,7 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
         this.mobileBorderColor = "#707070";
         this.mobileBorderWidth = "1";
         this.user = new User();
+        this.from = "";
     }
     ngAfterContentInit(): void {
         // this.renderingTimeout = setTimeout(() => {
@@ -155,6 +157,7 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
         else {
             this.route.queryParams.subscribe(params => {
                 this.user.phone = params["phone"];
+                this.from = params["from"];
             });
             this.isLoading = true;
             this.user.otp = this.otp1Text + this.otp2Text + this.otp3Text + this.otp4Text;
@@ -166,8 +169,13 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
                         if (res.isSuccess == true) {
                             this.isLoading = false;
                             localStorage.setItem('regToken', res.data.token);
-                            Toast.makeText("User registered successfully", "long").show();
-                            this.routerExtensions.navigate(['/login']);
+                            if (this.from == "login") {
+                                Toast.makeText("User verified successfully", "long").show();
+                                this.routerExtensions.back();
+                            } else {
+                                Toast.makeText("User registered successfully", "long").show();
+                                this.routerExtensions.navigate(['/login']);
+                            }
                         }
                     }
                 }, error => {

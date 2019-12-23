@@ -40,7 +40,7 @@ export class MenuComponent implements OnInit, AfterContentInit {
     }
     ngOnInit(): void {
         this.userService.activeScreen("menu");
-        this.profilePicture = "res://man";
+        this.profilePicture = "res://profile";
         this.userName = "";
         this.token = "";
         this.userId = "";
@@ -138,14 +138,20 @@ export class MenuComponent implements OnInit, AfterContentInit {
                     if (res.isSuccess == true) {
                         console.trace("PROFILE:::", res);
                         this.isLoading = false;
-                        if (res.data.profile.firstName != undefined) {
-                            console.log("dshdskjhdkjh dshkdjh dshkfdkj");
-                            this.userName = res.data.profile.firstName;
-                            if (res.data.profile.lastName != undefined) {
-                                this.userName = this.userName + " " + res.data.profile.lastName;
+                        if (res.data.profile) {
+                            if (res.data.profile.firstName != undefined) {
+                                this.userName = res.data.profile.firstName;
+                                if (res.data.profile.lastName != undefined) {
+                                    this.userName = this.userName + " " + res.data.profile.lastName;
+                                }
+                            }
+                            if (res.data.profile.image) {
+                                this.profilePicture = res.data.profile.image.url;
+                                if (this.profilePicture == "") {
+                                    this.profilePicture = "res://profile";
+                                }
                             }
                         }
-                        this.profilePicture = res.data.profile.image.url;
                     }
                 }
             }, error => {
