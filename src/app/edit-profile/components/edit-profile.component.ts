@@ -117,6 +117,7 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
             this.thumbnail = params["thumbnail"];
             this.resize_url = params["resize_url"];
             this.resize_thumbnail = params["resize_thumbnail"];
+            
         });
     }
 
