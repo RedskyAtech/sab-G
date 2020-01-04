@@ -17,17 +17,21 @@
                 </StackLayout>
             </GridLayout>
             <GridLayout row="1" width="100%" height="42%">
-                <GridView [items]="orderedProducts" colWidth="90%" rowHeight="32%" marginTop="2%" width="100%"
-                    height="100%" backgroundColor="transparent">
+                <!-- <GridView [items]="orderedProducts" colWidth="90%" rowHeight="32%" marginTop="2%" width="100%"
+                    height="100%" backgroundColor="transparent"> -->
+                <RadListView [items]="orderedProducts" width="100%" height="100%" colWidth="90%"
+                    rowHeight="32%">
+                    <ListViewStaggeredLayout tkListViewLayout scrollDirection="Vertical" spanCount="1">
+                    </ListViewStaggeredLayout>
                     <ng-template let-item="item" let-odd="odd">
-                        <GridLayout #orderCard width="90%" height="90%" backgroundColor="white" marginLeft="8%"
-                            marginRight="8%" marginTop="10%" marginBottom="10%" columns="auto,auto"
-                            (loaded)="onOrderLoaded($event)">
-                            <StackLayout #productImage col="0" width="25%" height="100%" backgroundColor="#F3F3F3"
-                                verticalAlignment="middle" (loaded)="onPrductImageLoaded($event)">
-                                <Image width="90%" height="90%" [src]="item.image"></Image>
+                        <GridLayout #orderCard width="90%" height="90vh" backgroundColor="white" marginLeft="8%"
+                            marginRight="8%" marginTop="5" marginBottom="5" columns="auto,auto" androidElevation="5"
+                            borderRadius="10">
+                            <StackLayout #productImage col="0" width="25%" height="100vh" backgroundColor="#F3F3F3"
+                                verticalAlignment="middle" borderRadius="10">
+                                <Image width="90vh" height="90vh" [src]="item.image"></Image>
                             </StackLayout>
-                            <GridLayout col="1" width="75%" height="100%" rows="auto,auto,auto">
+                            <GridLayout col="1" width="75%" height="100vh" rows="auto,auto,auto">
                                 <StackLayout row="0" width="95%" height="40%" verticalAlignment="middle">
                                     <Label [text]="item.name" color="#707070" fontSize="18%"
                                         textAlignment="left"></Label>
@@ -64,7 +68,8 @@
                             </GridLayout>
                         </GridLayout>
                     </ng-template>
-                </GridView>
+                </RadListView>
+                <!-- </GridView> -->
             </GridLayout>
             <StackLayout row="2" height="40%" width="100%" marginBottom="5%" backgroundColor="#F6F6F6">
                 <GridLayout #priceCard orientation="vertical" width="90%" height="85%" marginTop="2%"

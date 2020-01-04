@@ -17,8 +17,8 @@
     background: linear-gradient(345deg,#8BDE22,#23A6DB);
     text-transform: initial;
     color:white;
-    border-color: white;
-    border-width:1;
+    /* border-color: white; */
+    /* border-width:1; */
     padding:0;
     height:50%;
     width:80%;
@@ -26,7 +26,7 @@
 }
 .add-button:highlighted{
     background-color: white;
-    border-color: #273BD3;
+    /* border-color: #273BD3; */
     color: #273BD3;
 }
 .search-button{
@@ -35,8 +35,8 @@
     background: linear-gradient(345deg,#8BDE22,#23A6DB);
     text-transform: initial;
     color:white;
-    border-color: white;
-    border-width:1;
+    /* border-color: white;
+    border-width:1; */
     padding:0;
     height:80%;
     width:80%;
@@ -44,7 +44,7 @@
 }
 .search-button:highlighted{
     background-color: white;
-    border-color: #273BD3;
+    /* border-color: #273BD3; */
     color: #273BD3;
 }
 .weight-button{
@@ -53,15 +53,15 @@
     background: linear-gradient(345deg,#8BDE22,#23A6DB);
     text-transform: initial;
     color:white;
-    border-color: white;
-    border-width:1;
+    /* border-color: white;
+    border-width:1; */
     padding:0;
-    height:80%;
-    width:80%;
+    height:50%;
+    width:70%;
     text-align: center;
 }
 .weight-button:highlighted{
     background-color: white;
-    border-color: #273BD3;
+    /* border-color: #273BD3; */
     color: #273BD3;
 }

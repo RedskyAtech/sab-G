@@ -320,6 +320,7 @@ export class CartComponent implements OnInit, AfterContentInit {
 
     getCart() {
         this.isLoading = true;
+        console.log(localstorage.getItem("cartId"));
         this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${this.pageNo}&items=${this.items}`
         this.http
             .get(Values.BASE_URL + "carts?" + this.query, {

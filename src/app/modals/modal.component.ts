@@ -88,8 +88,8 @@ export class ModalComponent implements OnInit {
     @Input() private duration: number = 250; // in milliseconds
     @Output() private open = new EventEmitter<any>();
     @Output() private close = new EventEmitter<any>();
-    @ViewChild("bodyEl") private bodyEl: ElementRef;
-    @ViewChild("contentEl") private contentEl: ElementRef;
+    @ViewChild("bodyEl", { static: false }) private bodyEl: ElementRef;
+    @ViewChild("contentEl", { static: false }) private contentEl: ElementRef;
 
     constructor(
         private hostEl: ElementRef,

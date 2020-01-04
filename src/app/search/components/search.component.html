@@ -1,14 +1,18 @@
 <Page actionBarHidden="true">
   <GridLayout class="page">
     <CardView #weightDialog modal size="lg" duration="100" backgroundColor="transparent" (tap)="onOutsideClick()">
-      <GridView [items]="weights" colWidth="90%" rowHeight="8%" width="40%" height="60%" backgroundColor="transparent">
+      <!-- <GridView [items]="weights" colWidth="90%" rowHeight="8%" width="40%" height="60%" backgroundColor="transparent"> -->
+      <RadListView [items]="weights" width="40%" height="60%" colWidth="90%" rowHeight="8%">
+        <ListViewStaggeredLayout tkListViewLayout scrollDirection="Vertical" spanCount="1">
+        </ListViewStaggeredLayout>
         <ng-template let-item="item" let-odd="odd">
-          <StackLayout width="100%" height="100%" verticalAlignment="middle">
+          <StackLayout width="100%" height="100vh" verticalAlignment="middle" marginTop="5" marginBottom="5">
             <Button class="weight-button" [text]="item.value+' '+item.unit" (tap)="onWeight(item)">
             </Button>
           </StackLayout>
         </ng-template>
-      </GridView>
+      </RadListView>
+      <!-- </GridView> -->
     </CardView>
     <StackLayout *ngIf="!isProducts" width="95%" height="10%" verticalAlignment="middle">
       <Label [text]="productMessage" fontSize="16%" color="#8BDE22" fontWeight="500" textAlignment="center"
@@ -38,16 +42,19 @@
     </GridLayout>
     <GridLayout rows="auto,auto" width="100%" height="100%">
       <GridLayout row="0" width="100%" height="76%" marginTop="16%">
-        <GridView [items]="products" colWidth="90%" rowHeight="22%" marginTop="1%" width="100%" height="100%"
-          backgroundColor="transparent">
+        <!-- <GridView [items]="products" colWidth="90%" rowHeight="22%" marginTop="1%" width="100%" height="100%"
+          backgroundColor="transparent"> -->
+        <RadListView [items]="products" width="100%" height="100%" colWidth="90%" rowHeight="22%">
+          <ListViewStaggeredLayout tkListViewLayout scrollDirection="Vertical" spanCount="1">
+          </ListViewStaggeredLayout>
           <ng-template let-item="item" let-odd="odd">
-            <GridLayout #cartCard width="90%" height="90%" backgroundColor="white" marginLeft="8%" marginRight="8%"
-              marginTop="10%" marginBottom="10%" columns="auto,auto,auto" (loaded)="onCartLoaded($event)">
-              <StackLayout #cartImage col="0" width="25%" height="100%" backgroundColor="#F3F3F3"
+            <GridLayout #cartCard width="90%" height="90vh" backgroundColor="white" marginLeft="8%" marginRight="8%"
+              marginTop="10" marginBottom="10" columns="auto,auto,auto" (loaded)="onCartLoaded($event)">
+              <StackLayout #cartImage col="0" width="25%" height="100vh" backgroundColor="#F3F3F3"
                 verticalAlignment="middle" (loaded)="onCartImageLoaded($event)">
-                <Image width="90%" height="90%" [src]="item.imageUrl"></Image>
+                <Image width="90vh" height="90vh" [src]="item.imageUrl"></Image>
               </StackLayout>
-              <GridLayout col="1" width="50%" height="100%" rows="auto,auto,auto">
+              <GridLayout col="1" width="50%" height="100vh" rows="auto,auto,auto">
                 <StackLayout row="0" width="95%" height="40%" verticalAlignment="middle">
                   <Label [text]="item.name" color="#707070" fontSize="18%" textAlignment="left"></Label>
                 </StackLayout>
@@ -67,16 +74,16 @@
                     fontWeight="500"></Label>
                 </StackLayout>
               </GridLayout>
-              <GridLayout col="2" width="25%" height="100%" rows="auto,auto" borderRadius="10">
+              <GridLayout col="2" width="25%" height="100vh" rows="auto,auto" borderRadius="10">
                 <StackLayout row="0" width="100%" height="50%" verticalAlignment="middle" (tap)="onSelectWeight(item)">
                   <GridLayout height="50%" width="80%" verticalAlignment="middle" borderColor="#707070"
                     borderRadius="5%" borderWidth="1" columns="auto,auto">
                     <StackLayout col="0" width="75%" height="100%" verticalAlignment="middle">
-                      <Label [text]="item.weightValue+' '+item.weightUnit" fontSize="14%" textAlignment="center"
+                      <Label [text]="item.weightValue+' '+item.weightUnit" fontSize="12%" textAlignment="center"
                         color="#707070"></Label>
                     </StackLayout>
                     <StackLayout col="1" width="20%" height="100%" verticalAlignment="middle">
-                      <Image src="res://down_arrow" width="80%" height="30%" stretch="aspectFit">
+                      <Image src="res://down_arrow" width="80vh" height="30vh" stretch="aspectFit">
                       </Image>
                     </StackLayout>
                   </GridLayout>
@@ -87,7 +94,8 @@
               </GridLayout>
             </GridLayout>
           </ng-template>
-        </GridView>
+        </RadListView>
+        <!-- </GridView> -->
       </GridLayout>
     </GridLayout>
 

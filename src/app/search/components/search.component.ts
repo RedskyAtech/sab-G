@@ -25,7 +25,7 @@ declare const CGSizeMake: any;
 })
 export class SearchComponent implements OnInit, AfterContentInit {
 
-  @ViewChild('weightDialog') weightDialog: ModalComponent;
+  @ViewChild('weightDialog', { static: false }) weightDialog: ModalComponent;
 
   // isRendering: boolean;
   isLoading: boolean;

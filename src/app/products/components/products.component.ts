@@ -24,7 +24,7 @@ declare const CGSizeMake: any;
 })
 export class ProductsComponent implements OnInit, AfterContentInit {
 
-  @ViewChild('weightDialog') weightDialog: ModalComponent;
+  @ViewChild('weightDialog', { static: false }) weightDialog: ModalComponent;
 
   // isRendering: boolean;
   isLoading: boolean;
@@ -293,25 +293,25 @@ export class ProductsComponent implements OnInit, AfterContentInit {
     if (item.weightUnit == "g") {
       this.weights = [];
       this.weights.push(
-        { value: "100", unit: "g" },
-        { value: "200", unit: "g" },
-        { value: "300", unit: "g" },
-        { value: "400", unit: "g" },
+        // { value: "100", unit: "g" },
+        { value: "250", unit: "g" },
+        // { value: "300", unit: "g" },
+        // { value: "400", unit: "g" },
         { value: "500", unit: "g" },
-        { value: "600", unit: "g" },
-        { value: "700", unit: "g" },
-        { value: "800", unit: "g" },
-        { value: "900", unit: "g" },
+        // { value: "600", unit: "g" },
+        // { value: "700", unit: "g" },
+        // { value: "800", unit: "g" },
+        // { value: "900", unit: "g" },
         { value: "1", unit: "kg" },
         { value: "2", unit: "kg" },
         { value: "3", unit: "kg" },
         { value: "4", unit: "kg" },
         { value: "5", unit: "kg" },
-        { value: "6", unit: "kg" },
-        { value: "7", unit: "kg" },
-        { value: "8", unit: "kg" },
-        { value: "9", unit: "kg" },
-        { value: "10", unit: "kg" }
+        // { value: "6", unit: "kg" },
+        // { value: "7", unit: "kg" },
+        // { value: "8", unit: "kg" },
+        // { value: "9", unit: "kg" },
+        // { value: "10", unit: "kg" }
       );
       this.oldWeight = parseInt(item.weightValue) / 1000;
     }
@@ -320,25 +320,25 @@ export class ProductsComponent implements OnInit, AfterContentInit {
       if (item.weightUnit == "kg") {
         this.weights = [];
         this.weights.push(
-          { value: "100", unit: "g" },
-          { value: "200", unit: "g" },
-          { value: "300", unit: "g" },
-          { value: "400", unit: "g" },
+          // { value: "100", unit: "g" },
+          { value: "250", unit: "g" },
+          // { value: "300", unit: "g" },
+          // { value: "400", unit: "g" },
           { value: "500", unit: "g" },
-          { value: "600", unit: "g" },
-          { value: "700", unit: "g" },
-          { value: "800", unit: "g" },
-          { value: "900", unit: "g" },
+          // { value: "600", unit: "g" },
+          // { value: "700", unit: "g" },
+          // { value: "800", unit: "g" },
+          // { value: "900", unit: "g" },
           { value: "1", unit: "kg" },
           { value: "2", unit: "kg" },
           { value: "3", unit: "kg" },
           { value: "4", unit: "kg" },
           { value: "5", unit: "kg" },
-          { value: "6", unit: "kg" },
-          { value: "7", unit: "kg" },
-          { value: "8", unit: "kg" },
-          { value: "9", unit: "kg" },
-          { value: "10", unit: "kg" }
+          // { value: "6", unit: "kg" },
+          // { value: "7", unit: "kg" },
+          // { value: "8", unit: "kg" },
+          // { value: "9", unit: "kg" },
+          // { value: "10", unit: "kg" }
         );
       }
       else {

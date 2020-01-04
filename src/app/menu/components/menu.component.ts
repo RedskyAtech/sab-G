@@ -18,7 +18,7 @@ declare const CGSizeMake: any;
     styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit, AfterContentInit {
-    @ViewChild('viewLogoutDialog') viewLogoutDialog: ModalComponent;
+    @ViewChild('viewLogoutDialog', { static: false }) viewLogoutDialog: ModalComponent;
 
     // isRendering: boolean;
     isLoading: boolean;

@@ -8,7 +8,7 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { GridViewModule } from "nativescript-grid-view/angular";
 import { MyOrdersComponent } from "./components/my-orders.component";
 import { MyOrdersRoutingModule } from "./my-orders-routing.module";
-
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 @NgModule({
     bootstrap: [
@@ -22,7 +22,8 @@ import { MyOrdersRoutingModule } from "./my-orders-routing.module";
         MyOrdersRoutingModule,
         GridViewModule,
         HeaderModule,
-        FooterModule
+        FooterModule,
+        NativeScriptUIListViewModule
     ],
     declarations: [
         MyOrdersComponent

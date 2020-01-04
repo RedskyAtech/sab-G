@@ -30,9 +30,9 @@ declare const CGSizeMake: any;
     styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent implements OnInit, AfterContentInit {
-    @ViewChild('viewImageChooserDialog') viewImageChooserDialog: ModalComponent;
-    @ViewChild('viewRemoveAccountDialog') viewRemoveAccountDialog: ModalComponent;
-    @ViewChild('uploadProgressDialog') uploadProgressDialog: ModalComponent;
+    @ViewChild('viewImageChooserDialog', { static: false }) viewImageChooserDialog: ModalComponent;
+    @ViewChild('viewRemoveAccountDialog', { static: false }) viewRemoveAccountDialog: ModalComponent;
+    @ViewChild('uploadProgressDialog', { static: false }) uploadProgressDialog: ModalComponent;
 
     // isRendering: boolean;
     isLoading: boolean;

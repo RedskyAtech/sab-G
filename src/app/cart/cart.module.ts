@@ -5,9 +5,10 @@ import { NgModalModule } from "../modals/ng-modal";
 import { HttpClientModule } from "@angular/common/http";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
-import { GridViewModule } from "nativescript-grid-view/angular";
+// import { GridViewModule } from "nativescript-grid-view/angular";
 import { CartComponent } from "./components/cart.component";
 import { CartRoutingModule } from "./cart-routing.module";
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 
 @NgModule({
@@ -20,9 +21,10 @@ import { CartRoutingModule } from "./cart-routing.module";
         NgModalModule,
         HttpClientModule,
         CartRoutingModule,
-        GridViewModule,
+        // GridViewModule,
         HeaderModule,
-        FooterModule
+        FooterModule,
+        NativeScriptUIListViewModule
     ],
     declarations: [
         CartComponent

@@ -3,7 +3,6 @@ import { Color } from "tns-core-modules/color/color";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
 import { Page } from "tns-core-modules/ui/page/page";
-import { HttpInterceptingHandler } from "@angular/common/http/src/module";
 import { HttpHeaders, HttpClient } from "@angular/common/http";
 import * as localstorage from "nativescript-localstorage";
 import { Values } from "~/app/values/values";

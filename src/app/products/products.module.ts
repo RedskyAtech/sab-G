@@ -5,10 +5,10 @@ import { NgModalModule } from "../modals/ng-modal";
 import { HttpClientModule } from "@angular/common/http";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
-import { GridViewModule } from "nativescript-grid-view/angular";
+// import { GridViewModule } from "nativescript-grid-view/angular";
 import { ProductsComponent } from "./components/products.component";
 import { ProductsRoutingModule } from "./products-routing.module";
-
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 @NgModule({
     bootstrap: [
@@ -20,10 +20,10 @@ import { ProductsRoutingModule } from "./products-routing.module";
         NgModalModule,
         HttpClientModule,
         ProductsRoutingModule,
-        GridViewModule,
+        // GridViewModule,
         HeaderModule,
-        FooterModule
-
+        FooterModule,
+        NativeScriptUIListViewModule
     ],
     declarations: [
         ProductsComponent

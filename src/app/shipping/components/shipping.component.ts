@@ -108,6 +108,7 @@ export class ShippingComponent implements OnInit, AfterContentInit {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
                         console.trace(res);
+                        this.isLoading = false;
                         if (res.data.profile.address) {
                             this.addAddressButton = "Update address";
                         }

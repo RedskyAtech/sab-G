@@ -14,19 +14,23 @@
       <ns-footer></ns-footer>
     </GridLayout>
     <GridLayout width="100%" height="84%">
-      <GridView [items]="categories" colWidth="28%" rowHeight="24%" width="100%" height="100%">
+      <!-- <GridView [items]="categories" colWidth="28%" rowHeight="24%" width="100%" height="100%"> -->
+      <RadListView [items]="categories" width="100%" height="100%" colWidth="28%" rowHeight="24%">
+        <ListViewStaggeredLayout tkListViewLayout scrollDirection="Vertical" spanCount="3">
+        </ListViewStaggeredLayout>
         <ng-template let-item="item" let-odd="odd">
-          <GridLayout #categoryCard width="80%" height="90%" backgroundColor="white" rows="auto,auto"
-            (tap)="onCategoryClick(item)" (loaded)="onCategoryLoaded($event)">
+          <GridLayout #categoryCard width="80%" height="90%" marginTop="10" marginBottom="10" backgroundColor="white" rows="auto,auto"
+            (tap)="onCategoryClick(item)" androidElevation="5" borderRadius="10">
             <StackLayout row="0" width="100%" height="75%" verticalAlignment="middle">
-              <Image width="90%" height="90%" stretch="aspectFit" [src]="item.imageUrl"></Image>
+              <Image width="80vw" height="80vw" stretch="aspectFit" [src]="item.imageUrl"></Image>
             </StackLayout>
             <StackLayout row="1" width="100%" height="25%" verticalAlignment="top">
               <Label [text]="item.name" textWrap="true" fontSize="10%" color="#707070" textAlignment="center"></Label>
             </StackLayout>
           </GridLayout>
         </ng-template>
-      </GridView>
+      </RadListView>
+      <!-- </GridView> -->
     </GridLayout>
 
     <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">

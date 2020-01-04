@@ -21,7 +21,7 @@
                                 src="res://user_icon">
                             </Image>
                         </GridLayout>
-                        <TextField [hint]="mobileHint" width="85%" fontSize="16%" color="#23A6DB"
+                        <TextField [hint]="mobileHint" width="85%" fontSize="14%" color="#23A6DB"
                             style.placeholderColor="#B9B9B9" (textChange)="mobileTextField($event)"
                             borderColor="transparent" borderWidth="1" autocorrect="false" maxLength="10"
                             keyboardType="phone">
@@ -35,7 +35,7 @@
                                 src="res://lock">
                             </Image>
                         </GridLayout>
-                        <TextField [hint]="passwordHint" width="70%" fontSize="16%" color="#23A6DB"
+                        <TextField [hint]="passwordHint" width="70%" fontSize="14%" color="#23A6DB"
                             style.placeholderColor="#B9B9B9" (textChange)="passwordTextField($event)"
                             borderColor="transparent" borderWidth="1" autocorrect="false" [secure]="passwordSecure">
                         </TextField>
@@ -50,7 +50,7 @@
                                 src="res://lock">
                             </Image>
                         </GridLayout>
-                        <TextField [hint]="confirmPasswordHint" width="70%" fontSize="16%" color="#23A6DB"
+                        <TextField [hint]="confirmPasswordHint" width="70%" fontSize="14%" color="#23A6DB"
                             style.placeholderColor="#B9B9B9" (textChange)="confirmPasswordTextField($event)"
                             borderColor="transparent" borderWidth="1" autocorrect="false"
                             [secure]="confirmPasswordSecure">

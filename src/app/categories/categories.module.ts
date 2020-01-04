@@ -5,10 +5,10 @@ import { NgModalModule } from "../modals/ng-modal";
 import { HttpClientModule } from "@angular/common/http";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
-import { GridViewModule } from "nativescript-grid-view/angular";
+// import { GridViewModule } from "nativescript-grid-view/angular";
 import { CategoriesComponent } from "./components/categories.component";
 import { CategoriesRoutingModule } from "./categories-routing.module";
-
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 @NgModule({
     bootstrap: [
@@ -20,9 +20,10 @@ import { CategoriesRoutingModule } from "./categories-routing.module";
         NgModalModule,
         HttpClientModule,
         CategoriesRoutingModule,
-        GridViewModule,
+        // GridViewModule,
         HeaderModule,
-        FooterModule
+        FooterModule,
+        NativeScriptUIListViewModule
     ],
     declarations: [
         CategoriesComponent

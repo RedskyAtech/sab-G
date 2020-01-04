@@ -8,7 +8,7 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { GridViewModule } from "nativescript-grid-view/angular";
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchComponent } from './components/search.component';
-
+import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 
 @NgModule({
     bootstrap: [
@@ -22,7 +22,8 @@ import { SearchComponent } from './components/search.component';
         SearchRoutingModule,
         GridViewModule,
         HeaderModule,
-        FooterModule
+        FooterModule,
+        NativeScriptUIListViewModule
 
     ],
     declarations: [

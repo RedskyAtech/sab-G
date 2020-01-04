@@ -20,10 +20,10 @@ declare const CGSizeMake: any;
     styleUrls: ['./set-password.component.css']
 })
 export class SetPasswordComponent implements OnInit, AfterContentInit {
-    @ViewChild("textField1") textField1: ElementRef;
-    @ViewChild("textField2") textField2: ElementRef;
-    @ViewChild("textField3") textField3: ElementRef;
-    @ViewChild("textField4") textField4: ElementRef;
+    @ViewChild("textField1", { static: false }) textField1: ElementRef;
+    @ViewChild("textField2", { static: false }) textField2: ElementRef;
+    @ViewChild("textField3", { static: false }) textField3: ElementRef;
+    @ViewChild("textField4", { static: false }) textField4: ElementRef;
 
     // isRendering: boolean;
     isLoading: boolean;
