@@ -22,7 +22,8 @@ const routes: Routes = [
     { path: "myOrders", loadChildren: "./my-orders/my-orders.module#MyOrdersModule" },
     { path: "home", loadChildren: "./home/home.module#HomeModule" },
     { path: "categories", loadChildren: "./categories/categories.module#CategoriesModule" },
-    { path: "setPassword", loadChildren: "./set-password/set-password.module#SetPasswordModule" }
+    { path: "setPassword", loadChildren: "./set-password/set-password.module#SetPasswordModule" },
+    { path: "faq", loadChildren: "./faq/faq.module#FaqModule" }
 ];
 
 @NgModule({

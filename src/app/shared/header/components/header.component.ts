@@ -21,7 +21,8 @@ export class HeaderComponent implements OnInit {
     showBackButton: string;
     // showAddButton: string;
     screen: string;
-
+    showLogo: boolean;
+    sabgLogo: string;
     constructor(private http: HttpClient, private page: Page, private userService: UserService, private routerExtensions: RouterExtensions) {
         this.page.actionBarHidden = true;
         this.backIcon = "res://back";
@@ -30,6 +31,8 @@ export class HeaderComponent implements OnInit {
         this.showBackButton = "visible";
         // this.showAddButton = "hidden";
         this.screen = "";
+        this.showLogo = false;
+        this.sabgLogo = "res://header_icon";
 
         this.userService.headerlabel.subscribe((label: string) => {
             console.log("header:::::::::::", label);
@@ -52,6 +55,12 @@ export class HeaderComponent implements OnInit {
 
         this.userService.activescreen.subscribe((screen: string) => {
             this.screen = screen;
+            if (screen == "home") {
+                this.showLogo = true;
+            }
+            else {
+                this.showLogo = false;
+            }
         });
 
     }

@@ -236,6 +236,7 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
                 }
             })
             .subscribe((res: any) => {
+                console.trace(res);
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
                         console.trace(res);

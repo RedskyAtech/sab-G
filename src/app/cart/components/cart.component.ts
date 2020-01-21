@@ -336,10 +336,15 @@ export class CartComponent implements OnInit, AfterContentInit {
                             this.subtotal = res.data.grandTotal;
                             this.totalItems = res.data.products.length;
                             this.total = res.data.grandTotal;
+                            if (res.data.deliveryCharge > 0) {
+                                this.deliveryCharges = res.data.deliveryCharge;
+                            }
+                            this.subtotal = (res.data.grandTotal - res.data.deliveryCharge).toString();
                             for (var i = 0; i < res.data.products.length; i++) {
+                                var name = res.data.products[i].name.charAt(0).toUpperCase() + res.data.products[i].name.slice(1);
                                 this.cartProducts.push({
                                     id: res.data.products[i]._id,
-                                    name: res.data.products[i].name,
+                                    name: name,
                                     imageUrl: res.data.products[i].image.url,
                                     // thumbnail: res.data.products[i].image.thumbnail,
                                     // resize_url: res.data.products[i].image.resize_url,

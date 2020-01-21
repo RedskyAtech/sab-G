@@ -3,7 +3,7 @@ import { NgModalModule } from "../modals/ng-modal";
 import { HttpClientModule } from "@angular/common/http";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
-import { GridViewModule } from "nativescript-grid-view/angular";
+// import { GridViewModule } from "nativescript-grid-view/angular";
 import { ConfirmOtpComponent } from "./components/confirm-otp.component";
 import { ConfirmOtpRoutingModule } from "./confirm-otp-routing.module";
 
@@ -18,7 +18,7 @@ import { ConfirmOtpRoutingModule } from "./confirm-otp-routing.module";
         NgModalModule,
         HttpClientModule,
         ConfirmOtpRoutingModule,
-        GridViewModule
+        // GridViewModule
     ],
     declarations: [
         ConfirmOtpComponent

@@ -254,9 +254,10 @@ export class OrderDetailsComponent implements OnInit, AfterContentInit {
                         this.date = dateTime.getDate().toString() + "/" + (dateTime.getMonth() + 1).toString() + "/" + dateTime.getFullYear().toString() + " (" + finalHours + ":" + minutes + " " + ampm + ")";
                         this.orderId = res.data.orderId;
                         for (var i = 0; i < res.data.products.length; i++) {
+                            var name = res.data.products[i].name.charAt(0).toUpperCase() + res.data.products[i].name.slice(1);
                             this.orderedProducts.push({
                                 image: res.data.products[i].image.url,
-                                name: res.data.products[i].name,
+                                name: name,
                                 price: res.data.products[i].price,
                                 total: res.data.products[i].total,
                                 weightValue: res.data.products[i].dimensions.value,
@@ -264,7 +265,10 @@ export class OrderDetailsComponent implements OnInit, AfterContentInit {
                                 quantity: res.data.products[i].quantity,
                             })
                         }
-                        this.subtotal = res.data.grandTotal;
+                        if (res.data.deliveryCharge > 0) {
+                            this.deliveryCharges = res.data.deliveryCharge;
+                        }
+                        this.subtotal = (res.data.grandTotal - res.data.deliveryCharge).toString();
                         this.totalItems = res.data.products.length;
                         this.total = res.data.grandTotal;
                         this.address = res.data.deliveryAddress.addressLine;

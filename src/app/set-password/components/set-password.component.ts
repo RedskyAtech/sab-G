@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, AfterContentInit, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit, AfterContentInit, ViewChild, ElementRef, AfterViewInit } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
-import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
 import { UserService } from "~/app/services/user.service";
 import { Page } from "tns-core-modules/ui/page/page";
@@ -9,6 +8,7 @@ import { User } from "~/app/models/user.model";
 import { ActivatedRoute } from "@angular/router";
 import { Values } from '~/app/values/values';
 import * as Toast from 'nativescript-toast';
+import { TextField } from 'tns-core-modules/ui/text-field';
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -19,7 +19,8 @@ declare const CGSizeMake: any;
     templateUrl: "./set-password.component.html",
     styleUrls: ['./set-password.component.css']
 })
-export class SetPasswordComponent implements OnInit, AfterContentInit {
+export class SetPasswordComponent implements OnInit, AfterContentInit, AfterViewInit {
+
     @ViewChild("textField1", { static: false }) textField1: ElementRef;
     @ViewChild("textField2", { static: false }) textField2: ElementRef;
     @ViewChild("textField3", { static: false }) textField3: ElementRef;
@@ -31,6 +32,10 @@ export class SetPasswordComponent implements OnInit, AfterContentInit {
     otp2Text: string;
     otp3Text: string;
     otp4Text: string;
+    textfield1: TextField;
+    textfield2: TextField;
+    textfield3: TextField;
+    textfield4: TextField;
     heading: string;
     mobileHint: string;
     nextButton: string;
@@ -38,10 +43,6 @@ export class SetPasswordComponent implements OnInit, AfterContentInit {
     renderingTimeout;
     mobileBorderColor: string;
     mobileBorderWidth: string;
-    textfield1: TextField;
-    textfield2: TextField;
-    textfield3: TextField;
-    textfield4: TextField;
     passwordText: string;
     passwordHint: string;
     passwordBorderColor: string;
@@ -83,11 +84,17 @@ export class SetPasswordComponent implements OnInit, AfterContentInit {
         // }, 5000)
     }
     ngOnInit(): void {
-        this.textfield1 = <TextField>this.textField1.nativeElement;
-        this.textfield2 = <TextField>this.textField2.nativeElement;
-        this.textfield3 = <TextField>this.textField3.nativeElement;
-        this.textfield4 = <TextField>this.textField4.nativeElement;
-        this.textfield1.focus();
+
+    }
+
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.textfield1 = <TextField>this.textField1.nativeElement;
+            this.textfield2 = <TextField>this.textField2.nativeElement;
+            this.textfield3 = <TextField>this.textField3.nativeElement;
+            this.textfield4 = <TextField>this.textField4.nativeElement;
+            this.textfield1.focus();
+        }, 10)
     }
 
     onBack() {

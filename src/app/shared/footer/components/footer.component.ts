@@ -55,7 +55,7 @@ export class FooterComponent implements OnInit {
                 this.isMenuHighlighted = "hidden";
                 this.isCartHighlighted = "hidden";
             }
-            if (screen == "menu" || screen == "orderDetails" || screen == "congratulations" || screen == "myOrders") {
+            if (screen == "menu" || screen == "orderDetails" || screen == "congratulations" || screen == "myOrders" || screen == "faq") {
                 this.isHomeHighlighted = "hidden";
                 this.isProfileHighlighted = "hidden";
                 this.isSearchHighlighted = "hidden";

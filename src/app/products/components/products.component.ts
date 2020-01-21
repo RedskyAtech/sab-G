@@ -118,52 +118,6 @@ export class ProductsComponent implements OnInit, AfterContentInit {
     return 2.0
   }
 
-  onCartLoaded(args: any) {
-    var cartCard = <any>args.object;
-    setTimeout(() => {
-      if (cartCard.android) {
-        let nativeGridMain = cartCard.android;
-        var shape = new android.graphics.drawable.GradientDrawable();
-        shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
-        shape.setColor(android.graphics.Color.parseColor('white'));
-        shape.setCornerRadius(20)
-        nativeGridMain.setBackgroundDrawable(shape);
-        nativeGridMain.setElevation(5)
-      } else if (cartCard.ios) {
-        let nativeGridMain = cartCard.ios;
-        nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
-        nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
-        nativeGridMain.layer.shadowOpacity = 0.5
-        nativeGridMain.layer.shadowRadius = 5.0
-        nativeGridMain.layer.shadowRadius = 5.0
-      }
-      // this.changeDetector.detectChanges();
-    }, 10)
-  }
-
-  onCartImageLoaded(args: any) {
-    var cartImage = <any>args.object;
-    setTimeout(() => {
-      if (cartImage.android) {
-        let nativeGridMain = cartImage.android;
-        var shape = new android.graphics.drawable.GradientDrawable();
-        shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
-        shape.setColor(android.graphics.Color.parseColor('#F3F3F3'));
-        shape.setCornerRadius(20)
-        nativeGridMain.setBackgroundDrawable(shape);
-        nativeGridMain.setElevation(0)
-      } else if (cartImage.ios) {
-        let nativeGridMain = cartImage.ios;
-        nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
-        nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
-        nativeGridMain.layer.shadowOpacity = 0.5
-        nativeGridMain.layer.shadowRadius = 5.0
-        nativeGridMain.layer.shadowRadius = 5.0
-      }
-      // this.changeDetector.detectChanges();
-    }, 10)
-  }
-
   onHeaderLoaded(args: any) {
     var headerCard = <any>args.object;
     setTimeout(() => {
@@ -226,10 +180,10 @@ export class ProductsComponent implements OnInit, AfterContentInit {
               this.isProducts = true;
               this.productMessage = "";
               for (var i = 0; i < res.data.products.length; i++) {
-                //   // console.log(res.data.)
+                var name = res.data.products[i].name.charAt(0).toUpperCase() + res.data.products[i].name.slice(1);
                 this.products.push({
                   id: res.data.products[i]._id,
-                  name: res.data.products[i].name,
+                  name: name,
                   imageUrl: res.data.products[i].image.url,
                   thumbnail: res.data.products[i].image.thumbnail,
                   resize_url: res.data.products[i].image.resize_url,

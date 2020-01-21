@@ -177,7 +177,7 @@ export class MenuComponent implements OnInit, AfterContentInit {
     }
 
     onFAQClick() {
-        alert("FAQ clicked!!!");
+        this.routerExtensions.navigate(['/faq']);
     }
 
     onProfileClick() {

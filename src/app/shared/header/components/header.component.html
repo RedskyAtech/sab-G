@@ -7,8 +7,14 @@
                     </Image> -->
                     <Button class="back-button" (tap)="onBackClick()"></Button>
                 </StackLayout>
-                <StackLayout col="1" width="70%" height="100%" verticalAlignment="middle" horizontalAlignment="center">
+                <StackLayout *ngIf="!showLogo" col="1" width="70%" height="100%" verticalAlignment="middle"
+                    horizontalAlignment="center">
                     <Label class="header-label" [text]="headerLabel"></Label>
+                </StackLayout>
+                <StackLayout *ngIf="showLogo" col="1" width="70%" height="100%" verticalAlignment="middle"
+                    horizontalAlignment="center">
+                    <Image class="sabg-logo" [src]="sabgLogo">
+                    </Image>
                 </StackLayout>
                 <!-- <StackLayout [visibility]="showAddButton" col="2" width="15%" height="100%" verticalAlignment="middle"
                     horizontalAlignment="center">

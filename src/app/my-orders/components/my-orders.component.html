@@ -11,7 +11,7 @@
                 textWrap="true"></Label>
         </StackLayout>
         <GridLayout rows="auto,auto" width="100%" height="100%">
-            <GridLayout row="0" columns="auto,auto" height="15%" width="100%" marginTop="8%">
+            <GridLayout row="0" columns="auto,auto" height="12%" width="100%" marginTop="8%">
                 <StackLayout col="0" height="100%" width="50%" verticalAlignment="middle">
                     <Button *ngIf="isCurrentButton" class="selected-button" text="Current"
                         (tap)="onCurrentClick()"></Button>
@@ -23,7 +23,7 @@
                     <Button *ngIf="!isPastButton" class="unselected-button" text="Past" (tap)="onPastClick()"></Button>
                 </StackLayout>
             </GridLayout>
-            <GridLayout row="1" width="100%" height="69%">
+            <GridLayout row="1" width="100%" height="72%">
                 <!-- <GridView [items]="orders" colWidth="90%" rowHeight="23%" marginTop="2%" width="100%" height="100%"
                     backgroundColor="transparent"> -->
                 <RadListView [items]="orders" width="100%" height="100%" colWidth="90%" rowHeight="23%">
@@ -32,7 +32,7 @@
                     <ng-template let-item="item" let-odd="odd">
                         <GridLayout #cartCard width="90%" height="90vh" backgroundColor="white" marginLeft="8%"
                             marginRight="8%" marginTop="5" marginBottom="5" columns="auto,auto,auto"
-                            androidElevation="5" borderRadius="10">
+                            androidElevation="2" borderRadius="10">
                             <StackLayout #orderImage col="0" width="25%" height="100vh" backgroundColor="#F3F3F3"
                                 verticalAlignment="middle" borderRadius="10">
                                 <Image width="90vh" height="90vh" [src]="item.image"></Image>

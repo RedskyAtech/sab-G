@@ -163,9 +163,10 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
                             this.isCategories = true;
                             this.categoryMessage = "";
                             for (var i = 0; i < res.data.category.length; i++) {
+                                var name = res.data.category[i].name.charAt(0).toUpperCase() + res.data.category[i].name.slice(1);
                                 this.categories.push({
                                     id: res.data.category[i]._id,
-                                    name: res.data.category[i].name,
+                                    name: name,
                                     imageUrl: res.data.category[i].image.url,
                                     thumbnail: res.data.category[i].thumbnail,
                                     resize_url: res.data.category[i].resize_url,

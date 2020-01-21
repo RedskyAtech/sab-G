@@ -12,6 +12,9 @@ export class User {
     lastName: string;
     address: Address;
     deliveryAddress: DeliveryAddress;
+    question: string;
+    userId: string;
+
     constructor(obj?: any) {
         if (!obj) {
             return;
@@ -24,5 +27,7 @@ export class User {
         this.lastName = obj.lastName;
         this.address = obj.address;
         this.deliveryAddress = obj.deliveryAddress;
+        this.question = obj.question;
+        this.userId = obj.userId;
     }
 }

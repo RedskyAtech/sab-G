@@ -104,13 +104,14 @@ export class HomeComponent implements OnInit, AfterContentInit {
             .subscribe((res: any) => {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
-                        console.trace(res);
+                        // console.trace(res);
                         this.isLoading = false;
                         if (res.data.category.length > 6) {
                             for (var i = 0; i < 6; i++) {
+                                var name = res.data.category[i].name.charAt(0).toUpperCase() + res.data.category[i].name.slice(1);
                                 this.categories.push({
                                     id: res.data.category[i]._id,
-                                    name: res.data.category[i].name,
+                                    name: name,
                                     imageUrl: res.data.category[i].image.url,
                                     thumbnail: res.data.category[i].thumbnail,
                                     resize_url: res.data.category[i].resize_url,
@@ -120,9 +121,10 @@ export class HomeComponent implements OnInit, AfterContentInit {
                         }
                         else {
                             for (var i = 0; i < res.data.category.length; i++) {
+                                var name = res.data.category[i].name.charAt(0).toUpperCase() + res.data.category[i].name.slice(1);
                                 this.categories.push({
                                     id: res.data.category[i]._id,
-                                    name: res.data.category[i].name,
+                                    name: name,
                                     imageUrl: res.data.category[i].image.url,
                                     thumbnail: res.data.category[i].thumbnail,
                                     resize_url: res.data.category[i].resize_url,
@@ -156,7 +158,7 @@ export class HomeComponent implements OnInit, AfterContentInit {
             .subscribe((res: any) => {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
-                        console.log("OFFER:::", res);
+                        // console.log("OFFER:::", res);
                         this.isLoading = false;
                         if (res.data[0].offers[0].heading == "" || res.data[0].offers[0].heading == undefined || res.data[0].offers[0].heading == null) {
                             this.offerHeading = "Save more with";
@@ -194,7 +196,7 @@ export class HomeComponent implements OnInit, AfterContentInit {
             .subscribe((res: any) => {
                 if (res != null && res != undefined) {
                     if (res.isSuccess == true) {
-                        console.trace("SLIDER::::", res);
+                        // console.trace("SLIDER::::", res);
                         this.isLoading = false;
                         this.sliderImage1 = res.data[0].images[0].url;
                         this.sliderImage2 = res.data[0].images[1].url;

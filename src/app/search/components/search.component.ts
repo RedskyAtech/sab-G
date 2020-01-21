@@ -272,34 +272,32 @@ export class SearchComponent implements OnInit, AfterContentInit {
           if (res.isSuccess == true) {
             console.trace("PRODUCTS:::::", res);
             this.products = [];
-            // if (res.data.products.length > 0) {
-            //   this.isProducts = true;
-            //   this.productMessage = "";
-            //   for (var i = 0; i < res.data.products.length; i++) {
-            //     //   // console.log(res.data.)
-            this.products.push({
-              id: res.data._id,
-              name: res.data.name,
-              imageUrl: res.data.image.url,
-              thumbnail: res.data.image.thumbnail,
-              resize_url: res.data.image.resize_url,
-              resize_thumbnail: res.data.image.resize_thumbnail,
-              price: res.data.price,
-              marketPrice: res.data.marketPrice,
-              weightValue: res.data.dimensions.value,
-              weightUnit: res.data.dimensions.unit,
-            });
-            //   }
-            //   this.isLoading = false;
-            //   this.pageNo = this.pageNo + 1;
-            //   this.getProducts();
-            // }
-            // else {
-            //   if (this.pageNo == 1) {
-            //     this.isProducts = false;
-            //     this.productMessage = "There is no products."
-            //   }
-            // }
+            if (res.data.length > 0) {
+              this.isProducts = true;
+              this.productMessage = "";
+              for (var i = 0; i < res.data.length; i++) {
+                //   // console.log(res.data.)
+                this.products.push({
+                  id: res.data[i]._id,
+                  name: res.data[i].name,
+                  imageUrl: res.data[i].image.url,
+                  thumbnail: res.data[i].image.thumbnail,
+                  resize_url: res.data[i].image.resize_url,
+                  resize_thumbnail: res.data[i].image.resize_thumbnail,
+                  price: res.data[i].price,
+                  marketPrice: res.data[i].marketPrice,
+                  weightValue: res.data[i].dimensions.value,
+                  weightUnit: res.data[i].dimensions.unit,
+                });
+              }
+              //   this.isLoading = false;
+              //   this.pageNo = this.pageNo + 1;
+              //   this.getProducts();
+            }
+            else {
+              this.isProducts = false;
+              this.productMessage = "There is no products."
+            }
             this.isLoading = false;
           }
         }

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, AfterContentInit, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit, AfterContentInit, ElementRef, ViewChild, AfterViewInit } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
@@ -19,7 +19,8 @@ declare const CGSizeMake: any;
     templateUrl: "./confirm-otp.component.html",
     styleUrls: ['./confirm-otp.component.css']
 })
-export class ConfirmOtpComponent implements OnInit, AfterContentInit {
+export class ConfirmOtpComponent implements OnInit, AfterContentInit, AfterViewInit {
+
     @ViewChild("textField1", { static: false }) textField1: ElementRef;
     @ViewChild("textField2", { static: false }) textField2: ElementRef;
     @ViewChild("textField3", { static: false }) textField3: ElementRef;
@@ -65,11 +66,17 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit {
         // }, 5000)
     }
     ngOnInit(): void {
-        this.textfield1 = <TextField>this.textField1.nativeElement;
-        this.textfield2 = <TextField>this.textField2.nativeElement;
-        this.textfield3 = <TextField>this.textField3.nativeElement;
-        this.textfield4 = <TextField>this.textField4.nativeElement;
-        this.textfield1.focus();
+
+    }
+
+    ngAfterViewInit(): void {
+        setTimeout(() => {
+            this.textfield1 = <TextField>this.textField1.nativeElement;
+            this.textfield2 = <TextField>this.textField2.nativeElement;
+            this.textfield3 = <TextField>this.textField3.nativeElement;
+            this.textfield4 = <TextField>this.textField4.nativeElement;
+            this.textfield1.focus();
+        }, 10)
     }
 
     onBack() {

@@ -132,52 +132,6 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
 
     }
 
-    onOrderLoaded(args: any) {
-        var orderCard = <any>args.object;
-        setTimeout(() => {
-            if (orderCard.android) {
-                let nativeGridMain = orderCard.android;
-                var shape = new android.graphics.drawable.GradientDrawable();
-                shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
-                shape.setColor(android.graphics.Color.parseColor('white'));
-                shape.setCornerRadius(20)
-                nativeGridMain.setBackgroundDrawable(shape);
-                nativeGridMain.setElevation(5)
-            } else if (orderCard.ios) {
-                let nativeGridMain = orderCard.ios;
-                nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
-                nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
-                nativeGridMain.layer.shadowOpacity = 0.5
-                nativeGridMain.layer.shadowRadius = 5.0
-                nativeGridMain.layer.shadowRadius = 5.0
-            }
-            // this.changeDetector.detectChanges();
-        }, 10)
-    }
-
-    onOrderImageLoaded(args: any) {
-        var orderImage = <any>args.object;
-        setTimeout(() => {
-            if (orderImage.android) {
-                let nativeGridMain = orderImage.android;
-                var shape = new android.graphics.drawable.GradientDrawable();
-                shape.setShape(android.graphics.drawable.GradientDrawable.RECTANGLE);
-                shape.setColor(android.graphics.Color.parseColor('#F3F3F3'));
-                shape.setCornerRadius(20)
-                nativeGridMain.setBackgroundDrawable(shape);
-                nativeGridMain.setElevation(0)
-            } else if (orderImage.ios) {
-                let nativeGridMain = orderImage.ios;
-                nativeGridMain.layer.shadowColor = this.shadowColor.ios.CGColor;
-                nativeGridMain.layer.shadowOffset = CGSizeMake(0, this.shadowOffset);
-                nativeGridMain.layer.shadowOpacity = 0.5
-                nativeGridMain.layer.shadowRadius = 5.0
-                nativeGridMain.layer.shadowRadius = 5.0
-            }
-            // this.changeDetector.detectChanges();
-        }, 10)
-    }
-
     onHeaderLoaded(args: any) {
         var headerCard = <any>args.object;
         setTimeout(() => {
