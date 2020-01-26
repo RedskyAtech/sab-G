@@ -22,7 +22,7 @@
 }
 
 .season-special{
-    height:15%;
+    height:auto;
     width:100%;
     background: linear-gradient(320deg,#8BDE22,#23A6DB);
 }

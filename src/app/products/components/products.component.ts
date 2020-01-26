@@ -169,7 +169,7 @@ export class ProductsComponent implements OnInit, AfterContentInit {
     // this.query = `_id=${this.categoryId}&pageNo=${this.pageNo}&items=${this.items}`
     console.log(Values.BASE_URL + `products?_id=${this.categoryId}&pageNo=${this.pageNo}&items=${this.items}&status=active`);
     this.http
-      .get(Values.BASE_URL + `products?_id=${this.categoryId}&pageNo=${this.pageNo}&items=${this.items}`, {
+      .get(Values.BASE_URL + `products?_id=${this.categoryId}&pageNo=${this.pageNo}&items=${this.items}&status=active`, {
         headers: this.headers
       })
       .subscribe((res: any) => {

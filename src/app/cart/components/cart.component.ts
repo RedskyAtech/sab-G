@@ -276,9 +276,12 @@ export class CartComponent implements OnInit, AfterContentInit {
                         }
                         else {
                             this.cartProducts[item.index].quantity = res.data.products[item.index].quantity;
-                            this.subtotal = res.data.grandTotal;
+                            this.subtotal = (res.data.grandTotal - res.data.deliveryCharge).toString();
                             this.totalItems = res.data.products.length;
                             this.total = res.data.grandTotal;
+                            if (res.data.deliveryCharge) {
+                                this.deliveryCharges = res.data.deliveryCharge;
+                            }
                         }
                     }
                 }
@@ -295,7 +298,6 @@ export class CartComponent implements OnInit, AfterContentInit {
         this.cart.product.dimensions.value = item.weightValue;
         this.cart.product.dimensions.unit = item.weightUnit;
         this.cart.product.price = item.price;
-        console.log(this.cart);
         this.http
             .put(Values.BASE_URL + "carts/" + localstorage.getItem("cartId"), this.cart, {
                 headers: this.headers
@@ -305,9 +307,12 @@ export class CartComponent implements OnInit, AfterContentInit {
                     if (res.isSuccess == true) {
                         this.isLoading = false;
                         this.cartProducts[item.index].quantity = res.data.products[item.index].quantity;
-                        this.subtotal = res.data.grandTotal;
+                        this.subtotal = (res.data.grandTotal - res.data.deliveryCharge).toString();
                         this.totalItems = res.data.products.length;
                         this.total = res.data.grandTotal;
+                        if (res.data.deliveryCharge == 0) {
+                            this.deliveryCharges = "FREE";
+                        }
                         // this.cartProducts = [];
                         // this.getCart();
                     }

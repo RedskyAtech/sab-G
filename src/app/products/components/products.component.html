@@ -42,11 +42,15 @@
                 <StackLayout row="0" width="95%" height="40%" verticalAlignment="middle">
                   <Label [text]="item.name" color="#707070" fontSize="18%" textAlignment="left"></Label>
                 </StackLayout>
-                <GridLayout row="1" width="95%" height="20%" columns="auto" verticalAlignment="middle">
-                  <StackLayout col="0" height="100%" width="100%" verticalAlignment="middle" orientation="horizontal">
+                <GridLayout row="1" width="auto" height="20%" columns="auto" verticalAlignment="middle">
+                  <StackLayout col="0" height="100%" width="auto" verticalAlignment="middle" orientation="horizontal">
                     <Label text="MRP " color="#707070" fontSize="12%" textAlignment="left"></Label>
-                    <Label text="Rs " color="#707070" fontSize="12%" textAlignment="left"></Label>
-                    <Label [text]="item.marketPrice" color="#707070" fontSize="12%" textAlignment="left"></Label>
+                    <GridLayout width="auto">
+                      <StackLayout height="1" width="auto" backgroundColor="#707070" verticalAlignment="middle">
+                      </StackLayout>
+                      <Label [text]="'Rs '+item.marketPrice" color="#707070" fontSize="12%"
+                        textAlignment="left"></Label>
+                      </GridLayout>
                   </StackLayout>
                   <!-- <StackLayout col="0" height="1" width="32%" horizontalAlignment="left" verticalAlignment="middle"
                     marginLeft="18%" backgroundColor="#707070">

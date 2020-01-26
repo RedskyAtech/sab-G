@@ -90,10 +90,11 @@
                             borderColor="#B9B9B9">
                             <!-- <Image width="100%" height="100%" [src]="profilePicture">
                             </Image> -->
-                            <Image *ngIf="isVisibleImage" src="res://man" width="100%" height="100%" borderRadius="60%">
+                            <Image *ngIf="isVisibleImage" src="res://profile" stretch="aspectFill" width="100%"
+                                height="100%" borderRadius="60%">
                             </Image>
                             <Image *ngIf="!isVisibleImage" [src]="profilePicture" width="100%" height="100%"
-                                borderRadius="60%">
+                                stretch="aspectFill" borderRadius="60%">
                             </Image>F
                         </StackLayout>
                     </StackLayout>
