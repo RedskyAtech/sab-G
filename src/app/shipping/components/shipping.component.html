@@ -1,73 +1,70 @@
-<Page actionBarHidden="true">
-    <GridLayout class="page">
-        <GridLayout #headerCard (loaded)="onHeaderLoaded($event)" verticalAlignment="top" height="8%" width="100%">
-            <ns-header></ns-header>
-        </GridLayout>
-        <GridLayout #footerCard (loaded)="onFooterLoaded($event)" verticalAlignment="bottom" height="8%" width="100%">
-            <ns-footer></ns-footer>
-        </GridLayout>
-        <GridLayout rows="auto,auto,auto" width="100%" height="100%">
-            <StackLayout row="0" marginTop="15%" height="40%" width="100%" verticalAlignment="middle">
-                <GridLayout #shippingCard orientation="vertical" width="90%" height="90%" rows="auto,auto,auto"
-                    (loaded)="onShippingLoaded($event)">
-                    <StackLayout row="0" class="textfield-container" orientation="horizontal" borderWidth="1"
-                        [borderBottomColor]="cityBorderColor" borderLeftColor="transparent"
-                        borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="cityBorderWidth">
-                        <TextField [hint]="cityHint" [text]="cityText" width="100%" fontSize="16%" color="#23A6DB"
-                            style.placeholderColor="#B9B9B9" (textChange)="cityTextField($event)"
-                            borderColor="transparent" borderWidth="1" autocorrect="false">
-                        </TextField>
-                    </StackLayout>
-                    <StackLayout row="1" class="textfield-container" orientation="horizontal" borderWidth="1"
-                        [borderBottomColor]="addressLineBorderColor" borderLeftColor="transparent"
+<!-- <Page actionBarHidden="true"> -->
+<GridLayout @routeAnimations class="page">
+    <GridLayout #headerCard androidElevation="10" verticalAlignment="top" height="7%" width="100%">
+        <ns-header></ns-header>
+    </GridLayout>
+    <GridLayout #footerCard androidElevation="10" verticalAlignment="bottom" height="5%" width="100%">
+        <ns-footer [badgeData]="dataForBadge"></ns-footer>
+    </GridLayout>
+    <GridLayout rows="auto,auto,auto" width="100%" height="100%">
+        <StackLayout row="0" marginTop="10%" height="40%" width="100%" verticalAlignment="middle">
+            <GridLayout #shippingCard orientation="vertical" width="90%" height="90%" rows="auto,auto,auto"
+                androidElevation="3" borderRadius="7%" backgroundColor="white">
+                <StackLayout row="0" class="textfield-container" orientation="horizontal" borderWidth="1"
+                    [borderBottomColor]="cityBorderColor" borderLeftColor="transparent" borderRightColor="transparent"
+                    borderTopColor="transparent" [borderWidth]="cityBorderWidth">
+                    <TextField [hint]="cityHint" [text]="cityText" width="100%" fontSize="16%" color="#23A6DB"
+                        style.placeholderColor="#B9B9B9" (textChange)="cityTextField($event)" borderColor="transparent"
+                        borderWidth="1" autocorrect="false">
+                    </TextField>
+                </StackLayout>
+                <StackLayout row="1" class="textfield-container" orientation="horizontal" borderWidth="1"
+                    [borderBottomColor]="addressLineBorderColor" borderLeftColor="transparent"
+                    borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="addressLineBorderWidth">
+                    <TextField [hint]="addressLineHint" [text]="addressLineText" width="100%" fontSize="16%"
+                        color="#23A6DB" style.placeholderColor="#B9B9B9" (textChange)="addressLineTextField($event)"
+                        borderColor="transparent" borderWidth="1" autocorrect="false">
+                    </TextField>
+                </StackLayout>
+                <GridLayout row="2" columns="auto,auto" class="textfield-container">
+                    <StackLayout col="0" width="45%" height="auto" orientation="horizontal" borderWidth="1"
+                        [borderBottomColor]="apartmentBorderColor" borderLeftColor="transparent"
                         borderRightColor="transparent" borderTopColor="transparent"
-                        [borderWidth]="addressLineBorderWidth">
-                        <TextField [hint]="addressLineHint" [text]="addressLineText" width="100%" fontSize="16%"
-                            color="#23A6DB" style.placeholderColor="#B9B9B9" (textChange)="addressLineTextField($event)"
+                        [borderWidth]="apartmentBorderWidth">
+                        <TextField [hint]="apartmentHint" [text]="apartmentText" width="100%" fontSize="16%"
+                            color="#23A6DB" style.placeholderColor="#B9B9B9" (textChange)="apartmentTextField($event)"
                             borderColor="transparent" borderWidth="1" autocorrect="false">
                         </TextField>
                     </StackLayout>
-                    <GridLayout row="2" columns="auto,auto" class="textfield-container">
-                        <StackLayout col="0" width="45%" height="auto" orientation="horizontal" borderWidth="1"
-                            [borderBottomColor]="apartmentBorderColor" borderLeftColor="transparent"
-                            borderRightColor="transparent" borderTopColor="transparent"
-                            [borderWidth]="apartmentBorderWidth">
-                            <TextField [hint]="apartmentHint" [text]="apartmentText" width="100%" fontSize="16%"
-                                color="#23A6DB" style.placeholderColor="#B9B9B9"
-                                (textChange)="apartmentTextField($event)" borderColor="transparent" borderWidth="1"
-                                autocorrect="false">
-                            </TextField>
-                        </StackLayout>
-                        <StackLayout col="1" width="45%" height="auto" marginLeft="10%" orientation="horizontal"
-                            borderWidth="1" [borderBottomColor]="floorBorderColor" borderLeftColor="transparent"
-                            borderRightColor="transparent" borderTopColor="transparent"
-                            [borderWidth]="floorBorderWidth">
-                            <TextField [hint]="floorHint" [text]="floorText" width="100%" fontSize="16%" color="#23A6DB"
-                                style.placeholderColor="#B9B9B9" (textChange)="floorTextField($event)"
-                                borderColor="transparent" borderWidth="1" autocorrect="false">
-                            </TextField>
-                        </StackLayout>
-                    </GridLayout>
+                    <StackLayout col="1" width="45%" height="auto" marginLeft="10%" orientation="horizontal"
+                        borderWidth="1" [borderBottomColor]="floorBorderColor" borderLeftColor="transparent"
+                        borderRightColor="transparent" borderTopColor="transparent" [borderWidth]="floorBorderWidth">
+                        <TextField [hint]="floorHint" [text]="floorText" width="100%" fontSize="16%" color="#23A6DB"
+                            style.placeholderColor="#B9B9B9" (textChange)="floorTextField($event)"
+                            borderColor="transparent" borderWidth="1" autocorrect="false">
+                        </TextField>
+                    </StackLayout>
                 </GridLayout>
-            </StackLayout>
-            <GridLayout width="100%" height="10%" marginTop="50%" verticalAlignment="middle">
-                <Button class="update-button" [text]="addAddressButton" (tap)="onAddAddress()"></Button>
             </GridLayout>
-            <StackLayout row="2" height="10%" width="100%" verticalAlignment="middle" (tap)="onCancelClick()">
-                <Label color="#67CB62" fontSize="16" textAlignment="center" fontWeight="500" text=" Cancel"></Label>
-            </StackLayout>
+        </StackLayout>
+        <GridLayout width="100%" height="10%" marginTop="50%" verticalAlignment="middle">
+            <Button class="update-button" [text]="addAddressButton" (tap)="onAddAddress()"></Button>
         </GridLayout>
+        <StackLayout row="2" height="10%" width="100%" verticalAlignment="middle" (tap)="onCancelClick()">
+            <Label class="themeColor" fontSize="16" textAlignment="center" fontWeight="500" text=" Cancel"></Label>
+        </StackLayout>
+    </GridLayout>
 
-        <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
+    <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
         <ActivityIndicator horizontalAlignment="center" verticalAlignment="middle" [busy]="!isRendering" rowSpan="1"
             colSpan="1">
         </ActivityIndicator>
     </GridLayout> -->
 
-        <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
-            <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
-                [busy]="isLoading" rowSpan="1" colSpan="1">
-            </ActivityIndicator>
-        </GridLayout>
+    <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
+        <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
+            [busy]="isLoading" rowSpan="1" colSpan="1">
+        </ActivityIndicator>
     </GridLayout>
-</Page>
+</GridLayout>
+<!-- </Page> -->

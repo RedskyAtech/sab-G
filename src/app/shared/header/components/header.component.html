@@ -1,26 +1,26 @@
-<Page actionBarHidden="true">
-    <GridLayout class="page">
-        <StackLayout height="100%" width="100%" backgroundColor="#FFFFFF" verticalAlignment="Top">
-            <GridLayout columns="auto,auto">
-                <StackLayout [visibility]="showBackButton" col="0" width="15%" height="100%" verticalAlignment="middle">
-                    <!-- <Image class="header-icon" [src]="backIcon">
+<!-- <Page actionBarHidden="true"> -->
+<GridLayout class="page" androidElevation="10">
+    <StackLayout height="100%" width="100%" backgroundColor="#FFFFFF" verticalAlignment="Top">
+        <GridLayout columns="auto,auto">
+            <StackLayout [visibility]="showBackButton" col="0" width="15%" height="100%" verticalAlignment="middle">
+                <!-- <Image class="header-icon" [src]="backIcon">
                     </Image> -->
-                    <Button class="back-button" (tap)="onBackClick()"></Button>
-                </StackLayout>
-                <StackLayout *ngIf="!showLogo" col="1" width="70%" height="100%" verticalAlignment="middle"
-                    horizontalAlignment="center">
-                    <Label class="header-label" [text]="headerLabel"></Label>
-                </StackLayout>
-                <StackLayout *ngIf="showLogo" col="1" width="70%" height="100%" verticalAlignment="middle"
-                    horizontalAlignment="center">
-                    <Image class="sabg-logo" [src]="sabgLogo">
-                    </Image>
-                </StackLayout>
-                <!-- <StackLayout [visibility]="showAddButton" col="2" width="15%" height="100%" verticalAlignment="middle"
+                <Button class="back-button" (tap)="onBackClick()"></Button>
+            </StackLayout>
+            <StackLayout *ngIf="!showLogo" col="1" width="70%" height="100%" verticalAlignment="middle"
+                horizontalAlignment="center">
+                <Label class="header-label" [text]="headerLabel"></Label>
+            </StackLayout>
+            <StackLayout *ngIf="showLogo" col="1" width="70%" height="100%" verticalAlignment="middle"
+                horizontalAlignment="center">
+                <Image class="sabg-logo" [src]="sabgLogo">
+                </Image>
+            </StackLayout>
+            <!-- <StackLayout [visibility]="showAddButton" col="2" width="15%" height="100%" verticalAlignment="middle"
                     horizontalAlignment="center">
                     <Button class="add-button" text="Add" (tap)="onAddClick()"></Button>
                 </StackLayout> -->
-            </GridLayout>
-        </StackLayout>
-    </GridLayout>
-</Page>
+        </GridLayout>
+    </StackLayout>
+</GridLayout>
+<!-- </Page> -->

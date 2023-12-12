@@ -1,92 +1,136 @@
 <Page actionBarHidden="true">
-    <GridLayout class="page">
-        <GridLayout #headerCard (loaded)="onHeaderLoaded($event)" verticalAlignment="top" height="8%" width="100%">
-            <ns-header></ns-header>
-        </GridLayout>
-        <StackLayout #footerCard (loaded)="onFooterLoaded($event)" verticalAlignment="bottom" height="8%" width="100%">
-            <ns-footer></ns-footer>
-        </StackLayout>
-        <GridLayout rows="auto,auto,auto,auto" width="100%" height="100%">
-            <!-- <GridLayout class="slider" row="0">
-            <Image width="100%" height="100%" src="res://slider" stretch="aspectFit"></Image>
-        </GridLayout> -->
-            <GridLayout row="0" class="slider">
-                <Carousel #myCarousel ios:indicatorOffset="0,-10" ios:finite="true" ios:bounce="false"
-                    android:indicatorAlignment="bottom" showIndicator="true" [selectedPage]="selectedPage" height="100%"
-                    width="100%" indicatorColor="#8BDE22" android:indicatorAnimation="swap"
-                    indicatorColorUnselected="#23A6DB">
-                    <CarouselItem>
-                        <StackLayout class="sliderImageContainer" #sliderImage (loaded)="onSliderLoaded($event)">
-                            <Image borderRadius="5" stretch="aspectFill" [src]="sliderImage1"></Image>
-                        </StackLayout>
-                    </CarouselItem>
-                    <CarouselItem>
-                        <StackLayout class="sliderImageContainer" #sliderImage (loaded)="onSliderLoaded($event)">
-                            <Image borderRadius="5" stretch="aspectFill" [src]="sliderImage2"></Image>
-                        </StackLayout>
-                    </CarouselItem>
-                    <CarouselItem>
-                        <StackLayout class="sliderImageContainer" #sliderImage (loaded)="onSliderLoaded($event)">
-                            <Image borderRadius="5" stretch="aspectFill" [src]="sliderImage3"></Image>
-                        </StackLayout>
-                    </CarouselItem>
-                    <CarouselItem>
-                        <StackLayout class="sliderImageContainer" #sliderImage (loaded)="onSliderLoaded($event)">
-                            <Image borderRadius="5" stretch="aspectFill" [src]="sliderImage4"></Image>
-                        </StackLayout>
-                    </CarouselItem>
-                </Carousel>
-            </GridLayout>
-            <GridLayout row="1" width="100%" height="38%">
-                <!-- <GridView [items]="categories" colWidth="28%" rowHeight="48%" width="100%" height="100%"> -->
-                <RadListView [items]="categories" width="100%" height="100%" colWidth="28%" rowHeight="48%">
-                    <ListViewStaggeredLayout tkListViewLayout scrollDirection="Vertical" spanCount="3">
-                    </ListViewStaggeredLayout>
-                    <ng-template let-item="item" let-odd="odd">
-                        <!-- <CardView width="80%" height="90%" ripple="true" margin="10" elevation="10" radius="20"
-                            ios:shadowRadius="5"> -->
-                        <GridLayout width="80%" height="90%" #categoryCard marginTop="10" marginBottom="10"
-                            backgroundColor="white" rows="auto,auto" borderRadius="10" androidElevation="5"
-                            (tap)="onCategoryClick(item)">
-                            <StackLayout row="0" width="100%" height="75%" verticalAlignment="bottom">
-                                <Image width="80vw" height="80vw" stretch="aspectFill" [src]="item.imageUrl"></Image>
-                            </StackLayout>
-                            <StackLayout row="1" width="100%" height="25%" verticalAlignment="top">
-                                <Label [text]="item.name" textWrap="true" fontSize="12%" color="#707070"
-                                    textAlignment="center"></Label>
-                            </StackLayout>
-                        </GridLayout>
-                    </ng-template>
-                    <!-- </GridView> -->
-                </RadListView>
-            </GridLayout>
-            <GridLayout class="season-special" row="2" rows="auto,auto">
-                <StackLayout row="0" height="auto" marginTop="10" width="100%" verticalAlignment="middle">
-                    <Label [text]="offerHeading" color="#FFFFFF" fontSize="18%" textAlignment="center"></Label>
-                </StackLayout>
-                <StackLayout row="1" height="auto" marginTop="10" marginBottom="10" width="100%" verticalAlignment="middle">
-                    <StackLayout height="auto" width="50%" borderColor="#FFFFFF" borderWidth="1" borderRadius="5%"
-                        verticalAlignment="middle">
-                        <Label [text]="offer" color="#FFFFFF" fontSize="18%" fontWeight="300"
-                            textAlignment="center"></Label>
-                    </StackLayout>
-                </StackLayout>
-            </GridLayout>
-            <StackLayout row="3" width="100%" height="8%" verticalAlignment="middle">
-                <Button class="view-button" text="View more" (tap)="onViewMoreClick()"></Button>
+
+    <GridLayout rows="auto,*,auto">
+
+        <!-- Header & SearchBar-->
+        <StackLayout row="0" height="14%" androidElevation="7">
+            <StackLayout height="45%">
+                <ns-header></ns-header>
             </StackLayout>
-        </GridLayout>
+            <GridLayout columns="auto,*" class="searchBar">
+                <StackLayout col="0" horizontalAlignment="center" verticalAlignment="center" marginLeft="10">
+                    <image [src]="searchIcon" height="50%"></image>
+                </StackLayout>
+                <TextField #searchBar col="1" hint="Search 1000+ Products" class="searchField" borderBottomWidth="1"
+                    borderBottomColor="transparent" width="85%" android:imeOptions="actionSearch" fontSize="16%"
+                    (returnPress)="onReturnFromTextField(searchBar)">
+                </TextField>
+            </GridLayout>
+        </StackLayout>
 
-        <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
-        <ActivityIndicator horizontalAlignment="center" verticalAlignment="middle" [busy]="!isRendering" rowSpan="1"
-            colSpan="1">
-        </ActivityIndicator>
-    </GridLayout> -->
-
-        <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
-            <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
-                [busy]="isLoading" rowSpan="1" colSpan="1">
+        <!-- View before rendring -->
+        <GridLayout row="1" *ngIf="isRendering" width="100%" height="100%">
+            <ActivityIndicator horizontalAlignment="center" verticalAlignment="middle" [busy]="isRendering" rowSpan="1"
+                colSpan="1">
             </ActivityIndicator>
         </GridLayout>
+
+        <!-- Main Body -->
+        <ScrollView row="1" scrollBarIndicatorVisible="false" (scroll)="onScroll(searchBar)" *ngIf="!isRendering">
+            <FlexboxLayout flexDirection="column" height="1300" minHeight="100%" #page class="page" width="100%">
+
+                <!-- Special Offers -->
+                <Image [src]="saleImg" width="100%"></Image>
+
+                <!-- Slider -->
+                <GridLayout class="slider" height="10%">
+                    <Carousel #myCarousel ios:indicatorOffset="0,-10" ios:finite="true" ios:bounce="false"
+                        showIndicator="true" [selectedPage]="selectedPage" height="100%" width="100%"
+                        indicatorColor="#ff9b04" android:indicatorAnimation="scale" indicatorColorUnselected="#d0d0d0"
+                        indicatorRadius="5" indicatorOffset="0,12">
+                        <CarouselItem>
+                            <StackLayout class="sliderImageContainer" #sliderImage androidElevation="10" width="100%">
+                                <Image borderRadius="5" stretch="aspectFill" [src]="sliderImage1"></Image>
+                            </StackLayout>
+                        </CarouselItem>
+                        <CarouselItem>
+                            <StackLayout class="sliderImageContainer" #sliderImage androidElevation="10" width="100%">
+                                <Image borderRadius="5" stretch="aspectFill" [src]="sliderImage2"></Image>
+                            </StackLayout>
+                        </CarouselItem>
+                        <CarouselItem>
+                            <StackLayout class="sliderImageContainer" #sliderImage androidElevation="10" width="100%">
+                                <Image borderRadius="5" stretch="aspectFill" [src]="sliderImage3"></Image>
+                            </StackLayout>
+                        </CarouselItem>
+                        <CarouselItem>
+                            <StackLayout class="sliderImageContainer" #sliderImage androidElevation="10" width="100%">
+                                <Image borderRadius="5" stretch="aspectFill" [src]="sliderImage4"></Image>
+                            </StackLayout>
+                        </CarouselItem>
+                    </Carousel>
+                </GridLayout>
+
+                <!-- Deal Of the Day -->
+                <StackLayout height="23%">
+                    <StackLayout class="sub-title">
+                        <label text="DEAL OF THE DAY" class="dailyDealTitle" horizontalAlignment="center"></label>
+                    </StackLayout>
+                    <ScrollView orientation="horizontal" scrollBarIndicatorVisible="false" marginTop="10"
+                        marginLeft="2%">
+                        <FlexboxLayout width="600">
+                            <StackLayout *ngFor="let item of dealsOfDay; let i=index" class="dealOfDayItems">
+                                <StackLayout backgroundColor="#f8f8f8" borderRadius="8%">
+                                    <Image [src]="item.img" height="90vh" verticalAlignment="center"
+                                        horizontalAlignment="center"></Image>
+                                </StackLayout>
+                                <label [text]="item.name" textWrap="true" color="black" fontSize="16%"></label>
+                                <label text="{{item.weightValue}} {{item.weightUnit}}"></label>
+                                <StackLayout orientation="horizontal" verticalAlignment="middle">
+                                    <label text="Rs {{item.price}}" color="black" fontSize="16%"></label>
+                                    <GridLayout rows="auto" width="35%" marginLeft="10" verticalAlignment="middle">
+                                        <StackLayout height="1" backgroundColor="#707070" verticalAlignment="middle"
+                                            width="80%"></StackLayout>
+                                        <label text="Rs {{item.marketPrice}}" textAlignment="center" color="#707070"
+                                            fontSize="12%"></label>
+                                    </GridLayout>
+                                </StackLayout>
+                                <Button text="Add to Cart" class="addToCartBtns" *ngIf='!item.isAddedToCart'
+                                    (tap)="onAddToCart(i)" height="17%"></Button>
+                                <StackLayout width="100%" *ngIf="item.isAddedToCart" height="17%" margin="0.5%"
+                                    padding="0" orientation="horizontal">
+                                    <Button col="0" width="27%" text="-" (tap)="onMinus(i)" class="addToCartBtns"
+                                        marginRight="0"></Button>
+                                    <StackLayout col="1" width="30%" height="100%" verticalAlignment="center"
+                                        padding="0">
+                                        <label [text]="item.quantity" horizontalAlignment="center" fontSize="20dp"
+                                            color="black"></label>
+                                    </StackLayout>
+                                    <Button col="2" width="27%" text="+" (tap)="onPlus(i)" class="addToCartBtns"
+                                        marginLeft="0"></Button>
+                                </StackLayout>
+                            </StackLayout>
+                        </FlexboxLayout>
+                    </ScrollView>
+                </StackLayout>
+
+                <!-- All Categories -->
+                <StackLayout>
+                    <StackLayout class="sub-title">
+                        <label text="SHOP BY CATEGORY" class="dailyDealTitle" horizontalAlignment="center"></label>
+                    </StackLayout>
+                    <WrapLayout padding="2%" marginTop="10" horizontalAlignment="center">
+                        <StackLayout width="32.5%" height="170vh" *ngFor="let item of categories; let i=index"
+                            borderWidth="0.7" borderColor="rgba(208, 206, 207, 0.89)" padding="7%"
+                            (tap)="onCategoryClick(i)">
+                            <StackLayout height="100vh" width="100%" class="categoryImgBox" backgroundColor="#f0f0f0"
+                                horizontalAlignment="center" verticalAlignment="center" padding="5%" borderRadius="10%">
+                                <Image stretch="aspectFit" [src]="item.imageUrl"></Image>
+                            </StackLayout>
+                            <label [text]="item.name"></label>
+                            <label text="10% discount" borderLeftWidth="5" borderLeftColor="brown" paddingLeft="8%"
+                                [fontSize]="discountFontSize" fontWeight="600"></label>
+                        </StackLayout>
+                    </WrapLayout>
+                </StackLayout>
+
+            </FlexboxLayout>
+        </ScrollView>
+
+        <!-- Bottom Navigation / Footer -->
+        <GridLayout row="2" height="5%" borderColor="#f2f2f2" borderWidth="2">
+            <ns-footer [badgeData]="dataForBadge"></ns-footer>
+        </GridLayout>
+
     </GridLayout>
 </Page>

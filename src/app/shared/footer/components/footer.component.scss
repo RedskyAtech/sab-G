@@ -1,0 +1,23 @@
+@import '~/app/assets/constants/color-constant.scss';
+
+.footer-icon {
+  margin-top: 25%;
+  width: 60%;
+  height: 60%;
+}
+
+.selected-footerButton {
+  width: 70%;
+  height: 50%;
+  background: linear-gradient(to left, $THEME_COLOR_1, $THEME_COLOR_2);
+  border-top-left-radius: 30%;
+  border-top-right-radius: 30%;
+}
+
+.cartBadge{
+  width: 17%;
+  height: 49%;
+  background-color: $BORDER_THEME_COLOR;
+  border-radius: 100%;
+  margin-right: -23;
+}

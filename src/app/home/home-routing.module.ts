@@ -1,17 +1,12 @@
-import { NgModule } from "@angular/core";
-import { NativeScriptRouterModule } from "nativescript-angular/router";
-import { Routes } from "@angular/router";
-import { HomeComponent } from "./components/home.component";
+import { NgModule } from '@angular/core';
+import { NativeScriptRouterModule } from 'nativescript-angular/router';
+import { Routes } from '@angular/router';
+import { HomeComponent } from './components/home.component';
 
-const routes: Routes = [
-    { path: "", component: HomeComponent},
-];
-
+const routes: Routes = [{ path: '', component: HomeComponent }];
 
 @NgModule({
-    imports: [NativeScriptRouterModule.forChild(routes)],
-    exports: [NativeScriptRouterModule]
+  imports: [NativeScriptRouterModule.forChild(routes)],
+  exports: [NativeScriptRouterModule],
 })
-
-
-export class HomeRoutingModule { }
+export class HomeRoutingModule {}

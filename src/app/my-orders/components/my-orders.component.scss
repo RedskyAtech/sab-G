@@ -1,0 +1,77 @@
+@import '~/app/assets/constants/color-constant.scss';
+
+.page {
+  /* background-image: url("res://background"); */
+  background-size: cover;
+  background-color: #f6f6f6;
+  width: 100%;
+  height: 100%;
+}
+
+.price-heading-container {
+  width: 50%;
+  margin-left: 10%;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.price-heading {
+  font-size: 16%;
+  color: #707070;
+}
+
+.price-detail-container {
+  width: 30%;
+  height: 100%;
+  vertical-align: middle;
+  horizontal-align: right;
+  orientation: horizontal;
+}
+
+.price-detail {
+  font-size: 16%;
+  color: #404040;
+  vertical-align: middle;
+  font-weight: 500;
+}
+
+.selected-button {
+  font-size: 18%;
+  border-radius: 100;
+  background: linear-gradient(to left, $THEME_COLOR_1, $THEME_COLOR_2);
+  text-transform: initial;
+  color: white;
+  padding: 0;
+  height: 45%;
+  width: 70%;
+}
+
+.unselected-button {
+  font-size: 18%;
+  border-radius: 100;
+  background-color: #dbdbdb;
+  text-transform: initial;
+  color: white;
+  padding: 0;
+  height: 45%;
+  width: 70%;
+}
+
+.details-button {
+  font-size: 12%;
+  border-radius: 100;
+  background: linear-gradient(to left, $THEME_COLOR_1, $THEME_COLOR_2);
+  text-transform: initial;
+  color: white;
+  padding: 0;
+  height: 70%;
+  width: 80%;
+}
+.details-button:highlighted {
+  /* background-color: #DBDBDB; */
+  background: linear-gradient(to left, #dbdbdb, #dbdbdb);
+}
+
+.themeColor{
+  color: $BORDER_THEME_COLOR;
+}

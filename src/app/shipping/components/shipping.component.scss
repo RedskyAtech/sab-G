@@ -1,0 +1,53 @@
+@import '~/app/assets/constants/color-constant.scss';
+
+.page {
+  /* background-image: url("res://background"); */
+  background-size: cover;
+  background-color: #f6f6f6;
+  width: 100%;
+  height: 100%;
+}
+.upper-container {
+  /* background-image: url("res://background"); */
+  background-size: cover;
+  background: linear-gradient(to left, $THEME_COLOR_1, $THEME_COLOR_2);
+  width: 100%;
+  height: 50%;
+}
+.top-heading {
+  font-size: 32;
+  font-weight: 500;
+  color: #1b1b1b;
+}
+.menu-icon {
+  width: 25;
+  height: 25;
+  margin-top: 10;
+}
+.textfield-container {
+  margin-top: 5%;
+  /* margin-bottom: 2%; */
+  width: 95%;
+  height: 20%;
+}
+.update-button {
+  font-size: 16%;
+  border-radius: 100;
+  background: linear-gradient(to left, $THEME_COLOR_1, $THEME_COLOR_2);
+  text-transform: initial;
+  color: white;
+  /* border-color: white;
+    border-width:1; */
+  padding: 0;
+  height: 60%;
+  width: 50%;
+}
+.update-button:highlighted {
+  background-color: white;
+  /* border-color: #273BD3; */
+  color: #273bd3;
+}
+
+.themeColor{
+  color: $BORDER_THEME_COLOR;
+}

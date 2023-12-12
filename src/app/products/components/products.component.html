@@ -1,102 +1,131 @@
-<Page actionBarHidden="true">
-  <GridLayout class="page">
-    <CardView #weightDialog modal size="lg" duration="100" backgroundColor="transparent" (tap)="onOutsideClick()">
-      <!-- <GridView [items]="weights" colWidth="90%" rowHeight="8%" width="40%" height="60%" backgroundColor="transparent"> -->
-      <RadListView [items]="weights" width="40%" height="60%" colWidth="90%" rowHeight="8%">
+<!-- <Page actionBarHidden="true"> -->
+<GridLayout @routeAnimations class="page inAnimation">
+  <StackLayout *ngIf="!isProducts" width="95%" height="10%" verticalAlignment="middle">
+    <Label [text]="productMessage" fontSize="16%" color="#8BDE22" fontWeight="500" textAlignment="center"
+      textWrap="true"></Label>
+  </StackLayout>
+
+  <GridLayout rows="auto,*,auto">
+    <GridLayout row="0" #headerCard androidElevation="10" verticalAlignment="top" height="7%" width="100%">
+      <ns-header></ns-header>
+    </GridLayout>
+    <GridLayout row="2" #footerCard androidElevation="10" verticalAlignment="bottom" height="5%" width="100%">
+      <ns-footer [badgeData]="dataForBadge"></ns-footer>
+    </GridLayout>
+    <GridLayout row="1" width="100%" height="100%">
+      <RadListView [items]="products" width="100%" height="100%">
         <ListViewStaggeredLayout tkListViewLayout scrollDirection="Vertical" spanCount="1">
         </ListViewStaggeredLayout>
         <ng-template let-item="item" let-odd="odd">
-          <StackLayout width="100%" height="100%" verticalAlignment="middle" marginTop="5" marginBottom="5">
-            <Button class="weight-button" [text]="item.value+' '+item.unit" (tap)="onWeight(item)">
-            </Button>
-          </StackLayout>
-        </ng-template>
-        <!-- </GridView> -->
-      </RadListView>
-    </CardView>
-    <StackLayout *ngIf="!isProducts" width="95%" height="10%" verticalAlignment="middle">
-      <Label [text]="productMessage" fontSize="16%" color="#8BDE22" fontWeight="500" textAlignment="center"
-        textWrap="true"></Label>
-    </StackLayout>
-    <GridLayout #headerCard (loaded)="onHeaderLoaded($event)" verticalAlignment="top" height="8%" width="100%">
-      <ns-header></ns-header>
-    </GridLayout>
-    <GridLayout #footerCard (loaded)="onFooterLoaded($event)" verticalAlignment="bottom" height="8%" width="100%">
-      <ns-footer></ns-footer>
-    </GridLayout>
-    <GridLayout rows="auto,auto" width="100%" height="100%">
-      <GridLayout row="0" width="100%" height="84%" marginTop="8%">
-        <!-- <GridView [items]="products" colWidth="90%" rowHeight="18%" marginTop="1%" width="100%" height="100%"
-          backgroundColor="transparent"> -->
-        <RadListView [items]="products" width="100%" height="100%" colWidth="90%" rowHeight="15%">
-          <ListViewStaggeredLayout tkListViewLayout scrollDirection="Vertical" spanCount="1">
-          </ListViewStaggeredLayout>
-          <ng-template let-item="item" let-odd="odd">
-            <GridLayout #cartCard width="90%" height="90vh" backgroundColor="white" marginTop="5" marginBottom="5"
-              columns="auto,auto,auto" androidElevation="2" borderRadius="10">
-              <StackLayout #cartImage col="0" width="25%" height="100vh" backgroundColor="#F3F3F3"
-                verticalAlignment="middle" borderRadius="10">
-                <Image width="90vh" height="90vh" [src]="item.imageUrl"></Image>
+          <FlexboxLayout #cartCard [height]="itemHeight" backgroundColor="white" marginLeft="2%" marginRight="2%"
+            marginTop="10" androidElevation="5">
+            <StackLayout #cartImage width="25%" verticalAlignment="middle" class="productPicContainer" padding="0">
+              <Image [src]="item.imageUrl" stretch="aspectFit"></Image>
+            </StackLayout>
+            <StackLayout width="75%" padding="0" paddingLeft="8%">
+              <StackLayout padding="2%" paddingLeft="0">
+                <Label [text]="item.name" color="black" [fontSize]="nameFontSize" textAlignment="left"></Label>
               </StackLayout>
-              <GridLayout col="1" width="50%" height="100vh" rows="auto,auto,auto">
-                <StackLayout row="0" width="95%" height="40%" verticalAlignment="middle">
-                  <Label [text]="item.name" color="#707070" fontSize="18%" textAlignment="left"></Label>
-                </StackLayout>
-                <GridLayout row="1" width="auto" height="20%" columns="auto" verticalAlignment="middle">
-                  <StackLayout col="0" height="100%" width="auto" verticalAlignment="middle" orientation="horizontal">
-                    <Label text="MRP " color="#707070" fontSize="12%" textAlignment="left"></Label>
-                    <GridLayout width="auto">
-                      <StackLayout height="1" width="auto" backgroundColor="#707070" verticalAlignment="middle">
-                      </StackLayout>
-                      <Label [text]="'Rs '+item.marketPrice" color="#707070" fontSize="12%"
-                        textAlignment="left"></Label>
-                      </GridLayout>
+              <StackLayout orientation="horizontal" padding="0">
+                <Label [text]="'Rs '+item.price" color="#404040" fontSize="16%" textAlignment="left"
+                  fontWeight="600"></Label>
+                <GridLayout height="30%" width="20%" columns="auto" marginLeft="3%">
+                  <StackLayout col="0" padding="5%" paddingTop="2" padding="0">
+                    <Label text="Rs {{item.marketPrice}}" color="#707070" [fontSize]="priceFontSize"
+                      marginLeft="5"></Label>
                   </StackLayout>
-                  <!-- <StackLayout col="0" height="1" width="32%" horizontalAlignment="left" verticalAlignment="middle"
-                    marginLeft="18%" backgroundColor="#707070">
-                  </StackLayout> -->
+                  <StackLayout col="0" height="1" horizontalAlignment="center" width="50%" verticalAlignment="middle"
+                    backgroundColor="#707070">
+                  </StackLayout>
                 </GridLayout>
-                <StackLayout row="2" width="95%" height="40%" verticalAlignment="middle" orientation="horizontal">
-                  <Label text="Rs " color="#404040" fontSize="18%" textAlignment="left" fontWeight="500"></Label>
-                  <Label [text]="item.price" color="#404040" fontSize="18%" textAlignment="left"
-                    fontWeight="500"></Label>
-                </StackLayout>
-              </GridLayout>
-              <GridLayout col="2" width="25%" height="100vh" rows="auto,auto" borderRadius="10">
-                <StackLayout row="0" width="100%" height="50%" verticalAlignment="middle" (tap)="onSelectWeight(item)">
-                  <GridLayout height="50%" width="95%" verticalAlignment="middle" borderColor="#707070" borderRadius="5"
-                    borderWidth="1" columns="auto,auto">
-                    <StackLayout col="0" width="75%" height="100%" verticalAlignment="middle">
-                      <Label [text]="item.weightValue+' '+item.weightUnit" fontSize="12%" textAlignment="center"
-                        color="#707070"></Label>
-                    </StackLayout>
-                    <StackLayout col="1" width="20%" height="100%" verticalAlignment="middle">
-                      <Image src="res://down_arrow" width="80%" height="30%" stretch="aspectFit">
-                      </Image>
-                    </StackLayout>
-                  </GridLayout>
-                </StackLayout>
-                <StackLayout row="1" width="100%" height="50%" verticalAlignment="middle">
-                  <Button class="add-button" [text]="addButton" (tap)="onAddToCart(item)"></Button>
-                </StackLayout>
-              </GridLayout>
-            </GridLayout>
-          </ng-template>
-        </RadListView>
-        <!-- </GridView> -->
-      </GridLayout>
-    </GridLayout>
+              </StackLayout>
+              <StackLayout width="100%" orientation="horizontal" padding="0">
+                <GridLayout width="40%" height="55%" borderColor="#707070" borderRadius="5%" borderWidth="1"
+                  columns="auto,auto" (tap)="onSelectWeight(item)" padding="0">
+                  <StackLayout col="0" width="75%" height="80%" verticalAlignment="middle" padding="0">
+                    <Label [text]="item.weightValue+' '+item.weightUnit" textAlignment="center"
+                      [fontSize]="priceFontSize" color="#707070"></Label>
+                  </StackLayout>
+                  <StackLayout col="1" width="20%" height="80%" verticalAlignment="middle" padding="0">
+                    <Image [src]="downArrowIcon" width="50vh" height="40%" stretch="aspectFit">
+                    </Image>
+                  </StackLayout>
+                </GridLayout>
 
-    <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
-        <ActivityIndicator horizontalAlignment="center" verticalAlignment="middle" [busy]="!isRendering" rowSpan="1"
-            colSpan="1">
-        </ActivityIndicator>
-    </GridLayout> -->
+                <StackLayout width="60%">
+                  <Button class="add-button" [text]="addButton" (tap)="onAddToCart(item)" *ngIf="!item.isAddedToCart"
+                    height="50%" width="60%" horizontalAlignment="right" padding="0" marginTop="0"
+                    marginBottom="0"></Button>
 
-    <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
-      <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
-        [busy]="isLoading" rowSpan="1" colSpan="1">
-      </ActivityIndicator>
+                  <StackLayout width="70%" height="50%" orientation="horizontal" *ngIf="item.isAddedToCart"
+                    horizontalAlignment="right" padding="0" marginRight="5">
+                    <Button width="25%" text="-" (tap)="onMinus(item)" class="quantity-btn" marginRight="0"></Button>
+                    <StackLayout width="30%" height="100%" verticalAlignment="center" padding="0" backgroundColor="red">
+                      <label [text]="item.quantity" horizontalAlignment="center" [fontSize]="nameFontSize"
+                        color="black"></label>
+                    </StackLayout>
+                    <Button width="25%" text="+" (tap)="onPlus(item)" class="quantity-btn" marginLeft="0"></Button>
+                  </StackLayout>
+                </StackLayout>
+
+              </StackLayout>
+            </StackLayout>
+          </FlexboxLayout>
+        </ng-template>
+      </RadListView>
     </GridLayout>
   </GridLayout>
-</Page>
+
+  <GridLayout *ngIf="!isRendering" width="100%" height="100%">
+    <ActivityIndicator horizontalAlignment="center" verticalAlignment="middle" [busy]="!isRendering" rowSpan="1"
+      colSpan="1">
+    </ActivityIndicator>
+  </GridLayout>
+
+  <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
+    <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
+      [busy]="isLoading" rowSpan="1" colSpan="1">
+    </ActivityIndicator>
+  </GridLayout>
+</GridLayout>
+
+<!-- BottomSheet -->
+<StackLayout backgroundColor="rgba(220, 220, 220, 0.5)" *ngIf="showBottomSheet" width="100%" height="100%">
+  <AbsoluteLayout width="100%" height="100%">
+    <StackLayout width="100%" height="100%" (tap)="onWeightLayoutOutsideTap(bottomSheet)"></StackLayout>
+    <StackLayout #bottomSheet verticalAlignment="bottom" backgroundColor="#fdfdfd"
+      (loaded)="onBottomSheetLoaded(bottomSheet)" padding="15%" borderTopLeftRadius="15%" borderTopRightRadius="15%"
+      (tap)="onBottomSheetTap()" width="100%" [top]="bottomSheetPosition" opacity="0.1">
+      <FlexboxLayout padding="10%" borderBottomWidth="0.8" borderBottomColor="#e0e0e0" marginTop="10">
+        <StackLayout width="25%" padding="10%" margin="1.5%" borderWidth="0.8" borderColor="#f0f0f0" paddingBottom="0"
+          verticalAlignment="middle">
+          <image [src]="selectedProductPic" stretch="aspectFit" verticalAlignment="middle"></image>
+        </StackLayout>
+        <StackLayout width="65%" paddingLeft="7%" paddingTop="5%">
+          <label [text]="selectedProductName" textWrap="true" color="black"></label>
+          <FlexboxLayout padding="7%">
+            <StackLayout orientation="horizontal" class="rating" horizontalAlignment="center" padding="0">
+              <label text="4.5" color="green" marginLeft="10"></label>
+              <Image [src]="greenStarIcon" width="15" marginLeft="5"></Image>
+            </StackLayout>
+            <label text="210 Ratings" marginLeft="5%" padding="2%" paddingLeft="0"></label>
+          </FlexboxLayout>
+        </StackLayout>
+        <StackLayout width="10%" padding="0">
+          <Image [src]="closeIcon" padding="10%" marginTop="8%" opacity="0.5" (tap)="onCloseIconTap(bottomSheet)">
+          </Image>
+        </StackLayout>
+      </FlexboxLayout>
+      <StackLayout>
+        <label text="Choose a pack size" fontSize="16%" color="black" padding="10%"></label>
+        <StackLayout *ngFor="let item of priceList; let i=index" (tap)="onPriceTap(i,bottomSheet)"
+          [class]="item.classForItem" width="95%" horizontalAlignment="center">
+          <label text="{{item.weightValue}}  {{item.weightUnit}}" color="#808080" marginBottom="8"></label>
+          <label text="Rs {{item.itemPrice}}" color="black"></label>
+        </StackLayout>
+      </StackLayout>
+    </StackLayout>
+  </AbsoluteLayout>
+</StackLayout>
+
+<!-- </Page> -->

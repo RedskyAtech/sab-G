@@ -1,97 +1,87 @@
-<Page actionBarHidden="true">
-    <GridLayout class="page">
-        <GridLayout #headerCard (loaded)="onHeaderLoaded($event)" verticalAlignment="top" height="8%" width="100%">
-            <ns-header></ns-header>
-        </GridLayout>
-        <GridLayout #footerCard (loaded)="onFooterLoaded($event)" verticalAlignment="bottom" height="8%" width="100%">
-            <ns-footer></ns-footer>
-        </GridLayout>
+<GridLayout @routeAnimations class="page">
+    <GridLayout #headerCard androidElevation="10" verticalAlignment="top" height="7%" width="100%">
+        <ns-header></ns-header>
+    </GridLayout>
+    <GridLayout #footerCard androidElevation="10" verticalAlignment="bottom" height="5%" width="100%">
+        <ns-footer [badgeData]="dataForBadge"></ns-footer>
+    </GridLayout>
 
-        <StackLayout *ngIf="!isCart" width="100%" height="10%" verticalAlignment="top" marginTop="45%">
-            <Label [text]="cartMessage" color="black" fontSize="18%" textAlignment="center"></Label>
-        </StackLayout>
+    <StackLayout *ngIf="!isCart" width="100%" height="10%" verticalAlignment="top" marginTop="45%">
+        <Label [text]="cartMessage" color="black" fontSize="18%" textAlignment="center"></Label>
+    </StackLayout>
 
-        <GridLayout rows="auto,auto" width="100%" height="100%">
-            <GridLayout row="0" width="100%" height="50%" marginTop="8%">
-                <!-- <GridView [items]="cartProducts" colWidth="90%" rowHeight="30%" marginTop="2%" width="100%"
-                    height="100%" backgroundColor="transparent"> -->
-                <RadListView [items]="cartProducts" width="100%" height="100%" colWidth="90%"
-                    rowHeight="30%">
-                    <ListViewStaggeredLayout tkListViewLayout scrollDirection="Vertical" spanCount="1">
-                    </ListViewStaggeredLayout>
-                    <ng-template let-item="item" let-odd="odd">
-                        <GridLayout #cartCard width="90%" height="80vh" backgroundColor="white" marginLeft="8%"
-                            marginRight="8%" marginTop="5" marginBottom="5" columns="auto,auto,auto"
-                            androidElevation="5" borderRadius="10">
-                            <StackLayout #cartImage col="0" width="25%" height="100vh" backgroundColor="#F3F3F3"
-                                verticalAlignment="middle" borderRadius="10">
-                                <Image width="90vh" height="90vh" [src]="item.imageUrl"></Image>
+    <GridLayout rows="auto,auto" width="100%" height="100%">
+        <GridLayout row="0" width="100%" height="50%" marginTop="8%">
+            <RadListView [items]="cartProducts" width="100%" height="100%" colWidth="90%" rowHeight="30%">
+                <ListViewStaggeredLayout tkListViewLayout scrollDirection="Vertical" spanCount="1">
+                </ListViewStaggeredLayout>
+                <ng-template let-item="item">
+                    <GridLayout #cartCard width="90%" [height]="itemHeight" backgroundColor="white" marginLeft="8%"
+                        marginRight="8%" marginTop="8" columns="auto,auto,auto" androidElevation="5" borderRadius="10">
+                        <StackLayout #cartImage col="0" width="25%" height="100vh" backgroundColor="#F3F3F3"
+                            verticalAlignment="middle" borderRadius="10">
+                            <Image stretch="aspectFit" [src]="item.imageUrl"></Image>
+                        </StackLayout>
+                        <GridLayout col="1" width="50%" height="100vh" rows="auto,auto,auto">
+                            <StackLayout row="0" width="95%" height="30%" verticalAlignment="middle" marginTop="5"
+                                padding="0">
+                                <Label [text]="item.name" color="#707070" [fontSize]="nameFontSize" textAlignment="left"
+                                    fontWeight="600"></Label>
                             </StackLayout>
-                            <GridLayout col="1" width="50%" height="100vh" rows="auto,auto,auto">
-                                <StackLayout row="0" width="95%" height="40%" verticalAlignment="middle">
-                                    <Label [text]="item.name" color="#707070" fontSize="18%"
-                                        textAlignment="left"></Label>
-                                </StackLayout>
-                                <GridLayout row="1" width="95%" height="25%" verticalAlignment="middle">
-                                    <!-- <StackLayout col="0" height="100%" width="70%" verticalAlignment="middle"
-                                        orientation="horizontal">
-                                        <Label text="MRP " color="#707070" fontSize="12%" textAlignment="left"></Label>
-                                        <Label text="Rs " color="#707070" fontSize="12%" textAlignment="left"></Label>
-                                        <Label [text]="item.marketPrice" color="#707070" fontSize="12%"
-                                            textAlignment="left"></Label>
-                                    </StackLayout> -->
-                                    <!-- <StackLayout col="0" height="1" width="32%" horizontalAlignment="left"
-                                        verticalAlignment="middle" marginLeft="18%" backgroundColor="#707070">
-                                    </StackLayout> -->
-                                    <StackLayout height="100%" width="50%" verticalAlignment="middle"
-                                        horizontalAlignment="left">
-                                        <Label [text]="item.weightValue+' '+item.weightUnit" color="#707070"
-                                            fontSize="12%" fontWeight="500" textAlignment="left"></Label>
-                                    </StackLayout>
-                                </GridLayout>
-                                <StackLayout row="2" width="95%" height="35%" verticalAlignment="middle"
-                                    orientation="horizontal">
-                                    <Label [text]="'Rs '+item.price" color="#404040" fontSize="18%" textAlignment="left"
-                                        fontWeight="500"></Label>
+                            <GridLayout row="1" width="95%" height="25%" verticalAlignment="middle">
+                                <StackLayout height="100%" width="50%" verticalAlignment="middle"
+                                    horizontalAlignment="left" padding="0">
+                                    <Label [text]="item.weightValue+' '+item.weightUnit" color="#707070" fontSize="12%"
+                                        fontWeight="500" textAlignment="left"></Label>
                                 </StackLayout>
                             </GridLayout>
-                            <GridLayout col="2" width="25%" height="100vh" rows="auto,auto" borderRadius="10">
-                                <StackLayout row="0" width="100%" height="50%" verticalAlignment="middle">
-                                    <Image height="25vw" width="25vw" src="res://rubbish_bin_grey"
-                                        horizontalAlignment="right" marginRight="10vw" (tap)="onDelete(item)"></Image>
+                            <StackLayout row="2" width="95%" height="35%" verticalAlignment="middle"
+                                orientation="horizontal" padding="0">
+                                <Label [text]="'Rs '+item.price" color="#404040" [fontSize]="priceFontSize"
+                                    textAlignment="left" fontWeight="500"></Label>
+                            </StackLayout>
+                        </GridLayout>
+                        <GridLayout col="2" width="25%" height="100vh" rows="auto,auto" borderRadius="10">
+                            <StackLayout row="0" width="100%" height="50%" verticalAlignment="middle" padding="0">
+                                <Image height="25vw" width="25vw" [src]="rubbishBinIcon" horizontalAlignment="right"
+                                    marginRight="10vw" (tap)="onDelete(item)"></Image>
+                                <!-- <Image height="25vw" width="25vw" src="~/app/assets/rubbish_bin_grey.png"
+                                    horizontalAlignment="right" marginRight="10vw" (tap)="onDelete(item)"></Image> -->
+                            </StackLayout>
+                            <GridLayout row="1" width="100%" height="50%" verticalAlignment="middle"
+                                columns="auto,auto,auto">
+                                <StackLayout col="0" class="plus-minus-container" (tap)="onMinus(item)" padding="0">
+                                    <Image [src]="minusIcon" width="10vw"></Image>
+                                    <!-- <Image src="~/app/assets/minus.png" width="10vw"></Image> -->
                                 </StackLayout>
-                                <GridLayout row="1" width="100%" height="50%" verticalAlignment="middle"
-                                    columns="auto,auto,auto">
-                                    <StackLayout col="0" class="plus-minus-container" (tap)="onMinus(item)">
-                                        <Image src="res://minus" width="10vw"></Image>
-                                    </StackLayout>
-                                    <StackLayout col="1" width="35%" height="100%" verticalAlignment="middle">
-                                        <Label [text]="item.quantity" fontSize="16%" color="#707070"
-                                            textAlignment="center"></Label>
-                                    </StackLayout>
-                                    <StackLayout col="2" class="plus-minus-container" (tap)="onPlus(item)">
-                                        <Image src="res://plus" width="10vw"></Image>
-                                    </StackLayout>
-                                </GridLayout>
+                                <StackLayout col="1" width="35%" height="100%" verticalAlignment="middle" padding="0">
+                                    <Label [text]="item.quantity" fontSize="16%" color="#707070"
+                                        textAlignment="center"></Label>
+                                </StackLayout>
+                                <StackLayout col="2" class="plus-minus-container" (tap)="onPlus(item)" padding="0">
+                                    <Image [src]="plusIcon" width="10vw"></Image>
+                                    <!-- <Image src="~/app/assets/plus.png" width="10vw"></Image> -->
+                                </StackLayout>
                             </GridLayout>
                         </GridLayout>
-                    </ng-template>
-                    <!-- </GridView> -->
-                </RadListView>
-            </GridLayout>
-            <StackLayout *ngIf="isCart" row="1" height="33%" width="100%" marginBottom="5%" backgroundColor="#F6F6F6">
-                <GridLayout #addressCard orientation="vertical" width="90%" height="85%" marginTop="2%"
-                    rows="auto,auto,auto,auto" (loaded)="onAddressLoaded($event)">
-                    <GridLayout row="0" width="100%" height="21%" columns="auto,auto">
-                        <StackLayout class="price-heading-container" col="0">
-                            <Label class="price-heading" text="Subtotal"></Label>
-                        </StackLayout>
-                        <StackLayout class="price-detail-container" col="1">
-                            <Label class="price-detail" text="Rs "></Label>
-                            <Label class="price-detail" [text]="subtotal"></Label>
-                        </StackLayout>
                     </GridLayout>
-                    <!-- <GridLayout row="1" width="100%" height="17%" columns="auto,auto">
+                </ng-template>
+            </RadListView>
+        </GridLayout>
+        <StackLayout *ngIf="isCart" row="1" height="33%" width="100%" marginBottom="4%" backgroundColor="#F0F0F0"
+            androidElevation="3">
+            <GridLayout #addressCard orientation="vertical" width="90%" height="85%" marginTop="2%"
+                rows="auto,auto,auto,auto" androidElevation="10">
+                <GridLayout row="0" width="100%" height="21%" columns="auto,auto">
+                    <StackLayout class="price-heading-container" col="0">
+                        <Label class="price-heading" text="Subtotal"></Label>
+                    </StackLayout>
+                    <StackLayout class="price-detail-container" col="1">
+                        <Label class="price-detail" text="Rs "></Label>
+                        <Label class="price-detail" [text]="subtotal"></Label>
+                    </StackLayout>
+                </GridLayout>
+                <!-- <GridLayout row="1" width="100%" height="17%" columns="auto,auto">
                         <StackLayout class="price-heading-container" col="0">
                             <Label class="price-heading" text="Saved Rs"></Label>
                         </StackLayout>
@@ -100,49 +90,49 @@
                             <Label class="price-detail" [text]="savedRs"></Label>
                         </StackLayout>
                     </GridLayout> -->
-                    <GridLayout row="1" width="100%" height="21%" columns="auto,auto">
-                        <StackLayout class="price-heading-container" col="0">
-                            <Label class="price-heading" text="Total Items"></Label>
-                        </StackLayout>
-                        <StackLayout class="price-detail-container" col="1">
-                            <Label class="price-detail" [text]="totalItems"></Label>
-                        </StackLayout>
-                    </GridLayout>
-                    <GridLayout row="2" width="100%" height="21%" columns="auto,auto">
-                        <StackLayout class="price-heading-container" col="0">
-                            <Label class="price-heading" text="Delivery Charges"></Label>
-                        </StackLayout>
-                        <StackLayout class="price-detail-container" col="1">
-                            <Label fontSize="16%" verticalAlignment="middle" color="#FF3939" fontWeight="500"
-                                [text]="deliveryCharges"></Label>
-                        </StackLayout>
-                    </GridLayout>
-                    <GridLayout row="3" width="100%" height="21%" columns="auto,auto">
-                        <StackLayout class="price-heading-container" col="0">
-                            <Label class="price-heading" text="Total"></Label>
-                        </StackLayout>
-                        <StackLayout class="price-detail-container" col="1">
-                            <Label class="price-detail" text="Rs "></Label>
-                            <Label class="price-detail" [text]="total"></Label>
-                        </StackLayout>
-                    </GridLayout>
+                <GridLayout row="1" width="100%" height="21%" columns="auto,auto">
+                    <StackLayout class="price-heading-container" col="0">
+                        <Label class="price-heading" text="Total Items"></Label>
+                    </StackLayout>
+                    <StackLayout class="price-detail-container" col="1">
+                        <Label class="price-detail" [text]="totalItems"></Label>
+                    </StackLayout>
                 </GridLayout>
-            </StackLayout>
-            <StackLayout *ngIf="isCart" row="1" width="100%" height="10%" verticalAlignment="top" marginTop="25%">
-                <Button class="checkout-button" text="Checkout" (tap)="onCheckout()"></Button>
-            </StackLayout>
-        </GridLayout>
+                <GridLayout row="2" width="100%" height="21%" columns="auto,auto">
+                    <StackLayout class="price-heading-container" col="0">
+                        <Label class="price-heading" text="Delivery Charges"></Label>
+                    </StackLayout>
+                    <StackLayout class="price-detail-container" col="1">
+                        <Label fontSize="16%" verticalAlignment="middle" color="#FF3939" fontWeight="500"
+                            [text]="deliveryCharges"></Label>
+                    </StackLayout>
+                </GridLayout>
+                <GridLayout row="3" width="100%" height="21%" columns="auto,auto">
+                    <StackLayout class="price-heading-container" col="0">
+                        <Label class="price-heading" text="Total"></Label>
+                    </StackLayout>
+                    <StackLayout class="price-detail-container" col="1">
+                        <Label class="price-detail" text="Rs "></Label>
+                        <Label class="price-detail" [text]="total"></Label>
+                    </StackLayout>
+                </GridLayout>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout *ngIf="isCart" row="1" width="100%" height="10%" verticalAlignment="top" marginTop="25%"
+            padding="0" androidElevation="4" zIndex="10">
+            <Button class="checkout-button" text="Checkout" (tap)="onCheckout()"></Button>
+        </StackLayout>
+    </GridLayout>
 
-        <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
+    <!-- <GridLayout *ngIf="!isRendering" width="100%" height="100%">
         <ActivityIndicator horizontalAlignment="center" verticalAlignment="middle" [busy]="!isRendering" rowSpan="1"
             colSpan="1">
         </ActivityIndicator>
     </GridLayout> -->
 
-        <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
-            <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
-                [busy]="isLoading" rowSpan="1" colSpan="1">
-            </ActivityIndicator>
-        </GridLayout>
+    <GridLayout *ngIf="isLoading" backgroundColor="transparent" width="100%" height="100%">
+        <ActivityIndicator backgroundColor="transparent" horizontalAlignment="center" verticalAlignment="middle"
+            [busy]="isLoading" rowSpan="1" colSpan="1">
+        </ActivityIndicator>
     </GridLayout>
-</Page>
+</GridLayout>
