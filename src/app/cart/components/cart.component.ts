@@ -9,14 +9,14 @@ import {
   ChangeDetectorRef,
 } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
-import { RouterExtensions } from "nativescript-angular/router/router-extensions";
+import { RouterExtensions } from "@nativescript/angular";
 import { UserService } from "~/app/services/user.service";
 import { Page } from "tns-core-modules/ui/page/page";
 import * as localstorage from "nativescript-localstorage";
 import { Values } from "~/app/values/values";
 import * as Toast from "nativescript-toast";
 import { slideInAnimation } from "~/app/route-animation";
-import { screen } from "tns-core-modules/platform";
+import { Screen } from '@nativescript/core';
 import { images } from "~/app/assets/index";
 
 @Component({
@@ -76,8 +76,8 @@ export class CartComponent implements OnInit, AfterContentInit {
 
   ngOnInit(): void {
     console.log("ng oninit start in cart");
-    const screenHeight = screen.mainScreen.heightDIPs;
-    const screenWidth = screen.mainScreen.widthDIPs;
+    const screenHeight = Screen.mainScreen.heightDIPs;
+    const screenWidth = Screen.mainScreen.widthDIPs;
     this.nameFontSize = (4 * screenWidth) / 100;
     this.priceFontSize = (3.5 * screenWidth) / 100;
     this.itemHeight = (12 * screenHeight) / 100;

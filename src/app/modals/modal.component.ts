@@ -7,12 +7,7 @@ import {
   ElementRef,
   Input,
 } from '@angular/core';
-import { View } from 'tns-core-modules/ui/core/view';
-import { screen, isAndroid } from 'tns-core-modules/platform';
-import { AnimationCurve } from 'tns-core-modules/ui/enums';
-import { GestureTypes } from 'tns-core-modules/ui/gestures';
-import { Page } from 'tns-core-modules/ui/page';
-import { ios } from 'tns-core-modules/application';
+import { View, Screen, isAndroid, GestureTypes, Page, Application, Enums } from '@nativescript/core';
 
 declare const UITapGestureRecognizer, interop, NSObject;
 
@@ -26,7 +21,7 @@ function includes(container, value) {
 }
 
 let GestureRecognizer, Interop;
-if (ios) {
+if (Application.ios) {
   GestureRecognizer = NSObject;
   Interop = interop;
 } else {
@@ -43,7 +38,7 @@ class HideGestureRecognizerImpl extends GestureRecognizer {
   }
 
   tap() {
-    this._owner.ios.resignFirstResponder();
+    this._owner.Application.ios.resignFirstResponder();
     if (this.func) {
       this.func();
     }
@@ -134,7 +129,7 @@ export class ModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageHeight = this.pageHeight ? this.pageHeight : screen.mainScreen.heightDIPs;
+    this.pageHeight = this.pageHeight ? this.pageHeight : Screen.mainScreen.heightDIPs;
     this.hostView.style.translateY = this.pageHeight;
   }
 
@@ -158,7 +153,7 @@ export class ModalComponent implements OnInit {
         this.bodyView.animate({
           translate: { x: 0, y: 0 },
           duration: 0,
-          curve: AnimationCurve.cubicBezier(0.12, 0.3, 0.58, 0.44),
+          curve: Enums.AnimationCurve.cubicBezier(0.12, 0.3, 0.58, 0.44),
         }),
       )
       .then(() =>
@@ -166,7 +161,7 @@ export class ModalComponent implements OnInit {
           scale: { x: 1, y: 1 },
           opacity: 1,
           duration: this.timing,
-          curve: AnimationCurve.cubicBezier(0.12, 0.3, 0.58, 0.44),
+          curve: Enums.AnimationCurve.cubicBezier(0.12, 0.3, 0.58, 0.44),
         }),
       )
       .then(() => {
@@ -181,28 +176,28 @@ export class ModalComponent implements OnInit {
       .animate({
         opacity: 0,
         duration: this.timing * this.durationScale,
-        curve: AnimationCurve.cubicBezier(0.12, 0.3, 0.58, 0.44),
+        curve: Enums.AnimationCurve.cubicBezier(0.12, 0.3, 0.58, 0.44),
       })
       .then(() =>
         this.bodyView.animate({
           scale: { x: 0.6, y: 0.6 },
           translate: { x: 0, y: this.pageHeight },
           duration: 0,
-          curve: AnimationCurve.cubicBezier(0.12, 0.3, 0.58, 0.44),
+          curve: Enums.AnimationCurve.cubicBezier(0.12, 0.3, 0.58, 0.44),
         }),
       )
       .then(() =>
         this.overlayView.animate({
           opacity: 0,
           duration: this.timing * this.durationScale,
-          curve: AnimationCurve.easeInOut,
+          curve: Enums.AnimationCurve.easeInOut,
         }),
       )
       .then(() =>
         this.overlayView.animate({
           translate: { x: 0, y: this.pageHeight },
           duration: 0,
-          curve: AnimationCurve.easeInOut,
+          curve: Enums.AnimationCurve.easeInOut,
         }),
       )
       .then((data) => {
@@ -228,7 +223,7 @@ export class ModalComponent implements OnInit {
 
     // Event Propagation
 
-    if (ios) {
+    if (Application.ios) {
       targetHandler = HideGestureRecognizerImpl.initWithOwner(this.overlayView);
 
       if (this.dismissable) {
@@ -237,7 +232,7 @@ export class ModalComponent implements OnInit {
 
       const gesture = UITapGestureRecognizer.alloc().initWithTargetAction(targetHandler, 'tap');
 
-      this.overlayView.ios.addGestureRecognizer(gesture);
+      this.overlayView.Application.ios.addGestureRecognizer(gesture);
 
       targetHandler2 = HideGestureRecognizerImpl.initWithOwner(this.bodyView);
 
@@ -245,7 +240,7 @@ export class ModalComponent implements OnInit {
 
       gesture2.cancelsTouchesInView = true;
 
-      this.bodyView.ios.addGestureRecognizer(gesture2);
+      this.bodyView.Application.ios.addGestureRecognizer(gesture2);
     }
   }
 

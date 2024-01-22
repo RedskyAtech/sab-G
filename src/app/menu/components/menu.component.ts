@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterContentInit, ViewChild } from '@angular/core';
 import { Color } from 'tns-core-modules/color/color';
-import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
+import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
 import { ModalComponent } from '~/app/modals/modal.component';
 import * as localstorage from 'nativescript-localstorage';

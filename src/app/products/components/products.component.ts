@@ -2,7 +2,7 @@ import { Cart } from "./../../models/cart.model";
 import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { Component, OnInit, AfterContentInit, ViewChild } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
-import { RouterExtensions } from "nativescript-angular/router/router-extensions";
+import { RouterExtensions } from "@nativescript/angular";
 import { UserService } from "~/app/services/user.service";
 import { ActivatedRoute } from "@angular/router";
 import * as Toast from "nativescript-toast";
@@ -13,9 +13,9 @@ import { Page } from "tns-core-modules/ui/page/page";
 import { Product } from "~/app/models/product.model";
 import { Dimensions } from "~/app/models/dimensions.model";
 import { slideInAnimation } from "~/app/route-animation";
-import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";
-import { screen } from "tns-core-modules/platform";
-import { Animation } from "tns-core-modules/ui/animation";
+import { StackLayout } from '@nativescript/core';
+import { Screen } from '@nativescript/core';
+import { Animation } from '@nativescript/core';
 import { async } from "rxjs";
 import { images } from "~/app/assets/index";
 
@@ -84,8 +84,8 @@ export class ProductsComponent implements OnInit, AfterContentInit {
   }
   ngAfterContentInit(): void {}
   ngOnInit(): void {
-    const screenHeight = screen.mainScreen.heightDIPs;
-    const screenWidth = screen.mainScreen.widthDIPs;
+    const screenHeight = Screen.mainScreen.heightDIPs;
+    const screenWidth = Screen.mainScreen.widthDIPs;
     this.nameFontSize = (4 * screenWidth) / 100;
     this.priceFontSize = (3 * screenWidth) / 100;
     this.itemHeight = (13 * screenHeight) / 100;
@@ -488,7 +488,7 @@ export class ProductsComponent implements OnInit, AfterContentInit {
 
   onBottomSheetLoaded(args: StackLayout) {
     setTimeout(() => {
-      const screenHeight = screen.mainScreen.heightDIPs;
+      const screenHeight = Screen.mainScreen.heightDIPs;
       this.bottomSheetPosition = screenHeight;
       const bottomSheetHeight = args.getActualSize().height;
       const inAnimation = new Animation([

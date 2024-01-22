@@ -1,19 +1,15 @@
 import { Component, NgZone } from '@angular/core';
-import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
+import { RouterExtensions, registerElement } from '@nativescript/angular';
 import { ChildrenOutletContexts, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { UserService } from './services/user.service';
-import { registerElement } from 'nativescript-angular/element-registry';
 import { Color } from 'tns-core-modules/color/color';
 import { Carousel, CarouselItem } from 'nativescript-carousel';
 import { requestPermissions } from 'nativescript-permissions';
-import { Folder, path, File } from 'tns-core-modules/file-system';
+import { Folder, isAndroid, knownFolders } from '@nativescript/core';
 import * as Toast from 'nativescript-toast';
 import { exit } from 'nativescript-exit';
-import * as application from 'tns-core-modules/application';
 import * as localstorage from 'nativescript-localstorage';
 
-import { isAndroid } from 'tns-core-modules/platform';
-import { knownFolders } from 'tns-core-modules/file-system';
 
 declare const android: any;
 registerElement('Carousel', () => Carousel);

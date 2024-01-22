@@ -1,8 +1,7 @@
 import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { ModalComponent } from './modal.component';
 // import { NativeScriptUIGaugeModule } from "nativescript-ui-gauge/angular/gauges-directives";
-import { NativeScriptCommonModule } from 'nativescript-angular/common';
-import { NativeScriptFormsModule } from 'nativescript-angular/forms';
+import { NativeScriptCommonModule, NativeScriptFormsModule } from '@nativescript/angular';
 
 @NgModule({
   imports: [

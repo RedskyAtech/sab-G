@@ -8,14 +8,14 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { Color } from 'tns-core-modules/color/color';
-import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
+import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
 import { Page } from 'tns-core-modules/ui/page/page';
 import { User } from '~/app/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { Values } from '~/app/values/values';
 import * as Toast from 'nativescript-toast';
-import { TextField } from 'tns-core-modules/ui/text-field';
+import { TextField } from '@nativescript/core';
 import { slideInAnimation } from '~/app/route-animation';
 import { images } from '~/app/assets/index';
 

@@ -8,20 +8,20 @@ import {
   ChangeDetectorRef,
 } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
-import { RouterExtensions } from "nativescript-angular/router/router-extensions";
+import { RouterExtensions } from "@nativescript/angular";
 import { UserService } from "~/app/services/user.service";
 import { Page } from "tns-core-modules/ui/page/page";
 import { Values } from "~/app/values/values";
 import * as localstorage from "nativescript-localstorage";
-import { GridLayout } from "tns-core-modules/ui/layouts/grid-layout";
-import { TextField } from "tns-core-modules/ui/text-field";
+import { GridLayout } from '@nativescript/core';
+import { TextField } from '@nativescript/core';
 import { Cart } from "~/app/models/cart.model";
 import { Dimensions } from "~/app/models/dimensions.model";
 import { Product } from "~/app/models/product.model";
 import * as Toast from "nativescript-toast";
 import { requestPremissions } from "nativescript-plugin-badge";
 import { images } from "~/app/assets/index";
-import { screen } from "tns-core-modules/platform";
+import { Screen } from '@nativescript/core';
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -101,7 +101,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {}
   ngOnInit(): void {
-    const screenWidth = screen.mainScreen.widthDIPs;
+    const screenWidth = Screen.mainScreen.widthDIPs;
     this.discountFontSize = (3.5 * screenWidth) / 100;
 
     this.isRendering = true;

@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterContentInit } from '@angular/core';
-import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
+import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
 import { Color } from 'tns-core-modules/color/color';
 import { Page } from 'tns-core-modules/ui/page/page';

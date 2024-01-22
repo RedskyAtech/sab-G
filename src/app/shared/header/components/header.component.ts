@@ -1,4 +1,4 @@
-import { RouterExtensions } from 'nativescript-angular/router/router-extensions';
+import { RouterExtensions } from '@nativescript/angular';
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Page } from 'tns-core-modules/ui/page/page';

@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterContentInit, ViewChild } from "@angular/core";
 import { Color } from "tns-core-modules/color/color";
-import { TextField } from "tns-core-modules/ui/text-field";
-import { RouterExtensions } from "nativescript-angular/router/router-extensions";
+import { TextField, Folder, File, path } from '@nativescript/core';
+import { RouterExtensions } from "@nativescript/angular";
 import { UserService } from "~/app/services/user.service";
 import { ModalComponent } from "~/app/modals/modal.component";
 import { Page } from "tns-core-modules/ui/page/page";
@@ -10,7 +10,6 @@ import {
   fromFile,
 } from "tns-core-modules/image-source/image-source";
 import { ImageCropper } from "nativescript-imagecropper";
-import { Folder, path, File } from "tns-core-modules/file-system";
 import { session } from "nativescript-background-http";
 import { Values } from "~/app/values/values";
 import * as localstorage from "nativescript-localstorage";

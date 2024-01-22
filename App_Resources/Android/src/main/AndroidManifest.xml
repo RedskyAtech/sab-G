@@ -29,7 +29,9 @@
 			android:windowSoftInputMode="adjustPan"
 			android:isScrollContainer="true"
 			android:configChanges="keyboard|keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|locale|uiMode"
-			android:theme="@style/LaunchScreenTheme">
+			android:theme="@style/LaunchScreenTheme"
+			android:exported="true"
+			>
 
 			<meta-data android:name="SET_THEME_ON_LAUNCH" android:resource="@style/AppTheme" />
 
