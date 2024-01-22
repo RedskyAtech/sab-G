@@ -34,7 +34,7 @@ export class AppComponent {
     private userService: UserService,
     private ngZone: NgZone,
   ) {
-    this.ngZone.run(() => {
+    this.ngZone.run(async () => {
       if (localstorage.getItem('token')) {
         this.routerExtensions.navigate(['/home']);
       }

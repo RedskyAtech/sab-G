@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "535834150456",
+    "firebase_url": "https://sabg-17084.firebaseio.com",
+    "project_id": "sabg-17084",
+    "storage_bucket": "sabg-17084.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535834150456:android:8cf0dceb665182cc1548cd",
+        "android_client_info": {
+          "package_name": "org.nativescript.sabG"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535834150456-nkfpep86ccb4actieguhofqv6dff8r0l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARlsEcKJ0qYDNYPAWyLUA9BIwXBR7JwvE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "535834150456-nkfpep86ccb4actieguhofqv6dff8r0l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
