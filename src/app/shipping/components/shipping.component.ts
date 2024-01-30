@@ -1,6 +1,6 @@
 import { User } from '~/app/models/user.model';
 import { Component, OnInit, AfterContentInit } from '@angular/core';
-import { Color } from 'tns-core-modules/color/color';
+// import { Color } from 'tns-core-modules/color/color';
 import { TextField } from '@nativescript/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
@@ -62,7 +62,7 @@ export class ShippingComponent implements OnInit, AfterContentInit {
     this.page.actionBarHidden = true;
     // this.isRendering = true;
   }
-  ngAfterContentInit(): void {}
+  ngAfterContentInit(): void { }
   ngOnInit(): void {
     this.isLoading = false;
     this.cityText = '';

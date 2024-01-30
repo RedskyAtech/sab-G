@@ -5,65 +5,65 @@ import { Routes, PreloadAllModules } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // { path: 'home', loadChildren: './home/home.module#HomeModule' },
-  { path: 'login', loadChildren: './login/login.module#LoginModule' },
+  { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
   {
     path: 'register',
-    loadChildren: './register/register.module#RegisterModule',
+    loadChildren: () => import('./register/register.module').then(m => m.RegisterModule),
   },
   {
     path: 'forgotPassword',
-    loadChildren: './forgot-password/forgot-password.module#ForgotPasswordModule',
+    loadChildren: () => import('./forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
   },
   {
     path: 'changePassword',
-    loadChildren: './change-password/change-password.module#ChangePasswordModule',
+    loadChildren: () => import('./change-password/change-password.module').then(m => m.ChangePasswordModule),
   },
   {
     path: 'confirmOtp',
-    loadChildren: './confirm-otp/confirm-otp.module#ConfirmOtpModule',
+    loadChildren: () => import('./confirm-otp/confirm-otp.module').then(m => m.ConfirmOtpModule),
   },
   {
     path: 'shipping',
-    loadChildren: './shipping/shipping.module#ShippingModule',
+    loadChildren: () => import('./shipping/shipping.module').then(m => m.ShippingModule),
   },
   {
     path: 'addAddress',
-    loadChildren: './add-address/add-address.module#AddAddressModule',
+    loadChildren: () => import('./add-address/add-address.module').then(m => m.AddAddressModule),
   },
   {
     path: 'congratulations',
-    loadChildren: './congratulations/congratulations.module#CongratulationsModule',
+    loadChildren: () => import('./congratulations/congratulations.module').then(m => m.CongratulationsModule),
   },
-  { path: 'menu', loadChildren: './menu/menu.module#MenuModule' },
-  { path: 'profile', loadChildren: './profile/profile.module#ProfileModule' },
+  { path: 'menu', loadChildren: () => import('./menu/menu-routing.module').then(m => m.MenuRoutingModule) },
+  { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
   {
     path: 'editProfile',
-    loadChildren: './edit-profile/edit-profile.module#EditProfileModule',
+    loadChildren: () => import('./edit-profile/edit-profile.module').then(m => m.EditProfileModule),
   },
-  { path: 'cart', loadChildren: './cart/cart.module#CartModule' },
+  { path: 'cart', loadChildren: () => import('./cart/cart.module').then(m => m.CartModule) },
   {
     path: 'products',
-    loadChildren: './products/products.module#ProductsModule',
+    loadChildren: () => import('./products/products.module').then(m => m.ProductsModule),
   },
-  { path: 'search', loadChildren: './search/search.module#SearchModule' },
+  { path: 'search', loadChildren: () => import('./search/search.module').then(m => m.SearchModule) },
   {
     path: 'orderDetails',
-    loadChildren: './order-details/order-details.module#OrderDetailsModule',
+    loadChildren: () => import('./order-details/order-details.module').then(m => m.OrderDetailsModule),
   },
   {
     path: 'myOrders',
-    loadChildren: './my-orders/my-orders.module#MyOrdersModule',
+    loadChildren: () => import('./my-orders/my-orders.module').then(m => m.MyOrdersModule),
   },
-  { path: 'home', loadChildren: './home/home.module#HomeModule' },
+  { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
   {
     path: 'categories',
-    loadChildren: './categories/categories.module#CategoriesModule',
+    loadChildren: () => import('./categories/categories.module').then(m => m.CategoriesModule),
   },
   {
     path: 'setPassword',
-    loadChildren: './set-password/set-password.module#SetPasswordModule',
+    loadChildren: () => import('./set-password/set-password.module').then(m => m.SetPasswordModule),
   },
-  { path: 'faq', loadChildren: './faq/faq.module#FaqModule' },
+  { path: 'faq', loadChildren: () => import('./faq/faq.module').then(m => m.FaqModule) },
 ];
 
 @NgModule({
@@ -74,4 +74,4 @@ const routes: Routes = [
   ],
   exports: [NativeScriptRouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

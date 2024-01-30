@@ -21,4 +21,4 @@ import { AddAddressRoutingModule } from './add-address-routing.module';
   declarations: [AddAddressComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class AddAddressModule {}
+export class AddAddressModule { }

@@ -8,7 +8,7 @@ import { Page } from "tns-core-modules/ui/page/page";
 import {
   ImageSource,
   fromFile,
-} from "tns-core-modules/image-source/image-source";
+} from "@nativescript/core/image-source";
 import { ImageCropper } from "nativescript-imagecropper";
 import { session } from "nativescript-background-http";
 import { Values } from "~/app/values/values";
@@ -98,7 +98,7 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
     // this.isRendering = true;
     this.isVisibleImage = true;
   }
-  ngAfterContentInit(): void {}
+  ngAfterContentInit(): void { }
   ngOnInit(): void {
     this.isLoading = false;
     this.changePhotoButton = "Change Photo";
@@ -497,30 +497,28 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
 
   private processionImage(data: any) {
     const source = new ImageSource();
-    source.fromAsset(data).then((source) => {
-      this.imageCropper
-        .show(source, { lockSquare: true })
-        .then((args) => {
-          if (args.image !== null) {
-            const folder: Folder = Folder.fromPath(
-              "/storage/emulated/0" + "/sabG"
-            );
-            const file: File = File.fromPath(
-              path.join(folder.path, "sabG.jpg")
-            );
-            args.image.saveToFile(file.path, "jpg");
-            this.file = "/storage/emulated/0/sabG/sabG.jpg";
-            this.name = this.file.substr(this.file.lastIndexOf("/") + 1);
-            this.extension = this.name.substr(this.name.lastIndexOf(".") + 1);
-            this.profilePicture = undefined;
-            this.profilePicture = fromFile("/storage/emulated/0/sabG/sabG.jpg");
-            this.isVisibleImage = false;
-          }
-        })
-        .catch(function (e) {
-          console.log(e);
-        });
-    });
+    source.fromAsset(data).then((source) => this.imageCropper
+      .show(source, { lockSquare: true })
+      .then((args) => {
+        if (args.image !== null) {
+          const folder: Folder = Folder.fromPath(
+            "/storage/emulated/0" + "/sabG"
+          );
+          const file: File = File.fromPath(
+            path.join(folder.path, "sabG.jpg")
+          );
+          args.image.saveToFile(file.path, "jpg");
+          this.file = "/storage/emulated/0/sabG/sabG.jpg";
+          this.name = this.file.substr(this.file.lastIndexOf("/") + 1);
+          this.extension = this.name.substr(this.name.lastIndexOf(".") + 1);
+          this.profilePicture = undefined;
+          this.profilePicture = fromFile("/storage/emulated/0/sabG/sabG.jpg");
+          this.isVisibleImage = false;
+        }
+      })
+      .catch(function (e) {
+        console.log(e);
+      }));
   }
 
   onSubmitClick() {
@@ -614,9 +612,8 @@ export class EditProfileComponent implements OnInit, AfterContentInit {
 
   private getCart() {
     this.isLoading = true;
-    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${
-      this.pageNo
-    }&items=${this.items}`;
+    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${this.pageNo
+      }&items=${this.items}`;
     this.http
       .get(Values.BASE_URL + "carts?" + this.query, {
         headers: this.headers,

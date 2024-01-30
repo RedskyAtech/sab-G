@@ -25,7 +25,7 @@ if (Application.ios) {
   GestureRecognizer = NSObject;
   Interop = interop;
 } else {
-  GestureRecognizer = class A {};
+  GestureRecognizer = class A { };
   Interop = { types: { id: void 0, void: void 0 } };
 }
 
@@ -232,7 +232,7 @@ export class ModalComponent implements OnInit {
 
       const gesture = UITapGestureRecognizer.alloc().initWithTargetAction(targetHandler, 'tap');
 
-      this.overlayView.Application.ios.addGestureRecognizer(gesture);
+      this.overlayView.ios.addGestureRecognizer(gesture);
 
       targetHandler2 = HideGestureRecognizerImpl.initWithOwner(this.bodyView);
 
@@ -240,7 +240,7 @@ export class ModalComponent implements OnInit {
 
       gesture2.cancelsTouchesInView = true;
 
-      this.bodyView.Application.ios.addGestureRecognizer(gesture2);
+      this.bodyView.ios.addGestureRecognizer(gesture2);
     }
   }
 
