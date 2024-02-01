@@ -7,10 +7,10 @@ import {
   ElementRef,
   AfterViewInit,
 } from '@angular/core';
-import { Color } from 'tns-core-modules/color/color';
+import { Color } from '@nativescript/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page } from '@nativescript/core';
 import { User } from '~/app/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { Values } from '~/app/values/values';
@@ -73,10 +73,10 @@ export class SetPasswordComponent implements OnInit, AfterContentInit, AfterView
   from: string;
   token: string;
 
-  logoIcon:string = this.assets.logoIcon;
-  logoTransparentIcon:string = this.assets.logoTransparentIcon;
-  lockIcon:string = this.assets.lockIcon;
-  eyeIcon:string = this.assets.eyeIcon;
+  logoIcon: string = this.assets.logoIcon;
+  logoTransparentIcon: string = this.assets.logoTransparentIcon;
+  lockIcon: string = this.assets.lockIcon;
+  eyeIcon: string = this.assets.eyeIcon;
 
   constructor(
     private routerExtensions: RouterExtensions,
@@ -106,8 +106,8 @@ export class SetPasswordComponent implements OnInit, AfterContentInit, AfterView
     this.from = '';
     this.token = '';
   }
-  ngAfterContentInit(): void {}
-  ngOnInit(): void {}
+  ngAfterContentInit(): void { }
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {

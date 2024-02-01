@@ -4,7 +4,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgModalModule } from '../modals/ng-modal';
 import { HttpClientModule } from '@angular/common/http';
 import { NativeScriptCommonModule, NativeScriptFormsModule } from '@nativescript/angular';
-import { GridViewModule } from 'nativescript-grid-view/angular';
+// import { GridViewModule } from 'nativescript-grid-view/angular';
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchComponent } from './components/search.component';
 import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
@@ -17,7 +17,7 @@ import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
     NgModalModule,
     HttpClientModule,
     SearchRoutingModule,
-    GridViewModule,
+    // GridViewModule,
     HeaderModule,
     FooterModule,
     NativeScriptUIListViewModule,
@@ -25,4 +25,4 @@ import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
   declarations: [SearchComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class SearchModule {}
+export class SearchModule { }

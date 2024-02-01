@@ -4,7 +4,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgModalModule } from '../modals/ng-modal';
 import { HttpClientModule } from '@angular/common/http';
 import { NativeScriptCommonModule, NativeScriptFormsModule } from '@nativescript/angular';
-import { GridViewModule } from 'nativescript-grid-view/angular';
+// import { GridViewModule } from 'nativescript-grid-view/angular';
 import { ChangePasswordComponent } from './components/change-password.component';
 import { ChangePasswordRoutingModule } from './change-password-routing.module';
 
@@ -16,11 +16,11 @@ import { ChangePasswordRoutingModule } from './change-password-routing.module';
     NgModalModule,
     HttpClientModule,
     ChangePasswordRoutingModule,
-    GridViewModule,
+    // GridViewModule,
     HeaderModule,
     FooterModule,
   ],
   declarations: [ChangePasswordComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class ChangePasswordModule {}
+export class ChangePasswordModule { }

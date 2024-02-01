@@ -3,7 +3,7 @@ import { FooterModule } from './../shared/footer/footer.module';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NativeScriptCommonModule, NativeScriptFormsModule } from '@nativescript/angular';
-import { GridViewModule } from 'nativescript-grid-view/angular';
+// import { GridViewModule } from 'nativescript-grid-view/angular';
 import { AddAddressComponent } from './components/add-address.component';
 import { AddAddressRoutingModule } from './add-address-routing.module';
 
@@ -14,7 +14,7 @@ import { AddAddressRoutingModule } from './add-address-routing.module';
     NativeScriptFormsModule,
     HttpClientModule,
     AddAddressRoutingModule,
-    GridViewModule,
+    // GridViewModule,
     FooterModule,
     HeaderModule,
   ],

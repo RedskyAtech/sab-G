@@ -2,7 +2,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgModalModule } from '../modals/ng-modal';
 import { HttpClientModule } from '@angular/common/http';
 import { NativeScriptCommonModule, NativeScriptFormsModule } from '@nativescript/angular';
-import { GridViewModule } from 'nativescript-grid-view/angular';
+// import { GridViewModule } from 'nativescript-grid-view/angular';
 import { RegisterComponent } from './components/register.component';
 import { RegisterRoutingModule } from './register-routing.module';
 
@@ -14,9 +14,9 @@ import { RegisterRoutingModule } from './register-routing.module';
     NgModalModule,
     HttpClientModule,
     RegisterRoutingModule,
-    GridViewModule,
+    // GridViewModule,
   ],
   declarations: [RegisterComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class RegisterModule {}
+export class RegisterModule { }

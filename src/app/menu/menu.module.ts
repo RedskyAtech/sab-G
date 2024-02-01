@@ -2,7 +2,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgModalModule } from '../modals/ng-modal';
 import { HttpClientModule } from '@angular/common/http';
 import { NativeScriptCommonModule, NativeScriptFormsModule } from '@nativescript/angular';
-import { GridViewModule } from 'nativescript-grid-view/angular';
+// import { GridViewModule } from 'nativescript-grid-view/angular';
 import { MenuComponent } from './components/menu.component';
 import { MenuRoutingModule } from './menu-routing.module';
 
@@ -14,9 +14,9 @@ import { MenuRoutingModule } from './menu-routing.module';
     NgModalModule,
     HttpClientModule,
     MenuRoutingModule,
-    GridViewModule,
+    // GridViewModule,
   ],
   declarations: [MenuComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class MenuModule {}
+export class MenuModule { }

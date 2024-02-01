@@ -1,14 +1,14 @@
 import { Component, OnInit, AfterContentInit, ViewChild } from '@angular/core';
-import { Color } from 'tns-core-modules/color/color';
+import { Color } from '@nativescript/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
 import { ModalComponent } from '~/app/modals/modal.component';
 import * as localstorage from 'nativescript-localstorage';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page } from '@nativescript/core';
 import { Values } from '~/app/values/values';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { slideInAnimation } from '~/app/route-animation';
-import {images} from '~/app/assets/index';
+import { images } from '~/app/assets/index';
 
 declare const android: any;
 declare const CGSizeMake: any;
@@ -42,13 +42,13 @@ export class MenuComponent implements OnInit, AfterContentInit {
   token: string;
   headers: HttpHeaders;
   userId: string;
-  logoTransparentIcon:string = this.assets.logoTransparentIcon;
-  nextIcon:string = this.assets.nextIcon;
-  homeIcon:string = this.assets.homeIcon;
-  myOrderIcon:string = this.assets.orderIcon;
-  faqIcon:string = this.assets.faqIcon;
-  myProfileIcon:string = this.assets.myProfileIcon;
-  logoutIcon:string = this.assets.logoutIcon;
+  logoTransparentIcon: string = this.assets.logoTransparentIcon;
+  nextIcon: string = this.assets.nextIcon;
+  homeIcon: string = this.assets.homeIcon;
+  myOrderIcon: string = this.assets.orderIcon;
+  faqIcon: string = this.assets.faqIcon;
+  myProfileIcon: string = this.assets.myProfileIcon;
+  logoutIcon: string = this.assets.logoutIcon;
 
   constructor(
     private routerExtensions: RouterExtensions,
@@ -59,7 +59,7 @@ export class MenuComponent implements OnInit, AfterContentInit {
     this.page.actionBarHidden = true;
   }
 
-  ngAfterContentInit(): void {}
+  ngAfterContentInit(): void { }
 
   ngOnInit(): void {
     this.userService.activeScreen('menu');

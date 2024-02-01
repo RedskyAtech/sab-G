@@ -2,7 +2,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgModalModule } from '../modals/ng-modal';
 import { HttpClientModule } from '@angular/common/http';
 import { NativeScriptCommonModule, NativeScriptFormsModule } from '@nativescript/angular';
-import { GridViewModule } from 'nativescript-grid-view/angular';
+// import { GridViewModule } from 'nativescript-grid-view/angular';
 import { ForgotPasswordComponent } from './components/forgot-password.component';
 import { ForgotPasswordRoutingModule } from './forgot-password-routing.module';
 
@@ -14,9 +14,9 @@ import { ForgotPasswordRoutingModule } from './forgot-password-routing.module';
     NgModalModule,
     HttpClientModule,
     ForgotPasswordRoutingModule,
-    GridViewModule,
+    // GridViewModule,
   ],
   declarations: [ForgotPasswordComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class ForgotPasswordModule {}
+export class ForgotPasswordModule { }

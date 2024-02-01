@@ -4,7 +4,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgModalModule } from '../modals/ng-modal';
 import { HttpClientModule } from '@angular/common/http';
 import { NativeScriptCommonModule, NativeScriptFormsModule } from '@nativescript/angular';
-import { GridViewModule } from 'nativescript-grid-view/angular';
+// import { GridViewModule } from 'nativescript-grid-view/angular';
 import { ShippingComponent } from './components/shipping.component';
 import { ShippingRoutingModule } from './shipping-routing.module';
 
@@ -16,11 +16,11 @@ import { ShippingRoutingModule } from './shipping-routing.module';
     NgModalModule,
     HttpClientModule,
     ShippingRoutingModule,
-    GridViewModule,
+    // GridViewModule,
     HeaderModule,
     FooterModule,
   ],
   declarations: [ShippingComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class ShippingModule {}
+export class ShippingModule { }

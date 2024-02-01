@@ -1,12 +1,12 @@
 import { Component, OnInit, AfterContentInit } from '@angular/core';
-import { Color } from 'tns-core-modules/color/color';
+import { Color } from '@nativescript/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import * as localstorage from 'nativescript-localstorage';
 import { ActivatedRoute } from '@angular/router';
 import { Values } from '~/app/values/values';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page } from '@nativescript/core';
 import { slideInAnimation } from '~/app/route-animation';
 
 declare const android: any;
@@ -55,7 +55,7 @@ export class OrderDetailsComponent implements OnInit, AfterContentInit {
     this.page.actionBarHidden = true;
     // this.isRendering = true;
   }
-  ngAfterContentInit(): void {}
+  ngAfterContentInit(): void { }
   ngOnInit(): void {
     this.orderedProducts = [];
     this.isLoading = false;

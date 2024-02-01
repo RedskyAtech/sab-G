@@ -3,11 +3,11 @@ import { Order } from "./../../models/order.model";
 import { DeliveryAddress } from "./../../models/deliveryAddress.model";
 import { User } from "~/app/models/user.model";
 import { Component, OnInit, AfterContentInit } from "@angular/core";
-import { Color } from "tns-core-modules/color/color";
+import { Color } from "@nativescript/core";
 import { TextField } from '@nativescript/core';
 import { RouterExtensions } from "@nativescript/angular";
 import { UserService } from "~/app/services/user.service";
-import { Page } from "tns-core-modules/ui/page/page";
+import { Page } from "@nativescript/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Values } from "~/app/values/values";
 import * as localstorage from "nativescript-localstorage";
@@ -74,7 +74,7 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
     this.page.actionBarHidden = true;
     // this.isRendering = true;
   }
-  ngAfterContentInit(): void {}
+  ngAfterContentInit(): void { }
   ngOnInit(): void {
     this.isLoading = false;
     this.firstNameText = "";
@@ -491,9 +491,8 @@ export class AddAddressComponent implements OnInit, AfterContentInit {
   private getCart() {
     this.isLoading = true;
     console.log(localstorage.getItem("cartId"));
-    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${
-      this.pageNo
-    }&items=${this.items}`;
+    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${this.pageNo
+      }&items=${this.items}`;
     this.http
       .get(Values.BASE_URL + "carts?" + this.query, {
         headers: this.headers,

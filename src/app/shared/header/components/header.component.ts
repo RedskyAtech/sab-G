@@ -1,8 +1,8 @@
 import { RouterExtensions } from '@nativescript/angular';
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Page } from 'tns-core-modules/ui/page/page';
-import { Color } from 'tns-core-modules/color/color';
+import { Page } from '@nativescript/core';
+import { Color } from '@nativescript/core';
 import { UserService } from '~/app/services/user.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { images } from '~/app/assets/index';
@@ -79,7 +79,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   protected get shadowColor(): Color {
     return new Color('#888888');

@@ -1,11 +1,11 @@
 import { User } from './../../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, AfterContentInit } from '@angular/core';
-import { Color } from 'tns-core-modules/color/color';
+import { Color } from '@nativescript/core';
 import { TextField } from '@nativescript/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page } from '@nativescript/core';
 import { Values } from '~/app/values/values';
 import { slideInAnimation } from '~/app/route-animation';
 import { images } from '~/app/assets/index';
@@ -24,7 +24,9 @@ export class ForgotPasswordComponent implements OnInit, AfterContentInit {
   assets = {
     logoIcon: images.LOGO_ICON,
     logoTransparentIocn: images.LOGO_TRANSPARENT_ICON,
-    userIcon: images.USER_ICON
+    userIcon: images.USER_ICON,
+    logoTransparentIcon: images.LOGO_TRANSPARENT_ICON,
+
   }
 
   // isRendering: boolean;
@@ -38,9 +40,9 @@ export class ForgotPasswordComponent implements OnInit, AfterContentInit {
   mobileBorderColor: string;
   mobileBorderWidth: string;
   user: User;
-  logoIcon:string = this.assets.logoIcon;
-  logoTransperentIcon:string = this.assets.logoTransparentIocn;
-  userIcon:string = this.assets.userIcon;
+  logoIcon: string = this.assets.logoIcon;
+  logoTransperentIcon: string = this.assets.logoTransparentIocn;
+  userIcon: string = this.assets.userIcon;
 
   constructor(
     private routerExtensions: RouterExtensions,
@@ -66,7 +68,7 @@ export class ForgotPasswordComponent implements OnInit, AfterContentInit {
     //     this.isRendering = true;
     // }, 5000)
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   // protected get shadowColor(): Color {
   //   return new Color('#888888');

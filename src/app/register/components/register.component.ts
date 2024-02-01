@@ -1,11 +1,11 @@
 import { User } from "./../../models/user.model";
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, AfterContentInit } from "@angular/core";
-import { Color } from "tns-core-modules/color/color";
+import { Color } from "@nativescript/core";
 import { TextField } from '@nativescript/core';
 import { RouterExtensions } from "@nativescript/angular";
 import { UserService } from "~/app/services/user.service";
-import { Page } from "tns-core-modules/ui/page/page";
+import { Page } from "@nativescript/core";
 import { Values } from "~/app/values/values";
 import { slideInAnimation } from "~/app/route-animation";
 import { images } from "~/app/assets/index";
@@ -87,8 +87,8 @@ export class RegisterComponent implements OnInit, AfterContentInit {
     this.confirmPasswordSecure = true;
     this.user = new User();
   }
-  ngAfterContentInit(): void {}
-  ngOnInit(): void {}
+  ngAfterContentInit(): void { }
+  ngOnInit(): void { }
 
   // protected get shadowColor(): Color {
   //   return new Color('#888888');

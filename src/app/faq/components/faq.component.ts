@@ -1,15 +1,15 @@
 import { User } from './../../models/user.model';
 import { Component, OnInit, AfterContentInit } from '@angular/core';
-import { Color } from 'tns-core-modules/color/color';
+import { Color } from '@nativescript/core';
 import { TextField } from '@nativescript/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page } from '@nativescript/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as localstorage from 'nativescript-localstorage';
 import * as Toast from 'nativescript-toast';
 import { openApp } from 'nativescript-open-app';
-import * as utils from 'tns-core-modules/utils/utils';
+import * as utils from '@nativescript/core/utils';
 import { Values } from '~/app/values/values';
 import { slideInAnimation } from '~/app/route-animation';
 import { images } from '~/app/assets/index';
@@ -25,10 +25,10 @@ declare const CGSizeMake: any;
   animations: [slideInAnimation],
 })
 export class FaqComponent implements OnInit, AfterContentInit {
-  assets ={ 
+  assets = {
     instaIcon: images.INSTA_ICON,
     fbIcon: images.FB_ICON
-   }
+  }
 
   // isRendering: boolean;
   isLoading: boolean;
@@ -44,8 +44,8 @@ export class FaqComponent implements OnInit, AfterContentInit {
   items: number = 10;
   headers: HttpHeaders;
   dataForBadge: any = { showCartBadge: false, numberOnBadge: '' };
-  fbIcon:string = this.assets.fbIcon;
-  instaIcon:string = this.assets.instaIcon;
+  fbIcon: string = this.assets.fbIcon;
+  instaIcon: string = this.assets.instaIcon;
 
   constructor(
     private routerExtensions: RouterExtensions,
@@ -56,7 +56,7 @@ export class FaqComponent implements OnInit, AfterContentInit {
     this.page.actionBarHidden = true;
     // this.isRendering = true;
   }
-  ngAfterContentInit(): void {}
+  ngAfterContentInit(): void { }
   ngOnInit(): void {
     this.isLoading = false;
     this.questionText = '';

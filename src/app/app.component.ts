@@ -2,7 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { RouterExtensions, registerElement } from '@nativescript/angular';
 import { ChildrenOutletContexts, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { UserService } from './services/user.service';
-import { Color } from 'tns-core-modules/color/color';
+import { Color } from '@nativescript/core';
 import { Carousel, CarouselItem } from 'nativescript-carousel';
 import { requestPermissions } from 'nativescript-permissions';
 import { Folder, isAndroid, knownFolders } from '@nativescript/core';

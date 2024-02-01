@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterContentInit } from '@angular/core';
-import { Color } from 'tns-core-modules/color/color';
+import { Color } from '@nativescript/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page } from '@nativescript/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import * as localstorage from 'nativescript-localstorage';
 import { Values } from '~/app/values/values';
@@ -47,8 +47,8 @@ export class ProfileComponent implements OnInit, AfterContentInit {
   items: number = 10;
   dataForBadge: any = { showCartBadge: false, numberOnBadge: '' };
 
-  passwordIcon:string = this.assets.passwordIcon;
-  shippingIcon:string = this.assets.shippingIcon;
+  passwordIcon: string = this.assets.passwordIcon;
+  shippingIcon: string = this.assets.shippingIcon;
 
   constructor(
     private routerExtensions: RouterExtensions,
@@ -59,7 +59,7 @@ export class ProfileComponent implements OnInit, AfterContentInit {
     this.page.actionBarHidden = true;
     // this.isRendering = true;
   }
-  ngAfterContentInit(): void {}
+  ngAfterContentInit(): void { }
   ngOnInit(): void {
     this.isLoading = false;
     this.userService.activeScreen('profile');

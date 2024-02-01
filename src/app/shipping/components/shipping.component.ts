@@ -1,11 +1,11 @@
 import { User } from '~/app/models/user.model';
 import { Component, OnInit, AfterContentInit } from '@angular/core';
-// import { Color } from 'tns-core-modules/color/color';
+// import { Color } from '@nativescript/core';
 import { TextField } from '@nativescript/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
 import * as Toast from 'nativescript-toast';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page } from '@nativescript/core';
 import { Address } from '~/app/models/address.model';
 import { Values } from '~/app/values/values';
 import * as localstorage from 'nativescript-localstorage';

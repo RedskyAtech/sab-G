@@ -1,7 +1,7 @@
 import { Cart } from "../../models/cart.model";
 import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { Component, OnInit, AfterContentInit, ViewChild } from "@angular/core";
-import { Color } from "tns-core-modules/color/color";
+import { Color } from "@nativescript/core";
 import { RouterExtensions } from "@nativescript/angular";
 import { UserService } from "~/app/services/user.service";
 import { ActivatedRoute } from "@angular/router";
@@ -9,7 +9,7 @@ import * as Toast from "nativescript-toast";
 import { ModalComponent } from "~/app/modals/modal.component";
 import * as localstorage from "nativescript-localstorage";
 import { Values } from "~/app/values/values";
-import { Page, View } from "tns-core-modules/ui/page/page";
+import { Page, View } from "@nativescript/core";
 import { Product } from "~/app/models/product.model";
 import { Dimensions } from "~/app/models/dimensions.model";
 import { TextField } from '@nativescript/core';
@@ -282,9 +282,8 @@ export class SearchComponent implements OnInit, AfterContentInit {
   getCart() {
     this.isLoading = true;
     console.log(localstorage.getItem("cartId"));
-    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${
-      this.pageNo
-    }&items=${this.items}`;
+    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${this.pageNo
+      }&items=${this.items}`;
     this.http
       .get(Values.BASE_URL + "carts?" + this.query, {
         headers: this.headers,
@@ -345,7 +344,7 @@ export class SearchComponent implements OnInit, AfterContentInit {
     this.http
       .get(
         Values.BASE_URL +
-          `products/search?pageNo=${this.pageNo}&items=${this.items}&name=${this.productName}`,
+        `products/search?pageNo=${this.pageNo}&items=${this.items}&name=${this.productName}`,
         {
           headers: this.headers,
         }
@@ -563,7 +562,7 @@ export class SearchComponent implements OnInit, AfterContentInit {
     inAnimation.play().then(() => (this.showBottomSheet = false));
   }
 
-  onBottomSheetTap() {} //noting to do with it. //It prevent calling onWeightLayoutOutsideTap() function
+  onBottomSheetTap() { } //noting to do with it. //It prevent calling onWeightLayoutOutsideTap() function
 
   onPriceTap(index: number, args: StackLayout) {
     const selectedItem = this.priceList[index];
@@ -734,5 +733,10 @@ export class SearchComponent implements OnInit, AfterContentInit {
           console.log("ERROR::::", error.error.error);
         }
       );
+  }
+  onOutsideClick() {
+    this.userService.showFooter(true);
+    // this.viewImageChooserDialog.hide();
+    // this.viewRemoveAccountDialog.hide();
   }
 }

@@ -7,11 +7,11 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import { Color } from 'tns-core-modules/color/color';
+import { Color } from '@nativescript/core';
 import { TextField } from '@nativescript/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page } from '@nativescript/core';
 import { User } from '~/app/models/user.model';
 import { ActivatedRoute } from '@angular/router';
 import { Values } from '~/app/values/values';
@@ -57,8 +57,8 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit, AfterViewI
   user: User;
   from: string;
 
-  logoIcon:string = this.assets.logoIcon;
-  logoTransperentIcon:string = this.assets.logoTransIcon;
+  logoIcon: string = this.assets.logoIcon;
+  logoTransperentIcon: string = this.assets.logoTransIcon;
 
   constructor(
     private routerExtensions: RouterExtensions,
@@ -86,7 +86,7 @@ export class ConfirmOtpComponent implements OnInit, AfterContentInit, AfterViewI
     //     this.isRendering = true;
     // }, 5000)
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngAfterViewInit(): void {
     setTimeout(() => {

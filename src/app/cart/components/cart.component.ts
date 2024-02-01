@@ -8,10 +8,10 @@ import {
   AfterContentInit,
   ChangeDetectorRef,
 } from "@angular/core";
-import { Color } from "tns-core-modules/color/color";
+import { Color } from "@nativescript/core";
 import { RouterExtensions } from "@nativescript/angular";
 import { UserService } from "~/app/services/user.service";
-import { Page } from "tns-core-modules/ui/page/page";
+import { Page } from "@nativescript/core";
 import * as localstorage from "nativescript-localstorage";
 import { Values } from "~/app/values/values";
 import * as Toast from "nativescript-toast";
@@ -72,7 +72,7 @@ export class CartComponent implements OnInit, AfterContentInit {
     this.page.actionBarHidden = true;
   }
 
-  ngAfterContentInit(): void {}
+  ngAfterContentInit(): void { }
 
   ngOnInit(): void {
     console.log("ng oninit start in cart");
@@ -343,9 +343,8 @@ export class CartComponent implements OnInit, AfterContentInit {
   getCart() {
     this.isLoading = true;
     console.log(localstorage.getItem("cartId"));
-    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${
-      this.pageNo
-    }&items=${this.items}`;
+    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${this.pageNo
+      }&items=${this.items}`;
     this.http
       .get(Values.BASE_URL + "carts?" + this.query, {
         headers: this.headers,

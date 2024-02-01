@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterContentInit, ViewChild } from "@angular/core";
-import { Color } from "tns-core-modules/color/color";
+import { Color } from "@nativescript/core";
 import { TextField, Folder, File, path } from '@nativescript/core';
 import { RouterExtensions } from "@nativescript/angular";
 import { UserService } from "~/app/services/user.service";
 import { ModalComponent } from "~/app/modals/modal.component";
-import { Page } from "tns-core-modules/ui/page/page";
+import { Page } from "@nativescript/core";
 import {
   ImageSource,
   fromFile,
@@ -18,9 +18,9 @@ import * as Toast from "nativescript-toast";
 import { User } from "~/app/models/user.model";
 import { ActivatedRoute } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import * as camera from "nativescript-camera";
+import * as camera from "@nativescript/camera";
 import * as permissions from "nativescript-permissions";
-import * as imagepicker from "nativescript-imagepicker";
+import * as imagepicker from "@nativescript/imagepicker";
 import { images } from "~/app/assets/index";
 
 declare const android: any;

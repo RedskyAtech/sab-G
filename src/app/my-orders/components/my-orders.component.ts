@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterContentInit } from "@angular/core";
-import { Color } from "tns-core-modules/color/color";
+import { Color } from "@nativescript/core";
 import { RouterExtensions } from "@nativescript/angular";
 import { UserService } from "~/app/services/user.service";
-import { Page } from "tns-core-modules/ui/page/page";
+import { Page } from "@nativescript/core";
 import * as localstorage from "nativescript-localstorage";
 import { HttpHeaders, HttpClient } from "@angular/common/http";
 import { Values } from "~/app/values/values";
@@ -52,7 +52,7 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
     this.isCurrentButton = true;
     this.isPastButton = false;
   }
-  ngAfterContentInit(): void {}
+  ngAfterContentInit(): void { }
   ngOnInit(): void {
     this.orders = [];
     this.isLoading = false;
@@ -170,9 +170,8 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
   // }
 
   getOrders() {
-    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${
-      this.pageNo
-    }&items=${this.items}&history=${this.history}`;
+    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${this.pageNo
+      }&items=${this.items}&history=${this.history}`;
     // console.log(this.query);
     this.http
       .get(Values.BASE_URL + "orders?" + this.query, {
@@ -288,9 +287,8 @@ export class MyOrdersComponent implements OnInit, AfterContentInit {
 
   private getCart() {
     this.isLoading = true;
-    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${
-      this.pageNo
-    }&items=${this.items}`;
+    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${this.pageNo
+      }&items=${this.items}`;
     this.http
       .get(Values.BASE_URL + "carts?" + this.query, {
         headers: this.headers,

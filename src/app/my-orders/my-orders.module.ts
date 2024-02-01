@@ -4,7 +4,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgModalModule } from '../modals/ng-modal';
 import { HttpClientModule } from '@angular/common/http';
 import { NativeScriptCommonModule, NativeScriptFormsModule } from '@nativescript/angular';
-import { GridViewModule } from 'nativescript-grid-view/angular';
+// import { GridViewModule } from 'nativescript-grid-view/angular';
 import { MyOrdersComponent } from './components/my-orders.component';
 import { MyOrdersRoutingModule } from './my-orders-routing.module';
 import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
@@ -17,7 +17,7 @@ import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
     NgModalModule,
     HttpClientModule,
     MyOrdersRoutingModule,
-    GridViewModule,
+    // GridViewModule,
     HeaderModule,
     FooterModule,
     NativeScriptUIListViewModule,
@@ -25,4 +25,4 @@ import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
   declarations: [MyOrdersComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class MyOrdersModule {}
+export class MyOrdersModule { }

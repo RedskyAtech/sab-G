@@ -4,7 +4,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NgModalModule } from '../modals/ng-modal';
 import { HttpClientModule } from '@angular/common/http';
 import { NativeScriptCommonModule, NativeScriptFormsModule } from '@nativescript/angular';
-import { GridViewModule } from 'nativescript-grid-view/angular';
+// import { GridViewModule } from 'nativescript-grid-view/angular';
 import { ProfileComponent } from './components/profile.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 
@@ -16,11 +16,11 @@ import { ProfileRoutingModule } from './profile-routing.module';
     NgModalModule,
     HttpClientModule,
     ProfileRoutingModule,
-    GridViewModule,
+    // GridViewModule,
     HeaderModule,
     FooterModule,
   ],
   declarations: [ProfileComponent],
   schemas: [NO_ERRORS_SCHEMA],
 })
-export class ProfileModule {}
+export class ProfileModule { }

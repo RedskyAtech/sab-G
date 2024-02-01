@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
-import { Color } from 'tns-core-modules/color/color';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Color } from '@nativescript/core';
+import { Page } from '@nativescript/core';
 import { slideInAnimation } from '~/app/route-animation';
 import { images } from '~/app/assets/index'
 
@@ -19,7 +19,7 @@ export class CongratulationsComponent implements OnInit, AfterContentInit {
   isLoading: boolean;
   renderingTimeout;
   gotItButton: string;
-  successIcon:string = this.assets.successIcon;
+  successIcon: string = this.assets.successIcon;
 
   constructor(
     private routerExtensions: RouterExtensions,
@@ -28,7 +28,7 @@ export class CongratulationsComponent implements OnInit, AfterContentInit {
   ) {
     this.page.actionBarHidden = true;
   }
-  ngAfterContentInit(): void {}
+  ngAfterContentInit(): void { }
   ngOnInit(): void {
     this.isLoading = false;
     // this.userService.headerLabel("Delivery address");

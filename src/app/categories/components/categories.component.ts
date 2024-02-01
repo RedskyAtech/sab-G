@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterContentInit } from '@angular/core';
-import { Color } from 'tns-core-modules/color/color';
+import { Color } from '@nativescript/core';
 import { RouterExtensions } from '@nativescript/angular';
 import { UserService } from '~/app/services/user.service';
-import { Page } from 'tns-core-modules/ui/page/page';
+import { Page } from '@nativescript/core';
 import * as localstorage from 'nativescript-localstorage';
 import { Values } from '~/app/values/values';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -49,7 +49,7 @@ export class CategoriesComponent implements OnInit, AfterContentInit {
       }
     });
   }
-  ngAfterContentInit(): void {}
+  ngAfterContentInit(): void { }
   ngOnInit(): void {
     this.categories = [];
     this.isLoading = false;

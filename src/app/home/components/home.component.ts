@@ -7,10 +7,10 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
 } from "@angular/core";
-import { Color } from "tns-core-modules/color/color";
+import { Color } from "@nativescript/core";
 import { RouterExtensions } from "@nativescript/angular";
 import { UserService } from "~/app/services/user.service";
-import { Page } from "tns-core-modules/ui/page/page";
+import { Page } from "@nativescript/core";
 import { Values } from "~/app/values/values";
 import * as localstorage from "nativescript-localstorage";
 import { GridLayout } from '@nativescript/core';
@@ -99,7 +99,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
   @ViewChild("page", { static: false }) pageRef: ElementRef<GridLayout>;
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
   ngOnInit(): void {
     const screenWidth = Screen.mainScreen.widthDIPs;
     this.discountFontSize = (3.5 * screenWidth) / 100;
@@ -162,7 +162,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.http
       .get(
         Values.BASE_URL +
-          "categories?pageNo=${this.pageNo}&items=${this.items}&status=active",
+        "categories?pageNo=${this.pageNo}&items=${this.items}&status=active",
         {
           headers: {
             "Content-Type": "application/json",
@@ -275,9 +275,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   getCart() {
     this.isLoading = true;
     console.log("cart id", localstorage.getItem("cartId"));
-    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${
-      this.pageNo
-    }&items=${this.items}`;
+    this.query = `_id=${localstorage.getItem("cartId")}&pageNo=${this.pageNo
+      }&items=${this.items}`;
     this.http
       .get(Values.BASE_URL + "carts?" + this.query, {
         headers: this.headers,
